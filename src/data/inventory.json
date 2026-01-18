@@ -1,0 +1,9 @@
+{
+  "inventory": [
+    { "productId": 1, "productName": "Lavender Calm Soap", "stock": 34 },
+    { "productId": 2, "productName": "Citrus Sunrise Soap", "stock": 18 },
+    { "productId": 3, "productName": "Charcoal Detox Soap", "stock": 12 },
+    { "productId": 4, "productName": "Oatmeal Honey Soap", "stock": 25 },
+    { "productId": 5, "productName": "Unscented Gentle Soap", "stock": 40 }
+  ]
+}

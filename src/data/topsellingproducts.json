@@ -1,0 +1,9 @@
+{
+  "topProducts": [
+    { "productName": "Lavender Calm Soap", "unitsSold": 120 },
+    { "productName": "Citrus Sunrise Soap", "unitsSold": 98 },
+    { "productName": "Charcoal Detox Soap", "unitsSold": 86 },
+    { "productName": "Oatmeal Honey Soap", "unitsSold": 72 },
+    { "productName": "Unscented Gentle Soap", "unitsSold": 54 }
+  ]
+}
