@@ -1,0 +1,26 @@
+/* CustomerHome.css */
+.content {
+  padding-top: 80px; /* space for sticky header */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  min-height: 100vh;
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.products-grid {
+  display: grid; /* very important */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}

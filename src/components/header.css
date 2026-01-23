@@ -1,0 +1,56 @@
+/* header.css */
+.header-container {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f7f3f0; 
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-family: 'Arial', sans-serif;
+  
+}
+
+.header-logo h1 {
+  font-size: 1.8rem;
+  color: #2d5016;
+  margin: 0;
+  font-family: 'Georgia', serif;
+}
+
+.header-subtitle {
+  font-size: 0.9rem;
+  color: #6b8e23;
+  margin: 0;
+  font-style: italic;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+  font-family: inherit;
+}
+
+.nav-link:hover {
+  color: #6b8e23;
+}
+
+
+.header-logo {
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  flex: 1;
+  margin-bottom: 2rem;
+}
+
+
+

@@ -1,24 +1,26 @@
-import { useState } from "react";
-import SalesChart from "./components/SalesChart";
-import "./App.css";
+// import { useState } from "react";
+// import SalesChart from "./components/SalesChart";
 
-function App() {
-  const [count, setCount] = useState(0);
+import Header from './components/Header';
+import CustomerHome from './pages/CustomerHome';
+import ProductPage from './pages/ProductPage';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
+import './App.css';
 
+export default function App() {
   return (
-    <>
-      <h1>Seller Dashboard (Prototype)</h1>
-
-      <SalesChart />
-
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-    </>
+    <div className="app">
+      <Header />
+      <main className="main-content">
+        <CustomerHome />
+        <ProductPage />
+        <AboutUs />
+        <ContactUs />
+      </main>
+      <footer className="app-footer">
+        <p>&copy; 2026 Jabon Eterno by Lucy. All rights reserved.</p>
+      </footer>
+    </div>
   );
 }
-
-export default App;
-

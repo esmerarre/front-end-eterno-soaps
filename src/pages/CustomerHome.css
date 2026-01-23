@@ -1,0 +1,107 @@
+.customer-home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  padding: 2rem;
+  margin-top: 80px;
+}
+
+.home-content {
+  max-width: 800px;
+  text-align: center;
+}
+
+.home-title {
+  font-size: 3.5rem;
+  color: #2d5016;
+  margin-bottom: 1rem;
+  font-family: 'Georgia', serif;
+}
+
+.home-tagline {
+  font-size: 1.5rem;
+  color: #6b8e23;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.home-description {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: #6b8e23;
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.btn-primary:hover {
+  background: #556b1e;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(107, 142, 35, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #6b8e23;
+  border: 2px solid #6b8e23;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.btn-secondary:hover {
+  background: #6b8e23;
+  color: white;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 2.5rem;
+  }
+
+  .home-tagline {
+    font-size: 1.2rem;
+  }
+
+  .home-description {
+    font-size: 1rem;
+  }
+
+  .home-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
