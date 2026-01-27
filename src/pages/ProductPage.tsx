@@ -23,24 +23,24 @@ export default function ProductPage() {
 }
 
 
-// // import "./ProductPage.css";
+// import "./ProductPage.css";
 
-// // export default function ProductPage() {
-// //   return (
-// //     <main className="content">
-// //       <section className="product-section">
-// //         <h2>ALOEVERA SOAP</h2>
-// //         <p className="price">$10</p>
-// //         <p>
-// //           Infused with aloe vera, known for its soothing and moisturizing
-// //           properties, this soap helps calm dryness and irritation, leaving
-// //           skin soft, refreshed, and balanced. Ideal for daily use on all skin
-// //           types.
-// //         </p>
-// //       </section>
-// //     </main>
-// //   );
-// // }
+// export default function ProductPage() {
+//   return (
+//     <main className="content">
+//       <section className="product-section">
+//         <h2>ALOEVERA SOAP</h2>
+//         <p className="price">$10</p>
+//         <p>
+//           Infused with aloe vera, known for its soothing and moisturizing
+//           properties, this soap helps calm dryness and irritation, leaving
+//           skin soft, refreshed, and balanced. Ideal for daily use on all skin
+//           types.
+//         </p>
+//       </section>
+//     </main>
+//   );
+// }
 // import { soaps } from "../data/soaps";
 // import placeholder from "../assets/placeholder.png";
 // import "./ProductPage.css";
