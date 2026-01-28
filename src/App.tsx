@@ -14,7 +14,7 @@ export interface Product {
   id: number;
   name: string;
   description: string;
-  categories: Category[];
+  categories: Category[]; // [] belongs to multiple categories
   variants: ProductVariant[];
 }
 
@@ -25,7 +25,7 @@ export interface ProductVariant {
   shape: string;
   price: number;
   stockQuantity: number; //stock_quantity in backend
-  product: Product[];
+  product: Product; // belongs to one product
 }
 
 export interface Category {
@@ -36,39 +36,63 @@ export interface Category {
 }
 
 
-const BASE_URL = import.meta.env.APP_BACKEND_URL;
-
-
-
+// Base API URL for backend requests (Vite only exposes VITE_ prefixed vars)
+const BASE_URL = import.meta.env.VITE_APP_BACKEND_URL;
 
 export default function App() {
-  const [products, setProducts] = useState([]);
-  const [productVariant, setProductVariant] = useState(null); //reveiew default null state
+  // Global app state (owned here, passed down to ProductPage)
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productId, setProductId] = useState<number | null>(null);
+  const [productVariants, setProductVariants] = useState<ProductVariant[] | null>(null); //reveiew default null state
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
 
+  // Load all products once on page load
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/products`);
-        setProducts(response.data);
+        // Normalize API response in case it returns { products: [...] }
+        const data = response.data;
+        const normalizedProducts = Array.isArray(data)
+          ? data
+          : Array.isArray(data?.products)
+            ? data.products
+            : [];
+        setProducts(normalizedProducts);
       } catch (error) { 
         console.error("Error fetching products:", error);
       }
     };
+    fetchProducts();
+  }, []);
 
-    const []
-
-
-
-
-
-
+  // When a product is selected, fetch its variants
+  useEffect(() => {
+    if (!productId) return;
+    const fetchProductVariants = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/products/${productId}/variants`);
+        setProductVariants(response.data);
+      } catch (error) {
+        console.error("Error fetching product variants:", error);
+      }
+    };
+    fetchProductVariants();
+  }, [productId]);
 
   return (
     <div className="app">
       <Header />
       <main className="main-content">
         <CustomerHome />
-        <ProductPage />
+        <ProductPage 
+          products={products} 
+          onProductSelect={setProductId}
+          selectedProductId={productId}
+          productVariants={productVariants}
+          selectedVariant={selectedVariant}
+          onVariantSelect={setSelectedVariant}
+        />
         <AboutUs />
         <ContactUs />
       </main>

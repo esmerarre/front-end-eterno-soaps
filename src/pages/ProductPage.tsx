@@ -1,22 +1,46 @@
 import "./ProductPage.css";
+import type { Product, ProductVariant } from "../App";
+import ProductList from "../components/ProductList";
 
-export default function ProductPage() {
-  // 🔹 Data + types can live here later
+interface ProductPageProps {
+  // Data + callbacks passed from App
+  products: Product[];
+  onProductSelect: (productId: number) => void;
+  selectedProductId: number | null;
+  productVariants: ProductVariant[] | null;
+  selectedVariant: ProductVariant | null;
+  onVariantSelect: (variant: ProductVariant) => void;
+}
 
+export default function ProductPage({
+  products,
+  onProductSelect,
+  selectedProductId,
+  productVariants,
+  selectedVariant,
+  onVariantSelect,
+}: ProductPageProps) {
   return (
     <section className="product-page">
       <div className="product-container">
 
         <header className="product-header">
           <h2 className="product-title">
-            {/* Page heading */}
+            Our Handcrafted Soaps
           </h2>
         </header>
 
-        <div className="product-grid">
-          {/* Product cards go here */}
+        <div>
+          {/* ProductList renders the grid; ProductCard renders each tile */}
+          <ProductList
+            products={products}
+            selectedProductId={selectedProductId}
+            onProductSelect={onProductSelect}
+            productVariants={productVariants}
+            selectedVariant={selectedVariant}
+            onVariantSelect={onVariantSelect}
+          />
         </div>
-
       </div>
     </section>
   );
