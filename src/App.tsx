@@ -8,19 +8,22 @@ import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import './App.css';
 
-export default function App() {
+const App: React.FC = () => {
   return (
     <div className="app">
       <Header />
       <main className="main-content">
+  
         <CustomerHome />
         <ProductPage />
         <AboutUs />
         <ContactUs />
       </main>
       <footer className="app-footer">
-        <p>&copy; 2026 Jabon Eterno by Lucy. All rights reserved.</p>
+        <p>&copy; 2026 Eterno Soaps by Lucy. All rights reserved.</p>
       </footer>
     </div>
   );
 }
+
+export default App;
