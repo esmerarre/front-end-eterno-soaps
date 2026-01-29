@@ -1,6 +1,7 @@
 import "./ProductPage.css";
 import type { Product, ProductVariant } from "../App";
 import ProductList from "../components/ProductList";
+import { useState } from "react";
 
 interface ProductPageProps {
   // Data + callbacks passed from App
@@ -20,6 +21,24 @@ export default function ProductPage({
   selectedVariant,
   onVariantSelect,
 }: ProductPageProps) {
+  
+  const [isVariantOpen, setIsVariantOpen] = useState(false)
+
+
+	const openModal = () => {
+    if (isVariantOpen) return
+    setIsVariantOpen(true)
+  }
+
+    const closeModal = () => {
+    setIsVariantOpen(false)
+  }
+
+    const onAddBag = () => {
+    closeModal()
+	// decrease stock quantity logic to be added
+  }
+
   return (
     <section className="product-page">
       <div className="product-container">
@@ -34,6 +53,8 @@ export default function ProductPage({
           {/* ProductList renders the grid; ProductCard renders each tile */}
           <ProductList
             products={products}
+            viewVariant={openModal}
+            closeVariant={closeModal}
             selectedProductId={selectedProductId}
             onProductSelect={onProductSelect}
             productVariants={productVariants}

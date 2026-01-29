@@ -10,6 +10,8 @@ interface ProductListProps {
     productVariants: ProductVariant[] | null;
     selectedVariant: ProductVariant | null;
     onVariantSelect: (variant: ProductVariant) => void;
+    viewVariant: () => void; //void means the function does not return anything
+    closeVariant: () => void;
 }
 
 const ProductList = ({
@@ -19,6 +21,8 @@ const ProductList = ({
     productVariants,
     selectedVariant,
     onVariantSelect,
+    viewVariant,
+    closeVariant,
 }: ProductListProps) => {
     const getProductList = (products: Product[]) => {
         return products.map((product) => {
@@ -31,6 +35,8 @@ const ProductList = ({
                     variants={selectedProductId === product.id ? productVariants : null}
                     selectedVariant={selectedVariant}
                     onVariantSelect={onVariantSelect}
+                    viewVariant={viewVariant}
+                    closeVariant={closeVariant}
                 />
             );
         });
