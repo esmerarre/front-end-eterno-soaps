@@ -1,6 +1,7 @@
 import "./ProductList.css";
 import type { Product, ProductVariant } from "../App";
 import ProductCard from "./Product";
+// import {useState, useEffect} from "react";
 
 interface ProductListProps {
     // Props needed to render product tiles and handle selection
@@ -13,6 +14,9 @@ interface ProductListProps {
     isModalOpen: boolean;
     openModal: () => void;
     closeModal: () => void;
+    // quantity?: number;
+    onAdd?: () => void;
+    onSubtract?: () => void;
 }
 
 const ProductList = ({
@@ -26,6 +30,25 @@ const ProductList = ({
     openModal,
     closeModal,
 }: ProductListProps) => {
+
+    // const 
+
+    // const [quantity, setQuantity] = useState(1);
+
+    // const onSubtract = () => {
+	// 	// const quantity = 1
+	// 	// const min = 1;
+	// 	// const max = 30;
+	// 	// if 
+
+	// 	return 
+	// }
+
+	// const onAdd = () => {
+	// 	return 
+
+	// }
+
     const getProductList = (products: Product[]) => {
         return products.map((product) => {
             return (

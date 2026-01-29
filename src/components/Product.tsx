@@ -33,7 +33,7 @@ export default function ProductCard({
 		return `$${minPrice}`;
 	}
 
-	
+
 
 	// Sort variants by size (Small, Medium, Large, etc.)
 	const sizeOrder = ["small", "medium", "large"];
@@ -96,6 +96,9 @@ export default function ProductCard({
 							<h3> Key Ingredients: </h3>
 							<p>{product.ingredients?.join(", ")}</p>
 						</div>
+						{/* <div className="quantity-input-container">
+							<button className="minus" onClick={onSubtract()} >-</button>
+						</div> */}
 
 					</div>
 				</div>
