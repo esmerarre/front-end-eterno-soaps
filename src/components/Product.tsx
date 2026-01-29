@@ -33,10 +33,7 @@ export default function ProductCard({
 		return `$${minPrice}`;
 	}
 
-		//first ? automatically returns null if variants is null or undefined
-	const cheapestSize = variants?.reduce((min, curr) => 
-		curr.price < min.price ? curr : min
-	) ?? null;
+	
 
 	// Sort variants by size (Small, Medium, Large, etc.)
 	const sizeOrder = ["small", "medium", "large"];
@@ -58,7 +55,13 @@ export default function ProductCard({
 	}) : null;
 
 
-	// ${cheapestSize?.id === variant.id ? "cheapest" : ""}
+// THIS LOGIC IS TO HIGHLIGHT DEFAULT SIZE BUTTON BUT MAY IMPLEMENT LATER
+	// 	//first ? automatically returns null if variants is null or undefined
+	// const cheapestSize = variants?.reduce((min, curr) => 
+	// 	curr.price < min.price ? curr : min
+	// ) ?? null;
+	//NEEDS TO BE MOVED TO APPROPRIATE ClassName= LOCATION
+	// // ${cheapestSize?.id === variant.id ? "cheapest" : ""}
 
 	return (
 		<div className="product-card-container">
@@ -93,6 +96,7 @@ export default function ProductCard({
 							<h3> Key Ingredients: </h3>
 							<p>{product.ingredients?.join(", ")}</p>
 						</div>
+
 					</div>
 				</div>
 			)}

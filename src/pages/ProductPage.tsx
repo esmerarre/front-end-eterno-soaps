@@ -1,7 +1,6 @@
 import "./ProductPage.css";
 import type { Product, ProductVariant } from "../App";
 import ProductList from "../components/ProductList";
-import { useState } from "react";
 
 interface ProductPageProps {
   // Data + callbacks passed from App
