@@ -1,5 +1,5 @@
 import type { Product, ProductVariant } from "../App";
-import "./ProductList.css";
+import "./Product.css";
 // import { useState } from "react";
 
 interface ProductProps {
@@ -55,9 +55,13 @@ export default function ProductCard({
 		return sizeA.localeCompare(sizeB);
 	}) : null;
 
+
+	// ${cheapestSize?.id === variant.id ? "cheapest" : ""}
+
 	return (
 		<div className="product-card-container">
 			<button onClick={() => { onSelect(); openModal(); defaultPrice(); onVariantSelect()}} className="product-card">
+				<img src= "cottonwood_large-mb.jpg" alt="soap product image" id="card-img"/>
 				<h3>{product.name}</h3>
 				<p>{product.description}</p>
 			</button>
@@ -66,6 +70,7 @@ export default function ProductCard({
 				<div className="modal" onClick={closeModal}>
 					<div className="modal-content" onClick={(e) => e.stopPropagation()}>
 						<span className="close" onClick={closeModal}>&times;</span>
+						<img src= "cottonwood_large-mb.jpg" alt="soap product image"/>
 						<h2>{product.name}</h2>
 						<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
 
@@ -75,7 +80,7 @@ export default function ProductCard({
 							onClick={() => onVariantSelect(variant)}
 							className={`variant-btn ${
 								selectedVariant?.id === variant.id ? "active" : ""
-							} ${cheapestSize?.id === variant.id ? "cheapest" : ""}`}
+							} `}
 						>
 							{variant.size}
 						</button>

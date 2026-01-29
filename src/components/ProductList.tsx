@@ -45,7 +45,7 @@ const ProductList = ({
     };
     return (
         <div className="product-container">
-            <ul>{getProductList(products)}</ul>
+            <ul>{getProductList(products)} </ul>
         </div>
     );
 };
