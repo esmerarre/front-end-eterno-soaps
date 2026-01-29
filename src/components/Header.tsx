@@ -24,7 +24,6 @@ const Header = () => {
                     </button>
                     <button className="nav-link">
                         <img
-                        
                         src={shoppingbag} 
                         alt="Shopping Bag Icon"
                         className="checkout-btn-icon"
@@ -32,7 +31,6 @@ const Header = () => {
                     </button>
                 </nav>
             </div>
-
         </header>
 
     );

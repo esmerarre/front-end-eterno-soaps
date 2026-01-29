@@ -1,12 +1,59 @@
 import "./ContactUs.css";
+import ContactUsForm from './ContactUsForm';
 
-export default function ContactUs() {
-  return (
-    <section id="contact" className="contact-us">
-      
-    </section>
-  );
-}
+const ContactUs = () => {
+    return (
+      <section className="contact-us">
+        <div className="contact-container">
+            <div className="contact-header">
+            <h2 className="contact-title">Get in Touch</h2>
+            <p className="contact-subtitle">
+              We'd love to hear from you! Send us a message and we'll respond as soon as possible.
+              </p>
+          </div>
+       
+        
+        <div className="contact-content">
+          {/* LEFT COLUMN */}
+          <div className="contact-info">
+            <div className="info-item">
+              <div className="info-icon">📧</div>
+              <div>
+                <h3>Email</h3>
+                <p>lucy@jaboneterno.com</p>
+                <p>info@jaboneterno.com</p>
+              </div>
+            </div>
+
+            <div className="info-item">
+              <div className="info-icon">📱</div>
+              <div>
+                <h3>Phone</h3>
+                <p>+1 (555) 123-4567</p>
+                <p>Mon-Fri: 9am - 6pm</p>
+              </div>
+            </div>
+
+            <div className="info-item">
+              <div className="info-icon">📍</div>
+              <div>
+                <h3>Location</h3>
+                <p>Gallup, NM</p>
+              </div>
+            </div>
+            
+            </div>
+            {/* RIGHT COLUMN */}
+              <ContactUsForm/>
+          </div>
+        </div>
+      </section>
+
+    );
+  
+  };
+export default ContactUs;
+
 {/* <div className="contact-container">
         <h2 className="contact-title">Contact Us</h2>
 
