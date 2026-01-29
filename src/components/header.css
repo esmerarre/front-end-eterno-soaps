@@ -1,30 +1,30 @@
-/* header.css */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 1rem 0;
+}
+
 .header-container {
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-logo {
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #f7f3f0; 
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  font-family: 'Arial', sans-serif;
-  
 }
+ .logo-image {
+    height: 100px;
+  }
 
-.header-logo h1 {
-  font-size: 1.8rem;
-  color: #2d5016;
-  margin: 0;
-  font-family: 'Georgia', serif;
-}
-
-.header-subtitle {
-  font-size: 0.9rem;
-  color: #6b8e23;
-  margin: 0;
-  font-style: italic;
-}
 
 .nav-link {
   background: none;
@@ -41,16 +41,24 @@
   color: #6b8e23;
 }
 
+ .checkout-btn-icon {
+    height: 25px;
+    display: flex;
+    
+  }
 
-.header-logo {
+  .header-nav{
   font-size: 1.5rem;
   color: #333;
-  text-align: center;
+  text-align: right;
   font-family: "Times New Roman", Times, serif;
   font-style: italic;
   flex: 1;
-  margin-bottom: 2rem;
-}
+  /* margin-bottom: 2rem; */
+
+  }
+
+
 
 
 

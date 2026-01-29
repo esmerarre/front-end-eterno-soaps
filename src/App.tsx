@@ -102,6 +102,7 @@ export default function App() {
     <div className="app">
       <Header />
       <main className="main-content">
+  
         <CustomerHome />
         <ProductPage 
           products={products} 
@@ -119,8 +120,10 @@ export default function App() {
         <ContactUs />
       </main>
       <footer className="app-footer">
-        <p>&copy; 2026 Jabon Eterno by Lucy. All rights reserved.</p>
+        <p>&copy; 2026 Eterno Soaps by Lucy. All rights reserved.</p>
       </footer>
     </div>
   );
 }
+
+export default App;

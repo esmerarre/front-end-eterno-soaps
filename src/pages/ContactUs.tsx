@@ -3,7 +3,11 @@ import "./ContactUs.css";
 export default function ContactUs() {
   return (
     <section id="contact" className="contact-us">
-      <div className="contact-container">
+      
+    </section>
+  );
+}
+{/* <div className="contact-container">
         <h2 className="contact-title">Contact Us</h2>
 
         <form className="contact-form">
@@ -28,11 +32,7 @@ export default function ContactUs() {
             Send Message
           </button>
         </form>
-      </div>
-    </section>
-  );
-}
-
+      </div> */}
 
 // import { useState } from 'react';
 // import './ContactUs.css';
