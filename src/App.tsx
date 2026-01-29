@@ -46,11 +46,27 @@ export default function App() {
   const [productId, setProductId] = useState<number | null>(null);
   const [productVariants, setProductVariants] = useState<ProductVariant[] | null>(null); //reveiew default null state
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Handler that updates productId AND clears selectedVariant
   const handleProductSelect = (id: number) => {
     setProductId(id);
     setSelectedVariant(null);  // Clear variant when switching products
+  };
+
+  // Modal handlers
+  const openModal = () => {
+    if (isModalOpen) return;
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const onAddBag = () => {
+    closeModal();
+    // decrease stock quantity logic to be added
   };
 
   // Load all products once on page load
@@ -94,6 +110,9 @@ export default function App() {
           productVariants={productVariants}
           selectedVariant={selectedVariant}
           onVariantSelect={setSelectedVariant}
+          openModal={openModal}
+          closeModal={closeModal}
+          onAddBag={onAddBag}
         />
         <AboutUs />
         <ContactUs />

@@ -11,6 +11,9 @@ interface ProductPageProps {
   productVariants: ProductVariant[] | null;
   selectedVariant: ProductVariant | null;
   onVariantSelect: (variant: ProductVariant) => void;
+  openModal: () => void;
+  closeModal: () => void;
+  onAddBag: () => void;
 }
 
 export default function ProductPage({
@@ -20,24 +23,10 @@ export default function ProductPage({
   productVariants,
   selectedVariant,
   onVariantSelect,
+  openModal,
+  closeModal,
+  onAddBag,
 }: ProductPageProps) {
-  
-  const [isVariantOpen, setIsVariantOpen] = useState(false)
-
-
-	const openModal = () => {
-    if (isVariantOpen) return
-    setIsVariantOpen(true)
-  }
-
-    const closeModal = () => {
-    setIsVariantOpen(false)
-  }
-
-    const onAddBag = () => {
-    closeModal()
-	// decrease stock quantity logic to be added
-  }
 
   return (
     <section className="product-page">
@@ -53,13 +42,13 @@ export default function ProductPage({
           {/* ProductList renders the grid; ProductCard renders each tile */}
           <ProductList
             products={products}
-            viewVariant={openModal}
-            closeVariant={closeModal}
             selectedProductId={selectedProductId}
             onProductSelect={onProductSelect}
             productVariants={productVariants}
             selectedVariant={selectedVariant}
             onVariantSelect={onVariantSelect}
+            openModal={openModal}
+            closeModal={closeModal}
           />
         </div>
       </div>

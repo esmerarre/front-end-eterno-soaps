@@ -23,6 +23,8 @@ const ProductList = ({
     onVariantSelect,
     viewVariant,
     closeVariant,
+    openModal,
+    closeModal,
 }: ProductListProps) => {
     const getProductList = (products: Product[]) => {
         return products.map((product) => {
