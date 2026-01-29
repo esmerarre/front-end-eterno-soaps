@@ -31,10 +31,29 @@ export default function ProductCard({
 		return `$${minPrice}`;
 	}
 
-		//? automatically return null if variants is null or undefined
+		//first ? automatically returns null if variants is null or undefined
 	const cheapestSize = variants?.reduce((min, curr) => 
 		curr.price < min.price ? curr : min
 	) ?? null;
+
+	// Sort variants by size (Small, Medium, Large, etc.)
+	const sizeOrder = ["small", "medium", "large"];
+	//copy of variants gets sorted here 
+	const sortedVariants = variants ? [...variants].sort((a, b) => {
+		const sizeA = a.size.toLowerCase();
+		const sizeB = b.size.toLowerCase();
+		const indexA = sizeOrder.indexOf(sizeA);
+		const indexB = sizeOrder.indexOf(sizeB);
+		
+		// If both sizes are in the order array, sort by that order
+		//-1 means the size is not in predefined order, next line is for when both sizes are in the size order
+		if (indexA !== -1 && indexB !== -1) return indexA - indexB; // if negative, a comes before b
+		// If only one is in the order array, it comes first
+		if (indexA !== -1) return -1;
+		if (indexB !== -1) return 1;
+		// If neither are in the order array, sort alphabetically
+		return sizeA.localeCompare(sizeB);
+	}) : null;
 
 	return (
 		<div className="product-card-container">
@@ -50,17 +69,17 @@ export default function ProductCard({
 						<h2>{product.name}</h2>
 						<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
 
-						{variants.map((variant) => (
-							<button
-								key={variant.id}
-								onClick={() => onVariantSelect(variant)}
-								className={`variant-btn ${
-									selectedVariant?.id === variant.id ? "active" : ""
-								} ${cheapestSize?.id === variant.id ? "cheapest" : ""}`}
-							>
-								{variant.size}
-							</button>
-						))}
+					{sortedVariants && sortedVariants.map((variant) => (
+						<button
+							key={variant.id}
+							onClick={() => onVariantSelect(variant)}
+							className={`variant-btn ${
+								selectedVariant?.id === variant.id ? "active" : ""
+							} ${cheapestSize?.id === variant.id ? "cheapest" : ""}`}
+						>
+							{variant.size}
+						</button>
+					))}
 
 						<h3 className="modal-description">{product.description}</h3>
 						<div className="ingredients-block">
