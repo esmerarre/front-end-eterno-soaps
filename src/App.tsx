@@ -14,6 +14,7 @@ export interface Product {
   id: number;
   name: string;
   description: string;
+  ingredients: string[];
   categories: Category[]; // [] belongs to multiple categories
   variants: ProductVariant[];
 }
@@ -46,6 +47,12 @@ export default function App() {
   const [productVariants, setProductVariants] = useState<ProductVariant[] | null>(null); //reveiew default null state
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
 
+  // Handler that updates productId AND clears selectedVariant
+  const handleProductSelect = (id: number) => {
+    setProductId(id);
+    setSelectedVariant(null);  // Clear variant when switching products
+  };
+
   // Load all products once on page load
   useEffect(() => {
     const fetchProducts = async () => {
@@ -62,7 +69,7 @@ export default function App() {
   // When a product is selected, fetch its variants
   useEffect(() => {
     if (!productId) return;
-    const fetchProductVariants = async () => {
+    const fetchProductVariants = async (id: string) => {
       try {
         const response = await axios.get(`${BASE_URL}/products/${productId}/variants`);
         setProductVariants(response.data);
@@ -70,7 +77,9 @@ export default function App() {
         console.error("Error fetching product variants:", error);
       }
     };
-    fetchProductVariants();
+    if (productId) {
+    fetchProductVariants(productId.toString());
+    }
   }, [productId]);
 
   return (
@@ -80,7 +89,7 @@ export default function App() {
         <CustomerHome />
         <ProductPage 
           products={products} 
-          onProductSelect={setProductId}
+          onProductSelect={handleProductSelect}
           selectedProductId={productId}
           productVariants={productVariants}
           selectedVariant={selectedVariant}

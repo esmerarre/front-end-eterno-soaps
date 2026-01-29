@@ -52,3 +52,8 @@
 .close:focus {
   color: #e5e7eb;
 }
+
+.cheapest {
+  border: 7px solid rgb(0, 0, 0);
+  background-color: #fffacd;  /* Light yellow background */
+}
