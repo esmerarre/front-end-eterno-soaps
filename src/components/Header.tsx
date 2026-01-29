@@ -1,9 +1,25 @@
 import "./header.css";
 import eternologo from "../assets/eternologo.png";
+import React, { useState } from "react"
 import shoppingbag from "../assets/shopping-bag.png";
+import CartPage from "../pages/CartPage";
+import type { CartItem } from "../services/checkout";
 
-const Header = () => {
+const testItems: CartItem[] = [
+  { id: 1, name: "Stripe Test Soap", price: 10, quantity: 1 },
+  { id: 2, name: "Alovera Soap", price: 15, quantity: 2 },
+]
+
+const Header: React.FC = () => {
+    const [cartOpen, setCartOpen] = useState(false)
+    const handleCartClick = () => {
+        setCartOpen(true)
+  
+    
+  }
+    
     return (
+        <>
         <header className="header">
             <div className="header-container">
                  <div className="header-logo" >
@@ -22,7 +38,7 @@ const Header = () => {
                     <button className="nav-link">
                         Contact Us
                     </button>
-                    <button className="nav-link">
+                    <button onClick={handleCartClick} className="nav-link ">
                         <img
                         src={shoppingbag} 
                         alt="Shopping Bag Icon"
@@ -32,13 +48,14 @@ const Header = () => {
                 </nav>
             </div>
         </header>
+        {cartOpen && <CartPage items={testItems} onClose={() => setCartOpen(false)} />}
+        </>
 
     );
 
 };
-
-
 export default Header;
+
 //             <div key={soap.name} className="product-card">
 //               {/* Image */}
 //               <div className="product-image-placeholder">
