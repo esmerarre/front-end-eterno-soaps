@@ -1,7 +1,33 @@
 import "./ProductPage.css";
+import type { Product, ProductVariant } from "../App";
+import ProductList from "../components/ProductList";
 
-export default function ProductPage() {
-  // 🔹 Data + types can live here later
+interface ProductPageProps {
+  // Data + callbacks passed from App
+  products: Product[];
+  onProductSelect: (productId: number) => void;
+  selectedProductId: number | null;
+  productVariants: ProductVariant[] | null;
+  selectedVariant: ProductVariant | null;
+  onVariantSelect: (variant: ProductVariant) => void;
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+  onAddBag: () => void;
+}
+
+export default function ProductPage({
+  products,
+  onProductSelect,
+  selectedProductId,
+  productVariants,
+  selectedVariant,
+  onVariantSelect,
+  isModalOpen,
+  openModal,
+  closeModal,
+  onAddBag,
+}: ProductPageProps) {
 
   return (
     <section className="product-page">
@@ -9,38 +35,48 @@ export default function ProductPage() {
 
         <header className="product-header">
           <h2 className="product-title">
-            {/* Page heading */}
+            Our Handcrafted Soaps
           </h2>
         </header>
 
-        <div className="product-grid">
-          {/* Product cards go here */}
+        <div>
+          {/* ProductList renders the grid; ProductCard renders each tile */}
+          <ProductList
+            products={products}
+            selectedProductId={selectedProductId}
+            onProductSelect={onProductSelect}
+            productVariants={productVariants}
+            selectedVariant={selectedVariant}
+            onVariantSelect={onVariantSelect}
+            isModalOpen={isModalOpen}
+            openModal={openModal}
+            closeModal={closeModal}
+          />
         </div>
-
       </div>
     </section>
   );
 }
 
 
-// // import "./ProductPage.css";
+// import "./ProductPage.css";
 
-// // export default function ProductPage() {
-// //   return (
-// //     <main className="content">
-// //       <section className="product-section">
-// //         <h2>ALOEVERA SOAP</h2>
-// //         <p className="price">$10</p>
-// //         <p>
-// //           Infused with aloe vera, known for its soothing and moisturizing
-// //           properties, this soap helps calm dryness and irritation, leaving
-// //           skin soft, refreshed, and balanced. Ideal for daily use on all skin
-// //           types.
-// //         </p>
-// //       </section>
-// //     </main>
-// //   );
-// // }
+// export default function ProductPage() {
+//   return (
+//     <main className="content">
+//       <section className="product-section">
+//         <h2>ALOEVERA SOAP</h2>
+//         <p className="price">$10</p>
+//         <p>
+//           Infused with aloe vera, known for its soothing and moisturizing
+//           properties, this soap helps calm dryness and irritation, leaving
+//           skin soft, refreshed, and balanced. Ideal for daily use on all skin
+//           types.
+//         </p>
+//       </section>
+//     </main>
+//   );
+// }
 // import { soaps } from "../data/soaps";
 // import placeholder from "../assets/placeholder.png";
 // import "./ProductPage.css";
