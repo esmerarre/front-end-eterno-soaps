@@ -9,6 +9,7 @@ interface ProductProps {
 	variants: ProductVariant[] | null;
 	selectedVariant: ProductVariant | null;
 	onVariantSelect: (variant: ProductVariant) => void;
+	isModalOpen: boolean;
 	openModal: () => void;
 	closeModal: () => void;
 }
@@ -20,6 +21,7 @@ export default function ProductCard({
 	variants,
 	selectedVariant,
 	onVariantSelect,
+	isModalOpen,
 	openModal,
 	closeModal,
 }: ProductProps) {
@@ -60,16 +62,16 @@ export default function ProductCard({
 
 	return (
 		<div className="product-card-container">
-			<button onClick={() => { onSelect(); openModal(); defaultPrice(); onVariantSelect()}} className="product-card">
+			<button onClick={() => { onSelect(); openModal(); defaultPrice();}} className="product-card">
 				<img src= "cottonwood_large-mb.jpg" alt="soap product image" id="card-img"/>
 				<h3>{product.name}</h3>
 				<p>{product.description}</p>
 			</button>
 
-			{isSelected && variants && (
+		{isSelected && isModalOpen && variants && (
 				<div className="modal" onClick={closeModal}>
 					<div className="modal-content" onClick={(e) => e.stopPropagation()}>
-						<span className="close" onClick={closeModal}>&times;</span>
+						<button className="close" onClick={closeModal}>&times;</button>
 						<img src= "cottonwood_large-mb.jpg" alt="soap product image"/>
 						<h2>{product.name}</h2>
 						<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
@@ -88,7 +90,7 @@ export default function ProductCard({
 
 						<h3 className="modal-description">{product.description}</h3>
 						<div className="ingredients-block">
-							<h4> Ingredients: </h4>
+							<h3> Key Ingredients: </h3>
 							<p>{product.ingredients?.join(", ")}</p>
 						</div>
 					</div>

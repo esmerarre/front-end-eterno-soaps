@@ -11,6 +11,7 @@ interface ProductPageProps {
   productVariants: ProductVariant[] | null;
   selectedVariant: ProductVariant | null;
   onVariantSelect: (variant: ProductVariant) => void;
+  isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
   onAddBag: () => void;
@@ -23,6 +24,7 @@ export default function ProductPage({
   productVariants,
   selectedVariant,
   onVariantSelect,
+  isModalOpen,
   openModal,
   closeModal,
   onAddBag,
@@ -47,6 +49,7 @@ export default function ProductPage({
             productVariants={productVariants}
             selectedVariant={selectedVariant}
             onVariantSelect={onVariantSelect}
+            isModalOpen={isModalOpen}
             openModal={openModal}
             closeModal={closeModal}
           />

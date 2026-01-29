@@ -110,6 +110,7 @@ export default function App() {
           productVariants={productVariants}
           selectedVariant={selectedVariant}
           onVariantSelect={setSelectedVariant}
+          isModalOpen={isModalOpen}
           openModal={openModal}
           closeModal={closeModal}
           onAddBag={onAddBag}

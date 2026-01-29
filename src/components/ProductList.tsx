@@ -10,8 +10,9 @@ interface ProductListProps {
     productVariants: ProductVariant[] | null;
     selectedVariant: ProductVariant | null;
     onVariantSelect: (variant: ProductVariant) => void;
-    viewVariant: () => void; //void means the function does not return anything
-    closeVariant: () => void;
+    isModalOpen: boolean;
+    openModal: () => void;
+    closeModal: () => void;
 }
 
 const ProductList = ({
@@ -21,8 +22,7 @@ const ProductList = ({
     productVariants,
     selectedVariant,
     onVariantSelect,
-    viewVariant,
-    closeVariant,
+    isModalOpen,
     openModal,
     closeModal,
 }: ProductListProps) => {
@@ -37,8 +37,9 @@ const ProductList = ({
                     variants={selectedProductId === product.id ? productVariants : null}
                     selectedVariant={selectedVariant}
                     onVariantSelect={onVariantSelect}
-                    viewVariant={viewVariant}
-                    closeVariant={closeVariant}
+                    isModalOpen={isModalOpen}
+                    openModal={openModal}
+                    closeModal={closeModal}
                 />
             );
         });
