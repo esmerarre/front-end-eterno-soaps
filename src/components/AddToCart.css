@@ -1,0 +1,34 @@
+.add-to-cart-btn-container {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #6b6969;
+    width: fit-content;
+}
+
+.add-to-cart-btn-container:hover {
+    border: 1px solid #888;
+}
+
+.add-cart-btn {
+    width: 200px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #ccc;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-cart-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.add-to-cart-btn-container span {
+    font-size: 16px;
+    font-weight: bold;
+    justify-content: center;
+    background-color: none;
+}
