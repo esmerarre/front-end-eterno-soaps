@@ -40,7 +40,10 @@ export interface Category {
 
 
 // Base API URL for backend requests (Vite only exposes VITE_ prefixed vars)
-const BASE_URL = import.meta.env.VITE_APP_BACKEND_URL;
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+console.log("VITE_BACKEND_URL=", import.meta.env.VITE_BACKEND_URL);
+
+
 
 export default function App() {
   // Global app state (owned here, passed down to ProductPage)

@@ -5,12 +5,10 @@ export interface CartItem {
   price: number;
   quantity: number;
 }
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 
 export const createCheckoutSession = async (items: CartItem[]) => {
-  // backend URL from your .env
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
-  const response = await fetch(`${BACKEND_URL}/checkout`, {
+  const response = await fetch(`${BACKEND_URL}/api/checkout`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }), // must match your backend Pydantic model

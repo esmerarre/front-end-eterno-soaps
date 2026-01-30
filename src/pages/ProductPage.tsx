@@ -26,7 +26,7 @@ export default function ProductPage({
   isModalOpen,
   openModal,
   closeModal,
-  onAddBag,
+  // onAddBag,
 }: ProductPageProps) {
 
   return (

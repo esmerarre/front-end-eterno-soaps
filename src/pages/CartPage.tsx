@@ -1,6 +1,7 @@
 import React from "react";
 import "./CartPage.css";
 import type { CartItem } from "../services/checkout";
+import CheckoutButton from "../components/CheckoutButton";
 
 interface CartPageProps {
   items: CartItem[];
@@ -38,9 +39,8 @@ const CartPage: React.FC<CartPageProps> = ({ items, onClose }) => {
 
         <div className="cart-footer">
           <p className="subtotal">Subtotal: ${subtotal.toFixed(2)}</p>
-          <button className="checkout-btn" disabled={items.length === 0}>
-            Checkout
-          </button>
+          <CheckoutButton items={items}/>
+
         </div>
       </div>
     </>

@@ -19,7 +19,9 @@ interface ProductListProps {
     onSubtract?: () => void;
 }
 
+
 const ProductList = ({
+    
     products,
     selectedProductId,
     onProductSelect,
@@ -48,6 +50,7 @@ const ProductList = ({
 	// 	return 
 
 	// }
+    console.log("products prop:", products);
 
     const getProductList = (products: Product[]) => {
         return products.map((product) => {

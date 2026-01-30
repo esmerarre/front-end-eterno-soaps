@@ -22,9 +22,9 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ items }) => {
       setLoading(false)
     }
   }
-
+//add on line 27 diable button when items is empty
   return (
-    <button onClick={handleCheckout} disabled={loading}>
+    <button onClick={handleCheckout} className="checkout-btn" disabled={loading}>
       {loading ? "Processing..." : "Checkout"}
     </button>
   )
