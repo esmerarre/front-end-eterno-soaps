@@ -6,9 +6,10 @@ import CheckoutButton from "../components/CheckoutButton";
 interface CartPageProps {
   items: CartItem[];
   onClose: () => void;
+  onRemoveItem: (id: number) => void;
 }
 
-const CartPage: React.FC<CartPageProps> = ({ items, onClose }) => {
+const CartPage: React.FC<CartPageProps> = ({ items, onClose, onRemoveItem }) => {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
@@ -24,17 +25,34 @@ const CartPage: React.FC<CartPageProps> = ({ items, onClose }) => {
         {items.length === 0 ? (
           <p className="empty-cart">Your cart is empty</p>
         ) : (
+
+        
+          <>
+          <div className="cart-items-header">
+            <span className="header-action"></span>
+            <span className="header-product">Product</span>
+            <span className="header-quantity">Quantity</span>
+            <span className="header-total">Total</span>
+          
+           
+            
+          </div> 
+
           <ul className="cart-items">
             {items.map((item) => (
               <li key={item.id} className="cart-item">
-                <span>{item.name}</span>
-                <span>
-                  {item.quantity} × ${item.price.toFixed(2)}
+                <span className="item-action">
+                    <button className="delete-btn" onClick={() => onRemoveItem(item.id)}> x </button></span>
+                <span className="item-name">{item.name}</span>
+                <span className="item-quantity">
+                  {item.quantity}
                 </span>
-                <span>${(item.quantity * item.price).toFixed(2)}</span>
+                <span className="item-total">${(item.quantity * item.price).toFixed(2)}</span>
+                
               </li>
             ))}
           </ul>
+          </>
         )}
 
         <div className="cart-footer">

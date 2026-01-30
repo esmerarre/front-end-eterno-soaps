@@ -1,4 +1,4 @@
-import type { Product, ProductVariant } from "../App";
+import type { CartItem,Product, ProductVariant } from "../App";
 import QuantityUpdate from "./QuantityUpdate";
 import AddToCart from "./AddToCart";
 import "./Product.css";
@@ -14,6 +14,9 @@ interface ProductProps {
 	isModalOpen: boolean;
 	openModal: () => void;
 	closeModal: () => void;
+	onAddToCart: (item: CartItem) => void;
+	openCart: () => void;
+	
 }
 
 export default function ProductCard({
@@ -26,6 +29,8 @@ export default function ProductCard({
 	isModalOpen,
 	openModal,
 	closeModal,
+	onAddToCart,
+	openCart,
 }: ProductProps) {
 
 	const defaultPrice = () => {
@@ -34,6 +39,22 @@ export default function ProductCard({
 		const minPrice = Math.min(...prices);
 		return `$${minPrice}`;
 	}
+	const handleAddToCartClick = () => {
+		if (!selectedVariant) {
+			alert("Please select a size before adding to cart."); // simple popup
+			return;
+		}
+		
+		onAddToCart({
+			id: selectedVariant.id,
+			name: product.name,
+			price: selectedVariant.price,
+			quantity: 1,
+		});
+		openCart();   // open the cart immediately
+		closeModal(); // optional: close modal after adding
+};
+
 
 
 
@@ -100,7 +121,9 @@ export default function ProductCard({
 						</div>
 						<div className="quantity-add-cart-container">
 							<QuantityUpdate/>
-							<AddToCart/>
+							<AddToCart onClick={handleAddToCartClick}
+							
+							/>
 						</div>
 
 					</div>

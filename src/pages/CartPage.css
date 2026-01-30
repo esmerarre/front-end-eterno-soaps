@@ -19,13 +19,13 @@
 .cart-page {
   position: fixed;
   top: 0;
-  right: -100%; /* start hidden off screen */
+  right: -100%;
   width: 350px;
   height: 100%;
   background-color: #fff;
   border-left: 1px solid #ccc;
   padding: 20px;
-  z-index: 999;
+  z-index: 1000; /* raise above backdrop AND header */
   display: flex;
   flex-direction: column;
   animation: slideIn 0.3s forwards;
@@ -47,21 +47,6 @@
 h2 {
   margin-top: 0;
   margin-bottom: 1rem;
-}
-
-.cart-items {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
 }
 
 .empty-cart {
@@ -98,4 +83,52 @@ h2 {
 .checkout-btn:disabled {
   background: #ccc;
   cursor: not-allowed;
+}
+
+
+.cart-items-header span {
+  flex: 1;
+  text-align: center;
+}
+
+.header-product { flex: 2; text-align: left; }
+.header-quantity { flex: 1; }
+.header-total { flex: 1; }
+.header-action { flex: 1; }
+.cart-items-header,
+.cart-item {
+  display: grid;
+  grid-template-columns: 40px 1fr 60px 80px; /* delete | product | qty | total */
+  align-items: center;
+  gap: 10px;
+  padding: 0.5rem 0;
+}
+
+.cart-items-header {
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.cart-item {
+  border-bottom: 1px solid #eee;
+}
+
+.item-name {
+  display: block; /* make it take its own space */
+  max-width: 200px; /* or whatever width you want */
+  word-wrap: break-word; /* wrap long words */
+  white-space: normal; /* allow multiple lines */
+}
+
+.item-action {
+  text-align: center;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
 }

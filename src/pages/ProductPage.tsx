@@ -1,6 +1,8 @@
 import "./ProductPage.css";
-import type { Product, ProductVariant } from "../App";
+import type { CartItem, Product, ProductVariant } from "../App";
 import ProductList from "../components/ProductList";
+
+
 
 interface ProductPageProps {
   // Data + callbacks passed from App
@@ -14,6 +16,9 @@ interface ProductPageProps {
   openModal: () => void;
   closeModal: () => void;
   onAddBag: () => void;
+  onAddToCart: (item: CartItem) => void;
+  openCart: () => void;
+  
 }
 
 export default function ProductPage({
@@ -26,6 +31,10 @@ export default function ProductPage({
   isModalOpen,
   openModal,
   closeModal,
+  onAddToCart,
+  openCart,
+  
+  
   // onAddBag,
 }: ProductPageProps) {
 
@@ -51,6 +60,9 @@ export default function ProductPage({
             isModalOpen={isModalOpen}
             openModal={openModal}
             closeModal={closeModal}
+            onAddToCart={onAddToCart}
+            openCart={openCart}
+            
           />
         </div>
       </div>

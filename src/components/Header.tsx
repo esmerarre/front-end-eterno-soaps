@@ -1,22 +1,15 @@
 import "./header.css";
 import eternologo from "../assets/eternologo.png";
-import React, { useState } from "react"
+// import React, { useState } from "react"
 import shoppingbag from "../assets/shopping-bag.png";
-import CartPage from "../pages/CartPage";
-import type { CartItem } from "../services/checkout";
+// import CartPage from "../pages/CartPage";
 
-const testItems: CartItem[] = [
-  { id: 1, name: "Stripe Test Soap", price: 10, quantity: 1 },
-  { id: 2, name: "Alovera Soap", price: 15, quantity: 2 },
-]
-
-const Header: React.FC = () => {
-    const [cartOpen, setCartOpen] = useState(false)
-    const handleCartClick = () => {
-        setCartOpen(true)
-  
+interface HeaderProps {
+  onCartClick: () => void;
+}
+const Header: React.FC<HeaderProps> = ({ onCartClick }) => {
     
-  }
+ 
     
     return (
         <>
@@ -38,7 +31,7 @@ const Header: React.FC = () => {
                     <button className="nav-link">
                         Contact Us
                     </button>
-                    <button onClick={handleCartClick} className="nav-link ">
+                    <button onClick={onCartClick} className="nav-link ">
                         <img
                         src={shoppingbag} 
                         alt="Shopping Bag Icon"
@@ -48,7 +41,6 @@ const Header: React.FC = () => {
                 </nav>
             </div>
         </header>
-        {cartOpen && <CartPage items={testItems} onClose={() => setCartOpen(false)} />}
         </>
 
     );

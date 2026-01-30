@@ -1,5 +1,5 @@
 import "./ProductList.css";
-import type { Product, ProductVariant } from "../App";
+import type { CartItem, Product, ProductVariant } from "../App";
 import ProductCard from "./Product";
 // import {useState, useEffect} from "react";
 
@@ -17,6 +17,8 @@ interface ProductListProps {
     // quantity?: number;
     onAdd?: () => void;
     onSubtract?: () => void;
+    onAddToCart: (item: CartItem) => void;
+    openCart: () => void;
 }
 
 
@@ -31,6 +33,8 @@ const ProductList = ({
     isModalOpen,
     openModal,
     closeModal,
+    onAddToCart,
+    openCart,
 }: ProductListProps) => {
 
    
@@ -67,6 +71,10 @@ const ProductList = ({
                     isModalOpen={isModalOpen}
                     openModal={openModal}
                     closeModal={closeModal}
+                    onAddToCart={onAddToCart}
+                    openCart={openCart}
+                    
+    
                 />
             );
         });
