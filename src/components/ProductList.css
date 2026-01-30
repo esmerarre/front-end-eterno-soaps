@@ -1,6 +1,6 @@
 .product-container ul {
   display: grid; /* very important */
-  grid-template-columns: repeat(4, 200px);
+  grid-template-columns: repeat(4, 1fr);
   /* grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); */
   gap: 2rem;
 }
