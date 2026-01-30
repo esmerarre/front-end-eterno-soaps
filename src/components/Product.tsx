@@ -1,5 +1,6 @@
 import type { Product, ProductVariant } from "../App";
 import QuantityUpdate from "./QuantityUpdate";
+import AddToCart from "./AddToCart";
 import "./Product.css";
 // import { useState } from "react";
 
@@ -97,7 +98,10 @@ export default function ProductCard({
 							<h3> Key Ingredients: </h3>
 							<p>{product.ingredients?.join(", ")}</p>
 						</div>
-						<QuantityUpdate/>
+						<div className="quantity-add-cart-container">
+							<QuantityUpdate/>
+							<AddToCart/>
+						</div>
 
 					</div>
 				</div>

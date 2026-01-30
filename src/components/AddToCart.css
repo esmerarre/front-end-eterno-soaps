@@ -1,18 +1,16 @@
-.qty-btn-container {
-    display: flex;
-    align-items: center;
+.add-to-cart-btn-container {
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid #6b6969;
     width: fit-content;
 }
 
-.qty-btn-container:hover {
+.add-to-cart-btn-container:hover {
     border: 1px solid #888;
 }
 
-.qty-btn-container button {
-    width: 30px;
+.add-cart-btn {
+    width: 200px;
     height: 30px;
     display: flex;
     align-items: center;
@@ -24,16 +22,13 @@
     transition: all 0.3s ease;
 }
 
-.qty-btn-container button:hover {
+.add-cart-btn:hover {
     background-color: #f0f0f0;
 }
 
-.qty-btn-container p {
-    width: 20px;
-    display: flex;
-    align-items: center;
+.add-to-cart-btn-container span {
+    font-size: 16px;
+    font-weight: bold;
     justify-content: center;
-    background-color: #ccc;
-    border-left: 1px solid #ccc;    
-    border-right: 1px solid #ccc;
+    background-color: none;
 }
