@@ -31,9 +31,10 @@ const ProductList = ({
     closeModal,
 }: ProductListProps) => {
 
-    // const 
+   
 
-    // const [quantity, setQuantity] = useState(1);
+    
+    //
 
     // const onSubtract = () => {
 	// 	// const quantity = 1

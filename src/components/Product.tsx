@@ -1,4 +1,5 @@
 import type { Product, ProductVariant } from "../App";
+import QuantityUpdate from "./QuantityUpdate";
 import "./Product.css";
 // import { useState } from "react";
 
@@ -96,9 +97,7 @@ export default function ProductCard({
 							<h3> Key Ingredients: </h3>
 							<p>{product.ingredients?.join(", ")}</p>
 						</div>
-						{/* <div className="quantity-input-container">
-							<button className="minus" onClick={onSubtract()} >-</button>
-						</div> */}
+						<QuantityUpdate/>
 
 					</div>
 				</div>
