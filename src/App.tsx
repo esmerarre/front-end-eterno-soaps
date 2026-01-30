@@ -10,7 +10,7 @@ import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 import './App.css';
 import { use, useEffect, useState } from 'react';
-import axios from 'axios'
+import axios from "axios";
 
 export interface Product {
   id: number;
@@ -42,7 +42,7 @@ export interface Category {
 // Base API URL for backend requests (Vite only exposes VITE_ prefixed vars)
 const BASE_URL = import.meta.env.VITE_APP_BACKEND_URL;
 
-export default function App() {
+function App() {
   // Global app state (owned here, passed down to ProductPage)
   const [products, setProducts] = useState<Product[]>([]);
   const [productId, setProductId] = useState<number | null>(null);
@@ -136,6 +136,6 @@ export default function App() {
       </footer>
     </div>
   );
-}
+};
 
 export default App;
