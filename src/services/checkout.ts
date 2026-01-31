@@ -1,24 +1,34 @@
-// services/checkout.ts
-export interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 
-export const createCheckoutSession = async (items: CartItem[]) => {
+// services/checkout.ts
+export interface CheckoutCartItem {
+  id: number
+  name: string
+  price: number
+  quantity: number
+}
+
+const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL || "http://localhost:8000"
+
+export const createCheckoutSession = async (
+  items: CheckoutCartItem[]
+) => {
+  // Save cart ONLY (variants come from backend later)
+  localStorage.setItem("checkoutCart", JSON.stringify(items))
+
   const response = await fetch(`${BACKEND_URL}/api/checkout`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ items }), // must match your backend Pydantic model
-  });
+    body: JSON.stringify({ items }),
+  })
 
   if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Failed to create checkout session: ${text}`);
+    const text = await response.text()
+    throw new Error(text)
   }
 
-  const data = await response.json();
-  return data.url; // URL to redirect to Stripe
-};
+  const data = await response.json()
+  return data.url
+}
+
+

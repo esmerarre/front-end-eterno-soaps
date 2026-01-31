@@ -43,14 +43,8 @@ export default function ProductCard({
 		const minPrice = Math.min(...prices);
 		return `$${minPrice}`;
 	}
-	const [quantity, setQuantity] = useState(1);
-	const handleIncrement = () => {
-		setQuantity((prev) => prev + 1);
-};
+	const [selectedQuantity, setSelectedQuantity] = useState(1);
 
-	const handleDecrement = () => {
-		setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-};
 	const handleAddToCartClick = () => {
 		if (!selectedVariant) {
 			alert("Please select a size before adding to cart."); // simple popup
@@ -59,9 +53,10 @@ export default function ProductCard({
 		
 		onAddToCart({
 			id: selectedVariant.id,
+			productId: product.id,
 			name: product.name,
 			price: selectedVariant.price,
-			quantity: quantity,
+			quantity: selectedQuantity,
 		})
 		openCart();   // open the cart immediately
 		closeModal(); // optional: close modal after adding
@@ -133,9 +128,10 @@ export default function ProductCard({
 						</div>
 						<div className="quantity-add-cart-container">
 							<QuantityUpdate
-							count={quantity} 
-							onIncrement={handleIncrement}
-							onDecrement={handleDecrement}/>
+							minValue={1}
+							maxValue={selectedVariant?.stockQuantity ?? 30} // limit by backend stock
+							onChange={(qty) => setSelectedQuantity(qty)}
+							/>
 							<AddToCart onClick={handleAddToCartClick}
 							
 							/>
