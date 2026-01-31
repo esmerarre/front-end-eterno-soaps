@@ -1,8 +1,7 @@
 import "./ProductPage.css";
 import type { CartItem, Product, ProductVariant } from "../App";
 import ProductList from "../components/ProductList";
-
-
+import MultiFilter from "../components/MultiFilter";
 
 interface ProductPageProps {
   // Data + callbacks passed from App
@@ -18,8 +17,6 @@ interface ProductPageProps {
   onAddBag: () => void;
   onAddToCart: (item: CartItem) => void;
   openCart: () => void;
-
-  
 }
 
 export default function ProductPage({
@@ -34,22 +31,20 @@ export default function ProductPage({
   closeModal,
   onAddToCart,
   openCart,
-
-  
-  
   // onAddBag,
 }: ProductPageProps) {
 
   return (
     <section className="product-page">
       <div className="product-container">
-
         <header className="product-header">
           <h2 className="product-title">
             Our Handcrafted Soaps
           </h2>
         </header>
-
+        <div className="filter-container">
+          <MultiFilter />
+        </div>
         <div>
           {/* ProductList renders the grid; ProductCard renders each tile */}
           <ProductList

@@ -27,6 +27,7 @@ export interface ProductVariant {
   productId: number; //product_id in backend
   size: string;
   shape: string;
+  img_url: string;
   price: number;
   stockQuantity: number; //stock_quantity in backend
   product: Product; // belongs to one product
