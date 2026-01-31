@@ -5,7 +5,7 @@ import Header from './components/Header';
 import CartPage from "./pages/CartPage";
 import CustomerHome from './pages/CustomerHome';
 import ProductPage from './pages/ProductPage';
-import AboutUs from './pages/AboutUs';
+// import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
@@ -126,7 +126,7 @@ const closeCart = () => setCartOpen(false);
   // When a product is selected, fetch its variants
   useEffect(() => {
     if (!productId) return;
-    const fetchProductVariants = async (id: string) => {
+    const fetchProductVariants = async (productId: string) => {
       try {
         const response = await axios.get(`${BASE_URL}/products/${productId}/variants`);
         setProductVariants(response.data);
@@ -153,7 +153,7 @@ const closeCart = () => setCartOpen(false);
       
       <main className="main-content">
   
-        <CustomerHome />
+        {/* <CustomerHome /> */}
         <ProductPage 
           products={products} 
           onProductSelect={handleProductSelect}
@@ -169,7 +169,7 @@ const closeCart = () => setCartOpen(false);
           openCart={openCart}
        
         />
-        <AboutUs />
+        {/* <AboutUs /> */}
         <ContactUs />
         
       </main>
