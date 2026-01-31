@@ -69,11 +69,10 @@ export default function App() {
     setProductId(id);
     setSelectedVariant(null);  // Clear variant when switching products
   };
+
   const removeFromCart = (id: number) => {
   setCartItems(prev => prev.filter(item => item.id !== id));
 };
-
-
 
 
   // Modal handlers
@@ -167,6 +166,7 @@ const closeCart = () => setCartOpen(false);
           onAddBag={onAddBag}
           onAddToCart={addToCart}
           openCart={openCart}
+       
         />
         <AboutUs />
         <ContactUs />

@@ -19,6 +19,7 @@ interface ProductListProps {
     onSubtract?: () => void;
     onAddToCart: (item: CartItem) => void;
     openCart: () => void;
+
 }
 
 
@@ -35,6 +36,7 @@ const ProductList = ({
     closeModal,
     onAddToCart,
     openCart,
+
 }: ProductListProps) => {
 
    
@@ -73,6 +75,7 @@ const ProductList = ({
                     closeModal={closeModal}
                     onAddToCart={onAddToCart}
                     openCart={openCart}
+                   
                     
     
                 />

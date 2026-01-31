@@ -2,7 +2,7 @@ import type { CartItem,Product, ProductVariant } from "../App";
 import QuantityUpdate from "./QuantityUpdate";
 import AddToCart from "./AddToCart";
 import "./Product.css";
-// import { useState } from "react";
+import { useState } from "react";
 
 interface ProductProps {
 	product: Product;
@@ -16,10 +16,14 @@ interface ProductProps {
 	closeModal: () => void;
 	onAddToCart: (item: CartItem) => void;
 	openCart: () => void;
+
 	
 }
 
+
+
 export default function ProductCard({
+	
 	product,
 	isSelected,
 	onSelect,
@@ -39,6 +43,14 @@ export default function ProductCard({
 		const minPrice = Math.min(...prices);
 		return `$${minPrice}`;
 	}
+	const [quantity, setQuantity] = useState(1);
+	const handleIncrement = () => {
+		setQuantity((prev) => prev + 1);
+};
+
+	const handleDecrement = () => {
+		setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+};
 	const handleAddToCartClick = () => {
 		if (!selectedVariant) {
 			alert("Please select a size before adding to cart."); // simple popup
@@ -49,8 +61,8 @@ export default function ProductCard({
 			id: selectedVariant.id,
 			name: product.name,
 			price: selectedVariant.price,
-			quantity: 1,
-		});
+			quantity: quantity,
+		})
 		openCart();   // open the cart immediately
 		closeModal(); // optional: close modal after adding
 };
@@ -120,7 +132,10 @@ export default function ProductCard({
 							<p>{product.ingredients?.join(", ")}</p>
 						</div>
 						<div className="quantity-add-cart-container">
-							<QuantityUpdate/>
+							<QuantityUpdate
+							count={quantity} 
+							onIncrement={handleIncrement}
+							onDecrement={handleDecrement}/>
 							<AddToCart onClick={handleAddToCartClick}
 							
 							/>

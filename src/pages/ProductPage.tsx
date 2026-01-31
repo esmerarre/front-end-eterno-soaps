@@ -18,6 +18,7 @@ interface ProductPageProps {
   onAddBag: () => void;
   onAddToCart: (item: CartItem) => void;
   openCart: () => void;
+
   
 }
 
@@ -33,6 +34,7 @@ export default function ProductPage({
   closeModal,
   onAddToCart,
   openCart,
+
   
   
   // onAddBag,
@@ -62,6 +64,7 @@ export default function ProductPage({
             closeModal={closeModal}
             onAddToCart={onAddToCart}
             openCart={openCart}
+    
             
           />
         </div>
