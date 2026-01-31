@@ -1,0 +1,46 @@
+.success-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 5;
+}
+
+.success-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 3rem 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  z-index: 1001;
+  width: 90%;
+  max-width: 420px;
+
+}
+.success-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* Continue shopping */
+.continue-shopping-btn {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  border: none;
+  background: #000;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.continue-shopping-btn:hover {
+  opacity: 0.9;
+}

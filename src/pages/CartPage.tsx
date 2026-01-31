@@ -1,6 +1,6 @@
 import React from "react";
 import "./CartPage.css";
-import type { CartItem } from "../services/checkout";
+import type { CartItem } from "../App";
 import CheckoutButton from "../components/CheckoutButton";
 
 interface CartPageProps {

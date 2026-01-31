@@ -1,6 +1,7 @@
 // frontend/src/components/CheckoutButton.tsx
 import React, { useState } from "react"
-import { createCheckoutSession, type CartItem } from "../services/checkout"
+import { createCheckoutSession} from "../services/checkout"
+import type { CartItem } from "../App"
 
 interface CheckoutButtonProps {
   items: CartItem[]
