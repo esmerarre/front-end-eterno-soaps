@@ -55,12 +55,9 @@ export interface Category {
   products: ProductSummary[];
 }
 
-
 // Base API URL for backend requests (Vite only exposes VITE_ prefixed vars)
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 console.log("VITE_BACKEND_URL=", import.meta.env.VITE_BACKEND_URL);
-
-
 
 export default function App() {
   // Global app state (owned here, passed down to ProductPage)
@@ -81,16 +78,9 @@ export default function App() {
     setSelectedVariant(null);  // Clear variant when switching products
   };
 
-  //// REVIEW NOT USED YET, MAY NOT USE ////
-  const handleCategorySelect = (id: number | null) => {
-    setCategoryId(id);
-  }
-  ////////////////////////////////////////////
-
   const removeFromCart = (id: number) => {
   setCartItems(prev => prev.filter(item => item.id !== id));
 };
-
 
   // Modal handlers
   const openModal = () => {

@@ -51,7 +51,6 @@ export default function ProductPage({
         <div className="filter-container">
           <ProductListFilter 
             onCategorySelect={onCategorySelect}
-            categoryProducts={categoryProducts}
             categories={categories}
           />
         </div>
@@ -59,7 +58,6 @@ export default function ProductPage({
           {/* ProductList renders the grid; ProductCard renders each tile */}
           <ProductList
             categoryProducts={categoryProducts}
-            // onCategorySelect={onCategorySelect}
             products={products}
             selectedProductId={selectedProductId}
             onProductSelect={onProductSelect}
@@ -71,8 +69,6 @@ export default function ProductPage({
             closeModal={closeModal}
             onAddToCart={onAddToCart}
             openCart={openCart}
-    
-            
           />
         </div>
       </div>

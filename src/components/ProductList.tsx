@@ -20,7 +20,6 @@ interface ProductListProps {
     onAddToCart: (item: CartItem) => void;
     openCart: () => void;
     categoryProducts?: ProductSummary[];
-    onCategorySelect?: (categoryId: number | null) => void;
 }
 
 const ProductList = ({
@@ -36,10 +35,7 @@ const ProductList = ({
     onAddToCart,
     openCart,
     categoryProducts,
-    // onCategorySelect,
 }: ProductListProps) => {
-
-    // Function to render list of category products INSERT HERE. line  <ul>{getProductList(products)} </ul> should be either products or categoryProducts input //
     
     const productsToRender = categoryProducts && categoryProducts.length > 0 ? categoryProducts : products;
 

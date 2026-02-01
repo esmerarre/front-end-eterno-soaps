@@ -1,17 +1,13 @@
 // import {useEffect, useState} from "react";
 import "./ProductListFilter.css";
 // import type { Category } from "../App";
-import type { ProductSummary } from "../App";
 
 interface FilterProps {
     onCategorySelect: (categoryId: number | null) => void;
-    // categoryProducts: ProductSummary[];
     categories?: { id: number; name: string }[];
     }
 
-
-
-export default function ProductListFilter({onCategorySelect, /*categoryProducts,*/ categories}: FilterProps) {
+export default function ProductListFilter({onCategorySelect, categories}: FilterProps) {
 
     return (
         <div className="filter-container">
@@ -28,10 +24,6 @@ export default function ProductListFilter({onCategorySelect, /*categoryProducts,
                     </option>
                 ))}
             </select>
-            {/* <button 
-                className="filter-btn" 
-                onClick={() => onCategorySelect(null)}>All Products</button>
-             */}
         </div>
     )
 
