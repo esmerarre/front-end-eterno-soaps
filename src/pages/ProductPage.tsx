@@ -1,8 +1,7 @@
 import "./ProductPage.css";
-import type { CartItem, Product, ProductVariant } from "../App";
+import type { CartItem, Product, ProductSummary, ProductVariant } from "../App";
 import ProductList from "../components/ProductList";
-
-
+import ProductListFilter from "../components/ProductListFilter";
 
 interface ProductPageProps {
   // Data + callbacks passed from App
@@ -15,11 +14,11 @@ interface ProductPageProps {
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
-  onAddBag: () => void;
   onAddToCart: (item: CartItem) => void;
   openCart: () => void;
-
-  
+  onCategorySelect: (categoryId: number | null) => void;
+  categoryProducts: ProductSummary[] | undefined;
+  categories?: { id: number; name: string }[];
 }
 
 export default function ProductPage({
@@ -34,25 +33,29 @@ export default function ProductPage({
   closeModal,
   onAddToCart,
   openCart,
-
-  
-  
-  // onAddBag,
+  onCategorySelect,
+  categoryProducts,
+  categories,
 }: ProductPageProps) {
 
   return (
     <section className="product-page">
       <div className="product-container">
-
         <header className="product-header">
           <h2 className="product-title">
             Our Handcrafted Soaps
           </h2>
         </header>
-
+        <div className="filter-container">
+          <ProductListFilter 
+            onCategorySelect={onCategorySelect}
+            categories={categories}
+          />
+        </div>
         <div>
           {/* ProductList renders the grid; ProductCard renders each tile */}
           <ProductList
+            categoryProducts={categoryProducts}
             products={products}
             selectedProductId={selectedProductId}
             onProductSelect={onProductSelect}
@@ -64,8 +67,6 @@ export default function ProductPage({
             closeModal={closeModal}
             onAddToCart={onAddToCart}
             openCart={openCart}
-    
-            
           />
         </div>
       </div>

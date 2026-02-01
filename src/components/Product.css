@@ -53,10 +53,7 @@
   color: #e5e7eb;
 }
 
-.active {
-  border: 3px solid rgb(28, 33, 34);
-  background-color: white;
-}
+
 
 #card-img {
   width: 95%;
@@ -72,3 +69,26 @@
     align-items: center;
 }
 
+.variant-buttons-container button {
+    width: 100px;
+    height: 30px;
+    margin: 5px;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #ccc;
+    overflow: hidden;
+    border: 1px solid #6b6969;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.variant-buttons-container button:hover {
+    background-color: #f0f0f0;
+}
+
+.variant-buttons-container button.active {
+  border: 2px solid rgb(28, 33, 34);
+  background-color: #f0f0f0;
+}

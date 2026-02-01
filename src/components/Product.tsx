@@ -1,11 +1,11 @@
-import type { CartItem,Product, ProductVariant } from "../App";
+import type { CartItem, Product, ProductSummary, ProductVariant } from "../App";
 import QuantityUpdate from "./QuantityUpdate";
 import AddToCart from "./AddToCart";
 import "./Product.css";
 import { useState } from "react";
 
 interface ProductProps {
-	product: Product;
+	product: Product | ProductSummary;
 	isSelected: boolean;
 	onSelect: () => void;
 	variants: ProductVariant[] | null;
@@ -19,8 +19,6 @@ interface ProductProps {
 
 	
 }
-
-
 
 export default function ProductCard({
 	
@@ -61,9 +59,6 @@ export default function ProductCard({
 		openCart();   // open the cart immediately
 		closeModal(); // optional: close modal after adding
 };
-
-
-
 
 	// Sort variants by size (Small, Medium, Large, etc.)
 	const sizeOrder = ["small", "medium", "large"];
@@ -109,6 +104,8 @@ export default function ProductCard({
 						<h2>{product.name}</h2>
 						<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
 
+
+					<div className="variant-buttons-container">
 					{sortedVariants && sortedVariants.map((variant) => (
 						<button
 							key={variant.id}
@@ -120,6 +117,7 @@ export default function ProductCard({
 							{variant.size}
 						</button>
 					))}
+					</div>
 
 						<h3 className="modal-description">{product.description}</h3>
 						<div className="ingredients-block">
