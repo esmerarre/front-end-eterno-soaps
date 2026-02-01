@@ -30,8 +30,16 @@ export interface ProductVariant {
   img_url: string;
   price: number;
   stockQuantity: number; //stock_quantity in backend
-  product: Product; // belongs to one product
+  product: Product[]; // belongs to one product
 }
+export interface ProductSummary {
+  id: number;
+  name: string;
+  description: string;
+  ingredients: string[];
+  variants: ProductVariant[];
+}
+
 export interface CartItem {
   id: number;            // variant id
   productId: number;
@@ -44,7 +52,7 @@ export interface Category {
   id: number;
   name: string;
   description: string;
-  products: Product[];
+  products: ProductSummary[];
 }
 
 
@@ -63,14 +71,21 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
-
-
+  const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [categoryProducts, setCategoryProducts] = useState<ProductSummary[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   // Handler that updates productId AND clears selectedVariant
   const handleProductSelect = (id: number) => {
     setProductId(id);
     setSelectedVariant(null);  // Clear variant when switching products
   };
+
+  //// REVIEW NOT USED YET, MAY NOT USE ////
+  const handleCategorySelect = (id: number | null) => {
+    setCategoryId(id);
+  }
+  ////////////////////////////////////////////
 
   const removeFromCart = (id: number) => {
   setCartItems(prev => prev.filter(item => item.id !== id));
@@ -124,6 +139,19 @@ const closeCart = () => setCartOpen(false);
     fetchProducts();
   }, []);
 
+  // Load all categories once on page load
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/categories`);
+        setCategories(response.data);
+      } catch (error) { 
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   // When a product is selected, fetch its variants
   useEffect(() => {
     if (!productId) return;
@@ -139,6 +167,28 @@ const closeCart = () => setCartOpen(false);
     fetchProductVariants(productId.toString());
     }
   }, [productId]);
+
+  // When a category is selected, fetch its products
+  useEffect(() => {
+    if (categoryId === null) {
+      setCategoryProducts([]);
+      return;
+    }
+
+    const fetchCategoryProducts = async (categoryId: string) => {
+      try {
+        const response = await axios.get(`${BASE_URL}/categories/${categoryId}`);
+        const data = response.data;
+        const products = Array.isArray(data) ? data : data?.products;
+        setCategoryProducts(products ?? []);
+      } catch (error) {
+        console.error("Error fetching category products:", error);
+      }
+    };
+
+    fetchCategoryProducts(categoryId.toString());
+  }, [categoryId]);
+
 
   return (
     <div className="app">
@@ -168,7 +218,9 @@ const closeCart = () => setCartOpen(false);
           onAddBag={onAddBag}
           onAddToCart={addToCart}
           openCart={openCart}
-       
+          onCategorySelect={setCategoryId}
+          categoryProducts={categoryProducts}
+          categories={categories}
         />
         {/* <AboutUs /> */}
         <ContactUs />

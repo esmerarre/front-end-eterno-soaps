@@ -1,7 +1,7 @@
 import "./ProductPage.css";
-import type { CartItem, Product, ProductVariant } from "../App";
+import type { CartItem, Product, ProductSummary, ProductVariant } from "../App";
 import ProductList from "../components/ProductList";
-import MultiFilter from "../components/MultiFilter";
+import ProductListFilter from "../components/ProductListFilter";
 
 interface ProductPageProps {
   // Data + callbacks passed from App
@@ -14,9 +14,12 @@ interface ProductPageProps {
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
-  onAddBag: () => void;
+  // onAddBag: () => void;
   onAddToCart: (item: CartItem) => void;
   openCart: () => void;
+  onCategorySelect: (categoryId: number | null) => void;
+  categoryProducts: ProductSummary[];
+  categories?: { id: number; name: string }[];
 }
 
 export default function ProductPage({
@@ -31,6 +34,9 @@ export default function ProductPage({
   closeModal,
   onAddToCart,
   openCart,
+  onCategorySelect,
+  categoryProducts,
+  categories,
   // onAddBag,
 }: ProductPageProps) {
 
@@ -43,11 +49,17 @@ export default function ProductPage({
           </h2>
         </header>
         <div className="filter-container">
-          <MultiFilter />
+          <ProductListFilter 
+            onCategorySelect={onCategorySelect}
+            categoryProducts={categoryProducts}
+            categories={categories}
+          />
         </div>
         <div>
           {/* ProductList renders the grid; ProductCard renders each tile */}
           <ProductList
+            categoryProducts={categoryProducts}
+            // onCategorySelect={onCategorySelect}
             products={products}
             selectedProductId={selectedProductId}
             onProductSelect={onProductSelect}

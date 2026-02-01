@@ -1,11 +1,11 @@
-import type { CartItem,Product, ProductVariant } from "../App";
+import type { CartItem, Product, ProductSummary, ProductVariant } from "../App";
 import QuantityUpdate from "./QuantityUpdate";
 import AddToCart from "./AddToCart";
 import "./Product.css";
 import { useState } from "react";
 
 interface ProductProps {
-	product: Product;
+	product: Product | ProductSummary;
 	isSelected: boolean;
 	onSelect: () => void;
 	variants: ProductVariant[] | null;
@@ -19,8 +19,6 @@ interface ProductProps {
 
 	
 }
-
-
 
 export default function ProductCard({
 	
@@ -61,9 +59,6 @@ export default function ProductCard({
 		openCart();   // open the cart immediately
 		closeModal(); // optional: close modal after adding
 };
-
-
-
 
 	// Sort variants by size (Small, Medium, Large, etc.)
 	const sizeOrder = ["small", "medium", "large"];

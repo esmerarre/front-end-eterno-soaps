@@ -1,5 +1,5 @@
 import "./ProductList.css";
-import type { CartItem, Product, ProductVariant } from "../App";
+import type { CartItem, Product, ProductSummary, ProductVariant } from "../App";
 import ProductCard from "./Product";
 // import {useState, useEffect} from "react";
 
@@ -19,12 +19,11 @@ interface ProductListProps {
     onSubtract?: () => void;
     onAddToCart: (item: CartItem) => void;
     openCart: () => void;
-
+    categoryProducts?: ProductSummary[];
+    onCategorySelect?: (categoryId: number | null) => void;
 }
 
-
 const ProductList = ({
-    
     products,
     selectedProductId,
     onProductSelect,
@@ -36,30 +35,17 @@ const ProductList = ({
     closeModal,
     onAddToCart,
     openCart,
-
+    categoryProducts,
+    // onCategorySelect,
 }: ProductListProps) => {
 
-   
-
+    // Function to render list of category products INSERT HERE. line  <ul>{getProductList(products)} </ul> should be either products or categoryProducts input //
     
-    //
+    const productsToRender = categoryProducts && categoryProducts.length > 0 ? categoryProducts : products;
 
-    // const onSubtract = () => {
-	// 	// const quantity = 1
-	// 	// const min = 1;
-	// 	// const max = 30;
-	// 	// if 
-
-	// 	return 
-	// }
-
-	// const onAdd = () => {
-	// 	return 
-
-	// }
     console.log("products prop:", products);
 
-    const getProductList = (products: Product[]) => {
+    const getProductList = (products: Product[] | ProductSummary[]) => {
         return products.map((product) => {
             return (
                 <ProductCard
@@ -75,16 +61,13 @@ const ProductList = ({
                     closeModal={closeModal}
                     onAddToCart={onAddToCart}
                     openCart={openCart}
-                   
-                    
-    
                 />
             );
         });
     };
     return (
         <div className="product-container">
-            <ul>{getProductList(products)} </ul>
+            <ul>{getProductList(productsToRender)} </ul>
         </div>
     );
 };
