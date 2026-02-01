@@ -14,11 +14,10 @@ interface ProductPageProps {
   isModalOpen: boolean;
   openModal: () => void;
   closeModal: () => void;
-  // onAddBag: () => void;
   onAddToCart: (item: CartItem) => void;
   openCart: () => void;
   onCategorySelect: (categoryId: number | null) => void;
-  categoryProducts: ProductSummary[];
+  categoryProducts: ProductSummary[] | undefined;
   categories?: { id: number; name: string }[];
 }
 
@@ -37,7 +36,6 @@ export default function ProductPage({
   onCategorySelect,
   categoryProducts,
   categories,
-  // onAddBag,
 }: ProductPageProps) {
 
   return (

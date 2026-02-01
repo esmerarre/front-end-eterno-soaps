@@ -111,11 +111,6 @@ const addToCart = (item: CartItem) => {
 const openCart = () => setCartOpen(true);
 const closeCart = () => setCartOpen(false);
 
-  const onAddBag = () => {
-    closeModal();
-    // decrease stock quantity logic to be added
-  };
-
   // Load all products once on page load
   useEffect(() => {
     const fetchProducts = async () => {
@@ -205,7 +200,6 @@ const closeCart = () => setCartOpen(false);
           isModalOpen={isModalOpen}
           openModal={openModal}
           closeModal={closeModal}
-          onAddBag={onAddBag}
           onAddToCart={addToCart}
           openCart={openCart}
           onCategorySelect={setCategoryId}
