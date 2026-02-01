@@ -37,9 +37,11 @@ const ProductList = ({
     categoryProducts,
 }: ProductListProps) => {
     
-    const productsToRender = categoryProducts && categoryProducts.length > 0 ? categoryProducts : products;
+    // Determine which products to display
+    const productsToRender = categoryProducts !== undefined ? categoryProducts : products;
 
     console.log("products prop:", products);
+    console.log("categoryProducts prop:", categoryProducts);
 
     const getProductList = (products: Product[] | ProductSummary[]) => {
         return products.map((product) => {
@@ -61,9 +63,14 @@ const ProductList = ({
             );
         });
     };
+    
     return (
         <div className="product-container">
-            <ul>{getProductList(productsToRender)} </ul>
+            {productsToRender.length === 0 ? (
+                <p className="no-products">No products found in this category.</p>
+            ) : (
+                <ul>{getProductList(productsToRender)}</ul>
+            )}
         </div>
     );
 };

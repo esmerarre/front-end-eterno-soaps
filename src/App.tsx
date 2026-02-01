@@ -69,7 +69,7 @@ export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [categoryId, setCategoryId] = useState<number | null>(null);
-  const [categoryProducts, setCategoryProducts] = useState<ProductSummary[]>([]);
+  const [categoryProducts, setCategoryProducts] = useState<ProductSummary[] | undefined>(undefined);
   const [categories, setCategories] = useState<Category[]>([]);
 
   // Handler that updates productId AND clears selectedVariant
@@ -161,7 +161,7 @@ const closeCart = () => setCartOpen(false);
   // When a category is selected, fetch its products
   useEffect(() => {
     if (categoryId === null) {
-      setCategoryProducts([]);
+      setCategoryProducts(undefined);
       return;
     }
 
