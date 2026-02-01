@@ -104,6 +104,8 @@ export default function ProductCard({
 						<h2>{product.name}</h2>
 						<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
 
+
+					<div className="variant-buttons-container">
 					{sortedVariants && sortedVariants.map((variant) => (
 						<button
 							key={variant.id}
@@ -115,6 +117,7 @@ export default function ProductCard({
 							{variant.size}
 						</button>
 					))}
+					</div>
 
 						<h3 className="modal-description">{product.description}</h3>
 						<div className="ingredients-block">
