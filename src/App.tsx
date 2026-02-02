@@ -13,6 +13,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import AdminSignIn from "./components/AdminSignIn";
 
 export interface Product {
   id: number;
@@ -56,6 +57,11 @@ export interface Category {
   products: ProductSummary[];
 }
 
+export interface Admin {
+  id: number;
+  username: string;
+}
+
 // Base API URL for backend requests (Vite only exposes VITE_ prefixed vars)
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 console.log("VITE_BACKEND_URL=", import.meta.env.VITE_BACKEND_URL);
@@ -73,6 +79,8 @@ export default function App() {
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const [categoryProducts, setCategoryProducts] = useState<ProductSummary[] | undefined>(undefined);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [admins, setAdmins] = useState<Admin[]>([]);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
   // Handler that updates productId AND clears selectedVariant
   const handleProductSelect = (id: number) => {
@@ -103,6 +111,11 @@ export default function App() {
   const closeAdminModal = () => {
     setIsAdminModalOpen(false);
   };
+
+  const displayAdminDashboard = () => {
+    setIsAdminAuthenticated(true);
+    closeAdminModal();
+  }
 
 const addToCart = (item: CartItem) => {
   setCartItems((prev) => {
@@ -148,6 +161,21 @@ const closeCart = () => setCartOpen(false);
     };
     fetchCategories();
   }, []);
+
+
+    // Load all admin users once on page load
+  useEffect(() => {
+    const fetchAdminUsers = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/admins`);
+        setAdmins(response.data);
+      } catch (error) { 
+        console.error("Error fetching admins", error);
+      }
+    };
+    fetchAdminUsers();
+  }, []);
+
 
   // When a product is selected, fetch its variants
   useEffect(() => {
@@ -220,7 +248,8 @@ const closeCart = () => setCartOpen(false);
         />
         {/* <AboutUs /> */}
         <ContactUs />
-        <AdminDashboard isOpen={isAdminModalOpen} onClose={closeAdminModal}/>
+        <AdminSignIn isOpen={isAdminModalOpen} onClose={closeAdminModal} admins={admins} onSuccess={displayAdminDashboard} />
+        {isAdminAuthenticated && <AdminDashboard />}
 
         
       </main>
