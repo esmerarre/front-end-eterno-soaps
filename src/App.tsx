@@ -9,6 +9,8 @@ import ProductPage from './pages/ProductPage';
 import ContactUs from './pages/ContactUs';
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import AdminSignIn from './components/AdminSignIn';
+import AdminDashboard from './pages/AdminDashboard';
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from "axios";
@@ -181,15 +183,20 @@ const closeCart = () => setCartOpen(false);
         <Header onCartClick={openCart}/>
         <Routes>
           <Route path="/" element={<CustomerHome />} />
+          
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/admin-signin" element={<AdminSignIn />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        
         </Routes>
 
       </Router>
       
       <main className="main-content">
   
-        {/* <CustomerHome /> */}
+    
         <ProductPage 
           products={products} 
           onProductSelect={handleProductSelect}
@@ -206,12 +213,16 @@ const closeCart = () => setCartOpen(false);
           categoryProducts={categoryProducts}
           categories={categories}
         />
-        {/* <AboutUs /> */}
+     
         <ContactUs />
         
       </main>
       <footer className="app-footer">
         <p>&copy; 2026 Eterno Soaps by Lucy. All rights reserved.</p>
+        <p style={{ fontSize: "0.8rem", cursor: "pointer", color: "#555" }} 
+     onClick={() => window.location.href="/admin-signin"}>
+    Admin Sign In
+  </p>
       </footer>
       {cartOpen && (
       <CartPage items={cartItems} onClose={closeCart} onRemoveItem={removeFromCart}/> 

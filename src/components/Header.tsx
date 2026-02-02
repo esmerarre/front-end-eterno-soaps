@@ -3,11 +3,13 @@ import eternologo from "../assets/eternologo.png";
 // import React, { useState } from "react"
 import shoppingbag from "../assets/shopping-bag.png";
 // import CartPage from "../pages/CartPage";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   onCartClick: () => void;
 }
 const Header: React.FC<HeaderProps> = ({ onCartClick }) => {
+    const navigate = useNavigate();
     
  
     
@@ -22,13 +24,16 @@ const Header: React.FC<HeaderProps> = ({ onCartClick }) => {
                     className="logo-image"/>
                     </div>
                 <nav className="header-nav">
-                    <button className="nav-link">
+                    <button className="nav-link" onClick={() => navigate("/admin-signin")}>
+                        Admin Dashboard
+                    </button>
+                    <button onClick={() => navigate("/")} className="nav-link">
                         Home
                     </button>
-                    <button className="nav-link">
+                    <button onClick={() => navigate("/products")} className="nav-link">
                         Products
                     </button>
-                    <button className="nav-link">
+                    <button onClick={() => navigate("/contact")} className="nav-link">
                         Contact Us
                     </button>
                     <button onClick={onCartClick} className="nav-link ">

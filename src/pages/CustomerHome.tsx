@@ -26,31 +26,24 @@
 
 import './CustomerHome.css';
 
+
 export default function CustomerHome() {
   return (
-    <section id="home" className="customer-home">
-      <div className="home-content">
-        <h1 className="home-title">Welcome to Jabon Eterno</h1>
-        <p className="home-tagline">Handcrafted Natural Soaps by Lucy</p>
-        <p className="home-description">
-          Experience the luxury of pure, artisan soaps made with love and the finest natural ingredients.
-          Each bar is carefully crafted to nourish your skin and elevate your daily routine.
-        </p>
-        <div className="home-buttons">
-          <button 
-            className="btn-primary"
-            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Shop Now
-          </button>
-          <button 
-            className="btn-secondary"
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Learn More
-          </button>
-        </div>
-      </div>
-    </section>
+    <div>
+      <section id="home">
+        <h1>Welcome to Eterno Soaps</h1>
+        <p>Handmade soaps for every mood 🌿</p>
+      </section>
+
+      <section id="products">
+        <h2>Our Products</h2>
+        {/* Maybe show featured products here */}
+      </section>
+
+      <section id="contact">
+        <h2>Contact Us</h2>
+        {/* Include your contact form here */}
+      </section>
+    </div>
   );
 }
