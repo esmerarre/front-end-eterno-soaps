@@ -117,6 +117,10 @@ export default function App() {
     closeAdminModal();
   }
 
+  const handleAdminSignOut = () => {
+    setIsAdminAuthenticated(false);
+  };
+
 const addToCart = (item: CartItem) => {
   setCartItems((prev) => {
     const existing = prev.find((i) => i.id === item.id);
@@ -249,7 +253,7 @@ const closeCart = () => setCartOpen(false);
         {/* <AboutUs /> */}
         <ContactUs />
         <AdminSignIn isOpen={isAdminModalOpen} onClose={closeAdminModal} admins={admins} onSuccess={displayAdminDashboard} />
-        {isAdminAuthenticated && <AdminDashboard />}
+        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} />}
 
         
       </main>
