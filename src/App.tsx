@@ -9,6 +9,7 @@ import ProductPage from './pages/ProductPage';
 import ContactUs from './pages/ContactUs';
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import AdminDashboard from "./pages/AdminDashboard";
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from "axios";
@@ -66,6 +67,7 @@ export default function App() {
   const [productVariants, setProductVariants] = useState<ProductVariant[] | null>(null); //reveiew default null state
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [categoryId, setCategoryId] = useState<number | null>(null);
@@ -90,6 +92,16 @@ export default function App() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  // Admin modal handlers
+  const openAdminModal = () => {
+    if (isAdminModalOpen) return;
+    setIsAdminModalOpen(true);
+  };
+
+  const closeAdminModal = () => {
+    setIsAdminModalOpen(false);
   };
 
 const addToCart = (item: CartItem) => {
@@ -208,10 +220,13 @@ const closeCart = () => setCartOpen(false);
         />
         {/* <AboutUs /> */}
         <ContactUs />
+        <AdminDashboard isOpen={isAdminModalOpen} onClose={closeAdminModal}/>
+
         
       </main>
       <footer className="app-footer">
         <p>&copy; 2026 Eterno Soaps by Lucy. All rights reserved.</p>
+          <button onClick={() => { openAdminModal()}} className="sign-in-button">Admin Dashboard</button>
       </footer>
       {cartOpen && (
       <CartPage items={cartItems} onClose={closeCart} onRemoveItem={removeFromCart}/> 
