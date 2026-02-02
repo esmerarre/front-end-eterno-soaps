@@ -9,9 +9,11 @@ import ProductPage from './pages/ProductPage';
 import ContactUs from './pages/ContactUs';
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import AdminDashboard from "./pages/AdminDashboard";
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import AdminSignIn from "./components/AdminSignIn";
 
 export interface Product {
   id: number;
@@ -55,6 +57,11 @@ export interface Category {
   products: ProductSummary[];
 }
 
+export interface Admin {
+  id: number;
+  username: string;
+}
+
 // Base API URL for backend requests (Vite only exposes VITE_ prefixed vars)
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 console.log("VITE_BACKEND_URL=", import.meta.env.VITE_BACKEND_URL);
@@ -66,11 +73,14 @@ export default function App() {
   const [productVariants, setProductVariants] = useState<ProductVariant[] | null>(null); //reveiew default null state
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const [categoryProducts, setCategoryProducts] = useState<ProductSummary[] | undefined>(undefined);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [admins, setAdmins] = useState<Admin[]>([]);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
   // Handler that updates productId AND clears selectedVariant
   const handleProductSelect = (id: number) => {
@@ -90,6 +100,25 @@ export default function App() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  // Admin modal handlers
+  const openAdminModal = () => {
+    if (isAdminModalOpen) return;
+    setIsAdminModalOpen(true);
+  };
+
+  const closeAdminModal = () => {
+    setIsAdminModalOpen(false);
+  };
+
+  const displayAdminDashboard = () => {
+    setIsAdminAuthenticated(true);
+    closeAdminModal();
+  }
+
+  const handleAdminSignOut = () => {
+    setIsAdminAuthenticated(false);
   };
 
 const addToCart = (item: CartItem) => {
@@ -136,6 +165,21 @@ const closeCart = () => setCartOpen(false);
     };
     fetchCategories();
   }, []);
+
+
+    // Load all admin users once on page load
+  useEffect(() => {
+    const fetchAdminUsers = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/admins`);
+        setAdmins(response.data);
+      } catch (error) { 
+        console.error("Error fetching admins", error);
+      }
+    };
+    fetchAdminUsers();
+  }, []);
+
 
   // When a product is selected, fetch its variants
   useEffect(() => {
@@ -208,10 +252,14 @@ const closeCart = () => setCartOpen(false);
         />
         {/* <AboutUs /> */}
         <ContactUs />
+        <AdminSignIn isOpen={isAdminModalOpen} onClose={closeAdminModal} admins={admins} onSuccess={displayAdminDashboard} />
+        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} />}
+
         
       </main>
       <footer className="app-footer">
         <p>&copy; 2026 Eterno Soaps by Lucy. All rights reserved.</p>
+          <button onClick={() => { openAdminModal()}} className="sign-in-button">Admin Dashboard</button>
       </footer>
       {cartOpen && (
       <CartPage items={cartItems} onClose={closeCart} onRemoveItem={removeFromCart}/> 
