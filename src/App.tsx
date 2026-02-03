@@ -70,6 +70,7 @@ export interface NewProduct {
   name: string;
   description: string;
   ingredients: string[];
+  imgKey: string;
 }
 
 export interface NewVariant {
@@ -77,7 +78,6 @@ export interface NewVariant {
   size: string;
   shape: string;
   imgKey: string;
-  imageUrl: string;
   price: number;
   stockQuantity: number;
 }
@@ -266,7 +266,14 @@ const closeCart = () => setCartOpen(false);
 
     const createNewProduct = async (newProduct: NewProduct) => {
       try {
-        const response = await axios.post(`${BASE_URL}/products`, newProduct)
+        const payload = {
+          name: newProduct.name,
+          description: newProduct.description,
+          ingredients: newProduct.ingredients,
+          img_key: newProduct.imgKey,
+        };
+
+        const response = await axios.post(`${BASE_URL}/products`, payload)
         setProducts(prev => [...prev, transformProductData(response.data)]);
       } catch (error) {
         console.log(error);
@@ -278,7 +285,6 @@ const closeCart = () => setCartOpen(false);
           size: newVariant.size,
           shape: newVariant.shape,
           img_key: newVariant.imgKey,
-          image_url: newVariant.imageUrl, // Assuming imgKey is the URL or key for the image
           price: newVariant.price,
           stock_quantity: newVariant.stockQuantity,
         };

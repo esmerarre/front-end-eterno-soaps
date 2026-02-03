@@ -10,6 +10,7 @@ const kDefaultsFormState = {
   name: '',
   description: '',
   ingredients: '',
+  imgKey: '',
 };
 
 const NewProductForm = ({createNewProduct}: NewProductFormProps) => {
@@ -42,7 +43,7 @@ const NewProductForm = ({createNewProduct}: NewProductFormProps) => {
     setFormData(kDefaultsFormState) //resets the text bar when the form is submitted
   }
 
-  const makeControlledInput = (inputName: 'name' | 'description' | 'ingredients', placeholder?: string) => {
+  const makeControlledInput = (inputName: 'name' | 'description' | 'ingredients' | 'imgKey', placeholder?: string) => {
     return (
       <input
         type="text"
@@ -68,6 +69,10 @@ const NewProductForm = ({createNewProduct}: NewProductFormProps) => {
         <div className="input-wrapper">
         <label htmlFor="ingredients">List Ingredients (comma-separated):</label>
         <div>{makeControlledInput('ingredients', 'e.g. Oats, Honey, Lavender')}</div>
+      </div>
+      <div className="input-wrapper">
+        <label htmlFor="imgKey">Product Image Key (optional): </label>
+        <div>{ makeControlledInput('imgKey', "e.g. new-image.jpg")}</div>
       </div>
       <div className="submit-button-wrapper">
         <input type="submit" value="Create A New Product"/>
