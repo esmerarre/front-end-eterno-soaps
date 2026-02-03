@@ -2,7 +2,7 @@ import "./AdminDashboard.css";
 import { useEffect, useState } from "react";
 import MonthlySalesChart from "../components/SalesChart";
 import TopSellingProductsChart from "../components/TopSellingProductsChart";
-import InventoryStockChart from "../components/InventoryStockChart";
+// import InventoryStockChart from "../components/InventoryStockChart";
 
 
 
@@ -77,7 +77,6 @@ export default function AdminDashboard({onAdminSignOut}: AdminDashboardProps) {
    <section className="admin-dashboard">
        <div className="admin-header">
            <h1>Admin Dashboard</h1>
-           <button className="sign-out-button" onClick={onAdminSignOut}>Sign Out</button>
        </div>
        < div className="admin-content">
            <MonthlySalesChart />
@@ -108,12 +107,12 @@ export default function AdminDashboard({onAdminSignOut}: AdminDashboardProps) {
          </tbody>
        </table>
      )}
-     {!loading && (
+     {/* {!loading && (
  <>
    <h3>Stock by Variant</h3>
    <InventoryStockChart data={inventory} />
  </>
-)}
+)} */}
 
 
    </section>
