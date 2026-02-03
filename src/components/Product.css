@@ -70,6 +70,14 @@
   margin: 0 auto 1rem;
 }
 
+.eternologo-img {
+  width: 450px;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
 .quantity-add-cart-container {
     display: flex;
     gap: 1rem;

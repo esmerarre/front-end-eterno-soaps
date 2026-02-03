@@ -3,6 +3,8 @@ import QuantityUpdate from "./QuantityUpdate";
 import AddToCart from "./AddToCart";
 import "./Product.css";
 import { useState } from "react";
+import eternologocolor from '../assets/eternologocolor.png';
+
 
 interface ProductProps {
 	product: Product | ProductSummary;
@@ -91,7 +93,7 @@ export default function ProductCard({
 	return (
 		<div className="product-card-container">
 			<button onClick={() => { onSelect(); openModal(); defaultPrice();}} className="product-card">
-				<img src={product.imageUrl} alt="soap product image" id="card-img"/>
+				<img src={product.imageUrl || eternologocolor} alt="soap product image" id="card-img"/>
 				<h3>{product.name}</h3>
 				<p>{product.description}</p>
 			</button>
@@ -100,7 +102,9 @@ export default function ProductCard({
 				<div className="modal" onClick={closeModal}>
 					<div className="modal-content" onClick={(e) => e.stopPropagation()}>
 						<button className="close" onClick={closeModal}>&times;</button>
-				<img src={selectedVariant?.imageUrl || product.imageUrl || variants?.[0]?.imageUrl } alt="soap product image" className="modal-img"/>
+				<img src={selectedVariant?.imageUrl || product.imageUrl || variants?.[0]?.imageUrl 
+					|| eternologocolor} alt="soap product image" className={selectedVariant?.imageUrl 
+					|| product.imageUrl || variants?.[0]?.imageUrl ? "modal-img" : "eternologo-img"}/>
 						<h2>{product.name}</h2>
 						<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
 
