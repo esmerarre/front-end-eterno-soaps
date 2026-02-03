@@ -12,7 +12,7 @@ interface InventoryManagerProps {
 export default function InventoryManager({ createNewProduct, createNewVariant, products }: InventoryManagerProps) {
     return (
         <div className="inventory-manager">
-        <div>Inventory Manager</div>
+      
             <div className="new-product-form-container">
             <h2>Add New Product</h2>
             <NewProductForm createNewProduct={createNewProduct} />
