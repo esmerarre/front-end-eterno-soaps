@@ -91,7 +91,7 @@ export default function ProductCard({
 	return (
 		<div className="product-card-container">
 			<button onClick={() => { onSelect(); openModal(); defaultPrice();}} className="product-card">
-				<img src= "cottonwood-large-mb.jpeg" alt="soap product image" id="card-img"/>
+				<img src={product.imageUrl} alt="soap product image" id="card-img"/>
 				<h3>{product.name}</h3>
 				<p>{product.description}</p>
 			</button>
@@ -100,7 +100,7 @@ export default function ProductCard({
 				<div className="modal" onClick={closeModal}>
 					<div className="modal-content" onClick={(e) => e.stopPropagation()}>
 						<button className="close" onClick={closeModal}>&times;</button>
-						<img src= "cottonwood-large-mb.jpeg" alt="soap product image"/>
+				<img src={selectedVariant?.imageUrl || product.imageUrl || variants?.[0]?.imageUrl } alt="soap product image" className="modal-img"/>
 						<h2>{product.name}</h2>
 						<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
 
