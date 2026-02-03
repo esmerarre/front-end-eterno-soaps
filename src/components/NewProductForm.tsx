@@ -42,7 +42,7 @@ const NewProductForm = ({createNewProduct}: NewProductFormProps) => {
     setFormData(kDefaultsFormState) //resets the text bar when the form is submitted
   }
 
-  const makeControlledInput = (inputName: 'name' | 'description' | 'ingredients') => {
+  const makeControlledInput = (inputName: 'name' | 'description' | 'ingredients', placeholder?: string) => {
     return (
       <input
         type="text"
@@ -50,6 +50,7 @@ const NewProductForm = ({createNewProduct}: NewProductFormProps) => {
         id={`input-${inputName}`}
         value={formData[inputName]}
         onChange={handleChange}
+        placeholder={placeholder || ''}
       />
     );
   };
@@ -66,7 +67,7 @@ const NewProductForm = ({createNewProduct}: NewProductFormProps) => {
       </div>
         <div className="input-wrapper">
         <label htmlFor="ingredients">List Ingredients (comma-separated):</label>
-        <div>{makeControlledInput('ingredients')}</div>
+        <div>{makeControlledInput('ingredients', 'e.g. Oats, Honey, Lavender')}</div>
       </div>
       <div className="submit-button-wrapper">
         <input type="submit" value="Create A New Product"/>

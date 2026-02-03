@@ -2,13 +2,14 @@ import "./AdminDashboard.css";
 import MonthlySalesChart from "../components/SalesChart";
 import TopSellingProductsChart from "../components/TopSellingProductsChart";
 import InventoryManager from "../components/InventoryManager";
-import type { NewProduct, Product, ProductVariant } from "../App";
+import type { NewProduct, Product, NewVariant } from "../App";
 // import InventoryStockChart from "../components/InventoryStockChart";
 
 interface AdminDashboardProps {
-    createNewProduct?: (newProduct: NewProduct) => void;
+    createNewProduct: (newProduct: NewProduct) => void;
     products: Product[];
     onAdminSignOut?: () => void;
+    createNewVariant: (newVariant: NewVariant) => void;
 }
 
 interface InventoryItem {
@@ -17,7 +18,7 @@ interface InventoryItem {
     stockQuantity: number;
 }
 
-export default function AdminDashboard({createNewProduct, products}: AdminDashboardProps) {
+export default function AdminDashboard({createNewProduct, products, createNewVariant}: AdminDashboardProps) {
    // Build inventory from products prop (no fetch needed - App.tsx handles fetching)
    const inventory: InventoryItem[] = products.flatMap((product) =>
      product.variants.map((variant) => ({
@@ -64,7 +65,7 @@ export default function AdminDashboard({createNewProduct, products}: AdminDashbo
        </tbody>
      </table>
      <div className="inventory-manager-section">
-        <InventoryManager createNewProduct={createNewProduct} />
+        <InventoryManager createNewProduct={createNewProduct} createNewVariant={createNewVariant} products={products} />
     </div>
 
 

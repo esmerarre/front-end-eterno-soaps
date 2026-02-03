@@ -29,11 +29,12 @@ export interface ProductVariant {
   productId: number; //product_id in backend
   size: string;
   shape: string;
-  img_url: string;
+  imgUrl: string;
   price: number;
   stockQuantity: number; //stock_quantity in backend
   product: Product[]; // belongs to one product
 }
+
 export interface ProductSummary {
   id: number;
   name: string;
@@ -68,6 +69,15 @@ export interface NewProduct {
   ingredients: string[];
 }
 
+export interface NewVariant {
+  productId: number;
+  size: string;
+  shape: string;
+  imgUrl: string;
+  price: number;
+  stockQuantity: number;
+}
+
 // Base API URL for backend requests (Vite only exposes VITE_ prefixed vars)
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 console.log("VITE_BACKEND_URL=", import.meta.env.VITE_BACKEND_URL);
@@ -87,6 +97,29 @@ export default function App() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+
+  //product data to camelCase
+const transformProductData = (product: any): Product => {  // Single product
+  return {
+    ...product,
+    variants: product.variants.map((variant: any) => ({
+      ...variant,
+      productId: variant.product_id,
+      imgUrl: variant.img_url,
+      stockQuantity: variant.stock_quantity
+    }))
+  };
+};
+
+//transform variant data to camelCase
+const transformVariantData = (variant: any): ProductVariant => { // Single variant
+  return {
+    ...variant,
+    productId: variant.product_id,
+    imgUrl: variant.img_url,
+    stockQuantity: variant.stock_quantity
+  };
+};
 
   // Handler that updates productId AND clears selectedVariant
   const handleProductSelect = (id: number) => {
@@ -151,7 +184,7 @@ const closeCart = () => setCartOpen(false);
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/products`);
-        setProducts(response.data);
+        setProducts(response.data.map(transformProductData));
       } catch (error) { 
         console.error("Error fetching products:", error);
       }
@@ -193,7 +226,7 @@ const closeCart = () => setCartOpen(false);
     const fetchProductVariants = async (productId: string) => {
       try {
         const response = await axios.get(`${BASE_URL}/products/${productId}/variants`);
-        setProductVariants(response.data);
+        setProductVariants(response.data.map(transformVariantData));
       } catch (error) {
         console.error("Error fetching product variants:", error);
       }
@@ -228,6 +261,26 @@ const closeCart = () => setCartOpen(false);
       try {
         const response = await axios.post(`${BASE_URL}/products`, newProduct)
         setProducts(prev => [...prev, response.data]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const createNewVariant = async (newVariant: NewVariant) => {
+      try {
+        const payload = {
+          size: newVariant.size,
+          shape: newVariant.shape,
+          img_url: newVariant.imgUrl,
+          price: newVariant.price,
+          stock_quantity: newVariant.stockQuantity,
+        };
+        const response = await axios.post(`${BASE_URL}/products/${newVariant.productId}/variants`, payload)
+        // Update products list with new variant
+        setProducts(prev => prev.map(product => 
+          product.id === newVariant.productId 
+            ? { ...product, variants: [...product.variants, transformVariantData(response.data)] }
+            : product
+        ));
       } catch (error) {
         console.log(error);
       }
@@ -278,7 +331,7 @@ const closeCart = () => setCartOpen(false);
           />
         )}
 
-        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} createNewProduct={createNewProduct} products={products}/>}
+        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} createNewProduct={createNewProduct} createNewVariant={createNewVariant} products={products} />}
         
       </main>
       <footer className="app-footer">
