@@ -1,76 +1,32 @@
 import "./AdminDashboard.css";
-import { useEffect, useState } from "react";
 import MonthlySalesChart from "../components/SalesChart";
 import TopSellingProductsChart from "../components/TopSellingProductsChart";
+import InventoryManager from "../components/InventoryManager";
+import type { NewProduct, Product, NewVariant } from "../App";
 // import InventoryStockChart from "../components/InventoryStockChart";
 
-
-
-
-
 interface AdminDashboardProps {
-   onAdminSignOut?: () => void;
+    createNewProduct: (newProduct: NewProduct) => void;
+    products: Product[];
+    onAdminSignOut?: () => void;
+    createNewVariant: (newVariant: NewVariant) => void;
 }
-interface ProductVariant {
- id: number;
- size: string;
- shape: string;
- stock_quantity: number;
-}
+
 interface InventoryItem {
- productName: string;
- variantLabel: string;
- stockQuantity: number;
+    productName: string;
+    variantLabel: string;
+    stockQuantity: number;
 }
 
-
-export default function AdminDashboard({onAdminSignOut}: AdminDashboardProps) {
-   const [inventory, setInventory] = useState<InventoryItem[]>([]);
-   const [loading, setLoading] = useState(true);
-
-
-   useEffect(() => {
-   const fetchInventory = async () => {
-     try {
-       // 1️⃣ get all products
-       const productRes = await fetch("http://localhost:8000/products");
-       const products = await productRes.json();
-
-
-       const inventoryData: InventoryItem[] = [];
-
-
-       // 2️⃣ get variants per product
-       for (const product of products) {
-         const variantRes = await fetch(
-           `http://localhost:8000/products/${product.id}/variants`
-         );
-         const variants: ProductVariant[] = await variantRes.json();
-
-
-
-
-         variants.forEach((variant: ProductVariant) => {
-           inventoryData.push({
-             productName: product.name,
-             variantLabel: `${variant.size} / ${variant.shape}`,
-             stockQuantity: variant.stock_quantity,
-           });
-         });
-       }
-
-
-       setInventory(inventoryData);
-     } catch (error) {
-       console.error("Failed to load inventory", error);
-     } finally {
-       setLoading(false);
-     }
-   };
-
-
-   fetchInventory();
- }, []);
+export default function AdminDashboard({createNewProduct, products, createNewVariant}: AdminDashboardProps) {
+   // Build inventory from products prop (no fetch needed - App.tsx handles fetching)
+   const inventory: InventoryItem[] = products.flatMap((product) =>
+     product.variants.map((variant) => ({
+       productName: product.name,
+       variantLabel: `${variant.size} / ${variant.shape}`,
+       stockQuantity: variant.stockQuantity,
+     }))
+   );
 
 
  return (
@@ -84,29 +40,35 @@ export default function AdminDashboard({onAdminSignOut}: AdminDashboardProps) {
        </div>
        <h2>Inventory Overview</h2>
 
-
-     {loading ? (
-       <p>Loading inventory...</p>
-     ) : (
-       <table className="inventory-table">
-         <thead>
+     <table className="inventory-table">
+       <thead>
+         <tr>
+           <th>Product</th>
+           <th>Variant</th>
+           <th>Stock Quantity</th>
+         </tr>
+       </thead>
+       <tbody>
+         {inventory.length === 0 ? (
            <tr>
-             <th>Product</th>
-             <th>Variant</th>
-             <th>Stock Quantity</th>
+             <td colSpan={3}>No products available</td>
            </tr>
-         </thead>
-         <tbody>
-           {inventory.map((item, index) => (
+         ) : (
+           inventory.map((item, index) => (
              <tr key={index}>
                <td>{item.productName}</td>
                <td>{item.variantLabel}</td>
                <td>{item.stockQuantity}</td>
              </tr>
-           ))}
-         </tbody>
-       </table>
-     )}
+           ))
+         )}
+       </tbody>
+     </table>
+     <div className="inventory-manager-section">
+        <InventoryManager createNewProduct={createNewProduct} createNewVariant={createNewVariant} products={products} />
+    </div>
+
+
      {/* {!loading && (
  <>
    <h3>Stock by Variant</h3>
