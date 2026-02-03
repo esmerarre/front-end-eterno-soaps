@@ -236,7 +236,10 @@ const closeCart = () => setCartOpen(false);
   return (
     <div className="app">
       <Router>
-        <Header onCartClick={openCart}/>
+        <Header onCartClick={openCart}
+        isAdmin={isAdminAuthenticated}
+        onAdminSignOut={handleAdminSignOut}
+        />
         <Routes>
           <Route path="/" element={<CustomerHome />} />
           <Route path="/success" element={<Success />} />
@@ -266,9 +269,16 @@ const closeCart = () => setCartOpen(false);
         />
         {/* <AboutUs /> */}
         <ContactUs />
-        <AdminSignIn isOpen={isAdminModalOpen} onClose={closeAdminModal} admins={admins} onSuccess={displayAdminDashboard} />
-        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} createNewProduct={createNewProduct} />}
+        {!isAdminAuthenticated && (
+          <AdminSignIn 
+          isOpen={isAdminModalOpen} 
+          onClose={closeAdminModal} 
+          admins={admins} 
+          onSuccess={displayAdminDashboard} 
+          />
+        )}
 
+        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} createNewProduct={createNewProduct}/>}
         
       </main>
       <footer className="app-footer">

@@ -6,8 +6,10 @@ import shoppingbag from "../assets/shopping-bag.png";
 
 interface HeaderProps {
   onCartClick: () => void;
+  isAdmin?: boolean; 
+  onAdminSignOut?: () => void; 
 }
-const Header: React.FC<HeaderProps> = ({ onCartClick }) => {
+const Header: React.FC<HeaderProps> = ({ onCartClick, isAdmin, onAdminSignOut }) => {
     
  
     
@@ -31,6 +33,14 @@ const Header: React.FC<HeaderProps> = ({ onCartClick }) => {
                     <button className="nav-link">
                         Contact Us
                     </button>
+                    {isAdmin && (
+            <>
+              <button className="nav-link">Admin Dashboard</button>
+              <button className="nav-link" onClick={onAdminSignOut}>
+                Sign Out
+              </button>
+            </>
+          )}
                     <button onClick={onCartClick} className="nav-link ">
                         <img
                         src={shoppingbag} 

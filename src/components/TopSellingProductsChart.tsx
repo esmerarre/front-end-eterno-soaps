@@ -1,6 +1,6 @@
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   Tooltip,
@@ -8,21 +8,21 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import monthlySalesData from "../data/monthlysales.json";
+import topSellingData from "../data/topsellingproducts.json";
 
-export default function MonthlySalesChart() {
+export default function TopSellingProductsChart() {
   return (
     <div className="chart-card">
-      <h2>Monthly Revenue</h2>
+      <h2>Top Selling Products</h2>
 
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={monthlySalesData}>
+        <BarChart data={topSellingData.topProducts}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
+          <XAxis dataKey="productName" />
           <YAxis />
           <Tooltip />
-          <Line type="monotone" dataKey="revenue" />
-        </LineChart>
+          <Bar dataKey="unitsSold" />
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
