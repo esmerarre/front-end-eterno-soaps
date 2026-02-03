@@ -62,6 +62,12 @@ export interface Admin {
   username: string;
 }
 
+export interface NewProduct {
+  name: string;
+  description: string;
+  ingredients: string[];
+}
+
 // Base API URL for backend requests (Vite only exposes VITE_ prefixed vars)
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 console.log("VITE_BACKEND_URL=", import.meta.env.VITE_BACKEND_URL);
@@ -218,6 +224,14 @@ const closeCart = () => setCartOpen(false);
     fetchCategoryProducts(categoryId.toString());
   }, [categoryId]);
 
+    const createNewProduct = async (newProduct: NewProduct) => {
+      try {
+        const response = await axios.post(`${BASE_URL}/products`, newProduct)
+        setProducts(prev => [...prev, response.data]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   return (
     <div className="app">
@@ -253,7 +267,7 @@ const closeCart = () => setCartOpen(false);
         {/* <AboutUs /> */}
         <ContactUs />
         <AdminSignIn isOpen={isAdminModalOpen} onClose={closeAdminModal} admins={admins} onSuccess={displayAdminDashboard} />
-        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} />}
+        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} createNewProduct={createNewProduct} />}
 
         
       </main>
