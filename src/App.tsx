@@ -278,7 +278,7 @@ const closeCart = () => setCartOpen(false);
           />
         )}
 
-        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} createNewProduct={createNewProduct}/>}
+        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} createNewProduct={createNewProduct} products={products}/>}
         
       </main>
       <footer className="app-footer">
