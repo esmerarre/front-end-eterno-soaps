@@ -1,0 +1,40 @@
+form {
+  background: #f9f9f9;
+  padding: 1.25rem;
+  border-radius: 10px;
+}
+
+.input-wrapper {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+input:focus {
+  outline: none;
+  border-color: #888;
+}
+
+.submit-button-wrapper {
+  margin-top: 1rem;
+}
+
+input[type="submit"] {
+  background: black;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}

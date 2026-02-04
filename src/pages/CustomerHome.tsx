@@ -43,12 +43,6 @@ export default function CustomerHome() {
           >
             Shop Now
           </button>
-          <button 
-            className="btn-secondary"
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Learn More
-          </button>
         </div>
       </div>
     </section>

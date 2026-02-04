@@ -1,0 +1,9 @@
+.inventory-manager {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.inventory-manager h2 {
+  margin-bottom: 1rem;
+}
