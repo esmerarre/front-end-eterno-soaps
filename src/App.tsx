@@ -20,6 +20,7 @@ export interface Product {
   name: string;
   description: string;
   ingredients: string[];
+  imageUrl: string;
   categories: Category[]; // [] belongs to multiple categories
   variants: ProductVariant[];
 }
@@ -29,7 +30,8 @@ export interface ProductVariant {
   productId: number; //product_id in backend
   size: string;
   shape: string;
-  imgUrl: string;
+  imgKey: string;
+  imageUrl: string;
   price: number;
   stockQuantity: number; //stock_quantity in backend
   product: Product[]; // belongs to one product
@@ -41,6 +43,7 @@ export interface ProductSummary {
   description: string;
   ingredients: string[];
   variants: ProductVariant[];
+  imageUrl: string;
 }
 
 export interface CartItem {
@@ -67,13 +70,14 @@ export interface NewProduct {
   name: string;
   description: string;
   ingredients: string[];
+  imgKey: string;
 }
 
 export interface NewVariant {
   productId: number;
   size: string;
   shape: string;
-  imgUrl: string;
+  imgKey: string;
   price: number;
   stockQuantity: number;
 }
@@ -102,10 +106,12 @@ export default function App() {
 const transformProductData = (product: any): Product => {  // Single product
   return {
     ...product,
+    imageUrl: product.image_url,
     variants: product.variants.map((variant: any) => ({
       ...variant,
       productId: variant.product_id,
-      imgUrl: variant.img_url,
+      imgKey: variant.img_key,
+      imageUrl: variant.image_url,
       stockQuantity: variant.stock_quantity
     }))
   };
@@ -116,8 +122,26 @@ const transformVariantData = (variant: any): ProductVariant => { // Single varia
   return {
     ...variant,
     productId: variant.product_id,
-    imgUrl: variant.img_url,
+    imgKey: variant.img_key,
+    imageUrl: variant.image_url,
     stockQuantity: variant.stock_quantity
+  };
+};
+
+// Convert backend snake_case to frontend camelCase for ProductSummary
+const transformProductSummaryData = (product: any): ProductSummary => {
+  const variants = product.variants?.map((variant: any) => ({
+    ...variant,
+    productId: variant.product_id,
+    imgKey: variant.img_key,
+    imageUrl: variant.image_url,
+    stockQuantity: variant.stock_quantity
+  })) || [];
+
+  return {
+    ...product,
+    imageUrl: product.image_url,
+    variants
   };
 };
 
@@ -248,7 +272,8 @@ const closeCart = () => setCartOpen(false);
         const response = await axios.get(`${BASE_URL}/categories/${categoryId}`);
         const data = response.data;
         const products = Array.isArray(data) ? data : data?.products;
-        setCategoryProducts(products ?? []);
+        const transformed = (products ?? []).map(transformProductSummaryData);
+        setCategoryProducts(transformed);
       } catch (error) {
         console.error("Error fetching category products:", error);
       }
@@ -259,8 +284,15 @@ const closeCart = () => setCartOpen(false);
 
     const createNewProduct = async (newProduct: NewProduct) => {
       try {
-        const response = await axios.post(`${BASE_URL}/products`, newProduct)
-        setProducts(prev => [...prev, response.data]);
+        const payload = {
+          name: newProduct.name,
+          description: newProduct.description,
+          ingredients: newProduct.ingredients,
+          img_key: newProduct.imgKey,
+        };
+
+        const response = await axios.post(`${BASE_URL}/products`, payload)
+        setProducts(prev => [...prev, transformProductData(response.data)]);
       } catch (error) {
         console.log(error);
       }
@@ -270,7 +302,7 @@ const closeCart = () => setCartOpen(false);
         const payload = {
           size: newVariant.size,
           shape: newVariant.shape,
-          img_url: newVariant.imgUrl,
+          img_key: newVariant.imgKey,
           price: newVariant.price,
           stock_quantity: newVariant.stockQuantity,
         };

@@ -40,9 +40,6 @@ const ProductList = ({
     // Determine which products to display
     const productsToRender = categoryProducts !== undefined ? categoryProducts : products;
 
-    console.log("products prop:", products);
-    console.log("categoryProducts prop:", categoryProducts);
-
     const getProductList = (products: Product[] | ProductSummary[]) => {
         return products.map((product) => {
             return (
@@ -51,7 +48,7 @@ const ProductList = ({
                     product={product}
                     isSelected={selectedProductId === product.id}
                     onSelect={() => onProductSelect(product.id)}
-                    variants={selectedProductId === product.id ? productVariants : null}
+                    variants={selectedProductId === product.id ? productVariants : (product.variants ?? null)}
                     selectedVariant={selectedVariant}
                     onVariantSelect={onVariantSelect}
                     isModalOpen={isModalOpen}

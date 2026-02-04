@@ -11,7 +11,7 @@ const kDefaultsFormState = {
     name: '',
     size: '',
     shape: '',
-    imgUrl: '',
+    imgKey: '',
     price: '',
     stockQuantity: '',
 };
@@ -52,7 +52,7 @@ const NewVariantForm = ({createNewVariant, products}: NewVariantFormProps) => {
     setFormData(kDefaultsFormState) //resets the text bar when the form is submitted
   }
 
-  const makeControlledInput = (inputName: 'name' | 'size' | 'shape' | 'imgUrl' | 'price' | 'stockQuantity', placeholder?: string) => {
+  const makeControlledInput = (inputName: 'name' | 'size' | 'shape' | 'imgKey' | 'price' | 'stockQuantity', placeholder?: string) => {
     return (
       <input
         type="text"
@@ -80,8 +80,8 @@ const NewVariantForm = ({createNewVariant, products}: NewVariantFormProps) => {
         <div>{makeControlledInput('shape')}</div>
       </div>
       <div className="input-wrapper">
-        <label htmlFor="imgUrl">Image URL:</label>
-        <div>{makeControlledInput('imgUrl', "e.g. new-image.jpg")}</div>
+        <label htmlFor="imgKey">Image Key:</label>
+        <div>{makeControlledInput('imgKey', "e.g. new-image.jpg")}</div>
       </div>
         <div className="input-wrapper">
         <label htmlFor="price">Price:</label>

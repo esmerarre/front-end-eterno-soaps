@@ -61,6 +61,23 @@
   border-radius: 10px;
 }
 
+.modal-img {
+  width: 360px;
+  height: 450px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.eternologo-img {
+  width: 450px;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
 .quantity-add-cart-container {
     display: flex;
     gap: 1rem;
