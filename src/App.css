@@ -29,6 +29,15 @@ body {
   padding: 2rem;
   font-size: 0.9rem;
 }
+.sign-in-button{
+  background-color: transparent;
+  color: white;
+  border: none;
+
+  border-radius: 20px;
+  cursor: pointer;
+
+}
 
 html {
   scroll-behavior: smooth;

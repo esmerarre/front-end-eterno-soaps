@@ -1,10 +1,18 @@
-.filter-container select {
-    font-size: 16px;
-    width: 200px;
-    height: 30px;
-    margin-left: 20px;
-    color: black;
-    background-color: white;
-    border: 2px solid #000000;
-    cursor: pointer;
+.filter-container {
+  margin-bottom: 2rem;
+}
+
+.filter-select {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 20px;
+  border: 2px solid #6b8e23;
+  background: white;
+  color: #2d5016;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-select:hover {
+  background: #f1f8e9;
 }

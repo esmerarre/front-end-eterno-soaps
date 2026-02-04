@@ -1,24 +1,24 @@
 .qty-btn-container {
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #6b6969;
-    width: fit-content;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #6b6969;
+  background-color: #6b8e23; /* ✅ THIS is the fix */
 }
 
 .qty-btn-container:hover {
     border: 1px solid #888;
 }
 
-.qty-btn-container button {
+.qty-btn-container button{
     width: 30px;
     height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: black;
-    background-color: #ccc;
+    background-color: transparent;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -27,13 +27,19 @@
 .qty-btn-container button:hover {
     background-color: #f0f0f0;
 }
-
 .qty-btn-container p {
-    width: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ccc;
-    border-left: 1px solid #ccc;    
-    border-right: 1px solid #ccc;
+  background-color: transparent; /* inherit green */
+  color: white;
+}
+
+.add-to-cart-btn-container {
+  background-color: #6b8e23;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #6b6969;
+}
+
+.add-to-cart-btn-container button {
+  background: transparent;
+  color: white;
 }

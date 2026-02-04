@@ -1,27 +1,216 @@
-/* CustomerHome.css */
-.content {
-  padding-top: 80px; /* space for sticky header */
-  padding-left: 2rem;
-  padding-right: 2rem;
-  min-height: 100vh;
-}
+/* ===============================
+   PRODUCT CARD (grid view)
+================================ */
 
-.welcome-section {
-  text-align: center;
-  margin-bottom: 2rem;
+.product-card-container {
+  display: flex;
+  justify-content: center;
 }
 
 .product-card {
-  background-color: #fff;
-  border-radius: 10px;
+  background: azure;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   padding: 1rem;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 320px;
 }
 
-.product-title {
+.product-card:hover {
+  animation: floatShake 0.6s ease-in-out;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.product-card h3 {
+  color: #2d5016;
+  font-family: "Georgia", serif;
+  margin-top: 0.75rem;
+}
+.product-header{
   text-align: center;
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
-  margin-bottom: 2rem;
+  font-size: 1.75rem;
+  color: #2d5016;
+  margin-bottom: 1rem;
+  font-family: 'Georgia', serif
+
+}
+
+.product-card p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ===============================
+   PRODUCT CARD IMAGE
+================================ */
+
+#card-img {
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+/* ===============================
+   MODAL OVERLAY
+================================ */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+}
+
+/* ===============================
+   MODAL CONTENT
+================================ */
+
+.modal-content {
+  background: #ffffff;
+  margin: 8% auto;
+  padding: 2rem;
+  border: 1px solid rgba(84, 83, 86, 0.5);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 520px;
+  position: relative;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 28px;
+  font-weight: bold;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #374151;
+}
+
+/* ===============================
+   MODAL IMAGES
+================================ */
+
+.modal-img {
+  width: 360px;
+  height: 450px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.eternologo-img {
+  width: 450px;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+/* ===============================
+   MODAL TEXT
+================================ */
+
+.modal-content h2 {
+  color: #2d5016;
+  margin-bottom: 0.25rem;
+}
+
+.modal-content h4 {
+  color: #6b8e23;
+  margin-bottom: 1rem;
+}
+
+.modal-description {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+/* ===============================
+   INGREDIENTS
+================================ */
+
+.ingredients-block {
+  margin-bottom: 1.5rem;
+}
+
+.ingredients-block h3 {
+  color: #6b8e23;
+  margin-bottom: 0.3rem;
+}
+
+.ingredients-block p {
+  color: #4e6b1f;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ===============================
+   VARIANT BUTTONS
+================================ */
+
+.variant-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.variant-buttons-container button {
+  width: 100px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid #6b6969;
+  background-color: #ccc;
+  color: black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.variant-buttons-container button:hover {
+  background-color: #f0f0f0;
+}
+
+.variant-buttons-container button.active {
+  border: 2px solid rgb(28, 33, 34);
+  background-color: #f0f0f0;
+}
+
+/* ===============================
+   QUANTITY + ADD TO CART LAYOUT
+   (layout ONLY — no styling of qty buttons)
+================================ */
+
+.quantity-add-cart-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* ===============================
+   ANIMATIONS
+================================ */
+
+@keyframes floatShake {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px) rotate(0.3deg); }
+  100% { transform: translateY(0); }
 }

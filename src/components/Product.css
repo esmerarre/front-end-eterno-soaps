@@ -1,17 +1,72 @@
-.product-card {
+/* .product-card {
     list-style-type: none;
     background-color: azure;
-    padding: 10px;
+    padding: 1px;
     margin: 20px;
     border-radius: 1em;
-    border: 2px solid #282c34;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+} */
+
+.product-card-container {
+  display: flex;
+  justify-content: center;
 }
-.variants-container {
-    margin-top: 10px;
+
+.product-card {
+  background: azure;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+ 
 }
+
+.product-card h3 {
+  color: #2d5016;
+  font-family: 'Georgia', serif;
+ 
+}
+.product-card p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.ingredients-block h3 {
+  color: #6b8e23;
+  margin-bottom: 0.3rem;
+}
+
+.ingredients-block p {
+  color: #4e6b1f;
+  font-style: italic;
+}
+.quantity-add-cart-container button {
+  background: #6b8e23;
+  color: white;
+  border-radius: 999px;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.quantity-add-cart-container button:hover {
+  background: #556b1e;
+  transform: scale(1.05);
+}
+
+
+
 
 .modal {
   position: fixed;
+  
   z-index: 1000;
   left: 0;
   top: 0;
@@ -22,15 +77,16 @@
 }
 
 .modal-content {
-  background-color: #d2cfd6;
+ 
+  background: azure;
   margin: 10% auto;
   padding: 2rem;
   border: 1px solid rgba(84, 83, 86, 0.5);
   border-radius: 12px;
   width: 90%;
-  max-width: 500px;
+  max-width: 520px;
   position: relative;
-  padding: 2rem 2rem 2rem 2rem;
+ 
 }
 
 .close {
@@ -56,9 +112,12 @@
 
 
 #card-img {
-  width: 95%;
-  height: 95%;
+  width: 100%;
+  height: auto;
+  max-height: 350px;
+  object-fit: cover;
   border-radius: 10px;
+  display: block;
 }
 
 .modal-img {
@@ -92,8 +151,8 @@
     margin: 5px;
     align-items: center;
     justify-content: center;
-    color: black;
-    background-color: #ccc;
+    color: white;
+    background-color: #6b8e23;
     overflow: hidden;
     border: 1px solid #6b6969;
     border-radius: 8px;
@@ -108,4 +167,15 @@
 .variant-buttons-container button.active {
   border: 2px solid rgb(28, 33, 34);
   background-color: #f0f0f0;
+}
+
+@keyframes floatShake {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px) rotate(0.3deg); }
+  100% { transform: translateY(0); }
+}
+
+.product-card:hover {
+  animation: floatShake 0.6s ease-in-out;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
 }
