@@ -93,7 +93,7 @@ export default function ProductCard({
 	return (
 		<div className="product-card-container">
 			<button onClick={() => { onSelect(); openModal(); defaultPrice();}} className="product-card">
-				<img src={product.imageUrl || eternologocolor} alt="soap product image" id="card-img"/>
+				<img src={product.imageUrl || variants?.[0]?.imageUrl || eternologocolor} alt="soap product image" id="card-img"/>
 				<h3>{product.name}</h3>
 				<p>{product.description}</p>
 			</button>

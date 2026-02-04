@@ -128,6 +128,23 @@ const transformVariantData = (variant: any): ProductVariant => { // Single varia
   };
 };
 
+// Convert backend snake_case to frontend camelCase for ProductSummary
+const transformProductSummaryData = (product: any): ProductSummary => {
+  const variants = product.variants?.map((variant: any) => ({
+    ...variant,
+    productId: variant.product_id,
+    imgKey: variant.img_key,
+    imageUrl: variant.image_url,
+    stockQuantity: variant.stock_quantity
+  })) || [];
+
+  return {
+    ...product,
+    imageUrl: product.image_url,
+    variants
+  };
+};
+
   // Handler that updates productId AND clears selectedVariant
   const handleProductSelect = (id: number) => {
     setProductId(id);
@@ -255,7 +272,8 @@ const closeCart = () => setCartOpen(false);
         const response = await axios.get(`${BASE_URL}/categories/${categoryId}`);
         const data = response.data;
         const products = Array.isArray(data) ? data : data?.products;
-        setCategoryProducts(products ?? []);
+        const transformed = (products ?? []).map(transformProductSummaryData);
+        setCategoryProducts(transformed);
       } catch (error) {
         console.error("Error fetching category products:", error);
       }
