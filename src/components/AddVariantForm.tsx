@@ -99,13 +99,3 @@ const NewVariantForm = ({createNewVariant, products}: NewVariantFormProps) => {
 };
 
 export default NewVariantForm;
-
-
-// export interface NewVariant {
-//   productId: number;
-//   size: string;
-//   shape: string;
-//   imgUrl: string;
-//   price: number;
-//   stockQuantity: number;
-// }
