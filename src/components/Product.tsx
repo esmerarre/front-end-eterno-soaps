@@ -43,7 +43,7 @@ export default function ProductCard({
 		const minPrice = Math.min(...prices);
 		return `$${minPrice}`;
 	}
-	const [selectedQuantity, setSelectedQuantity] = useState(1);
+	const [selectedQuantity, setSelectedQuantity] = useState(0);
 
 	const handleAddToCartClick = () => {
 		if (!selectedVariant) {
@@ -92,7 +92,7 @@ export default function ProductCard({
 
 	return (
 		<div className="product-card-container">
-			<button onClick={() => { onSelect(); openModal(); defaultPrice();}} className="product-card">
+			<button onClick={() => { onSelect(); openModal(); defaultPrice(); setSelectedQuantity(0)}} className="product-card">
 				<img src={product.imageUrl || variants?.[0]?.imageUrl || eternologocolor} alt="soap product image" id="card-img"/>
 				<h3>{product.name}</h3>
 				<p>{product.description}</p>
@@ -128,12 +128,12 @@ export default function ProductCard({
 								{sortedVariants && sortedVariants.map((variant) => (
 									<button
 										key={variant.id}
-										onClick={() => onVariantSelect(variant)}
+										onClick={() => { onVariantSelect(variant); setSelectedQuantity(0); }} // reset quantity to 0 when variant changes
 										className={`variant-btn ${
 											selectedVariant?.id === variant.id ? "active" : ""
 										} `}
 									>
-										{variant.size}
+										{variant.size}-{variant.shape}
 									</button>
 								))}
 							</div>
@@ -146,9 +146,10 @@ export default function ProductCard({
 
 							<div className="quantity-add-cart-container">
 								<QuantityUpdate
-									minValue={1}
+									minValue={0} 
 									maxValue={selectedVariant?.stockQuantity ?? 30} // limit by backend stock
 									onChange={(qty) => setSelectedQuantity(qty)}
+									value={selectedQuantity} // pass current quantity to QuantityUpdate
 								/>
 								<AddToCart onClick={handleAddToCartClick}/>
 							</div>
