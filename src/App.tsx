@@ -286,7 +286,8 @@ const closeCart = () => setCartOpen(false);
     try {           
       await axios.patch(
         `${BASE_URL}/products/${productId}/variants/${variantId}/stock-quantity`,
-        { stock_quantity: newStockQuantity }
+        null,
+        { params: { stock_quantity: newStockQuantity } }
       );
       
       setProducts(prev => prev.map(product => 

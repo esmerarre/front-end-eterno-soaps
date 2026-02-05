@@ -36,6 +36,8 @@ export default function AdminDashboard({
    const [showManager, setShowManager] = useState(false);
    const [showAnalytics, setShowAnalytics] = useState(false); 
    const [showInventory, setShowInventory] = useState(false);  
+    const [editingVariantId, setEditingVariantId] = useState<number | null>(null);
+    const [editStockValue, setEditStockValue] = useState<string>("");
 
 
    const inventory: InventoryItem[] = products.flatMap((product) =>
@@ -48,6 +50,23 @@ export default function AdminDashboard({
      }))
    );
 
+    const commitStockUpdate = (item: InventoryItem, value: string) => {
+        if (value.trim() === "") {
+            setEditStockValue(String(item.stockQuantity));
+            setEditingVariantId(null);
+            return;
+        }
+
+        const parsed = Number(value);
+        if (Number.isNaN(parsed)) {
+            setEditStockValue(String(item.stockQuantity));
+            setEditingVariantId(null);
+            return;
+        }
+
+        updateStock(item.productId, item.variantId, parsed);
+        setEditingVariantId(null);
+    };
 
  return (
    <section className="admin-dashboard">
@@ -115,7 +134,35 @@ export default function AdminDashboard({
                         <tr key={item.variantId} className={rowClass}>
                         <td>{item.productName}</td>
                         <td>{item.variantLabel}</td>
-                        <td>{item.stockQuantity}</td>
+                        <td
+                            onClick={() => {
+                                setEditingVariantId(item.variantId);
+                                setEditStockValue(String(item.stockQuantity));
+                            }}
+                            className ="editable-stock"
+                            >
+                                {editingVariantId === item.variantId ? (
+                                <input
+                                    type="number"
+                                    value={editStockValue}
+                                    onChange={(e) => setEditStockValue(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            commitStockUpdate(item, e.currentTarget.value);
+                                        }
+                                        if (e.key === "Escape") {
+                                            setEditingVariantId(null);
+                                            setEditStockValue(String(item.stockQuantity)); // reset to original on cancel
+                                        }
+                                    }}
+                                    onBlur={() => {
+                                        commitStockUpdate(item, e.currentTarget.value);
+                                    }}
+                                    autoFocus //cursor starts in input immediately
+                                />) : (
+                                item.stockQuantity
+                                )}
+                        </td>
                         <td>
                             <button
                             className="delete-variant-btn"
