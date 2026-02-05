@@ -89,6 +89,7 @@ export default function MainLayout(props: MainLayoutProps) {
         <section id="contact">
           <ContactUs />
         </section>
+        <section id="admin-dashboard"> 
 
         {props.isAdminAuthenticated && (
           <AdminDashboard
@@ -100,6 +101,8 @@ export default function MainLayout(props: MainLayoutProps) {
             onAdminSignOut={props.onAdminSignOut}
           />
         )}
+        </section>
+    
       </main>
 
       {/* Footer */}

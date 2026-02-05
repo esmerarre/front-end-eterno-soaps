@@ -3,14 +3,24 @@ import eternologo from "../assets/eternologo.png";
 // import React, { useState } from "react"
 import shoppingbag from "../assets/shopping-bag.png";
 // import CartPage from "../pages/CartPage";
-import { NavLink } from "react-router-dom";
+
 
 
 interface HeaderProps {
   onCartClick: () => void;
   isAdmin?: boolean; 
   onAdminSignOut?: () => void; 
+
 }
+
+const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+    window.history.replaceState(null, '', `#${id}`);
+  }
+};
+
 const Header: React.FC<HeaderProps> = ({ onCartClick, isAdmin, onAdminSignOut }) => {
     
  
@@ -26,12 +36,12 @@ const Header: React.FC<HeaderProps> = ({ onCartClick, isAdmin, onAdminSignOut })
                     className="logo-image"/>
                     </div>
                 <nav className="header-nav">
-                    <NavLink to="/#home" className="nav-link">Home</NavLink>
-                    <NavLink to="/#products" className="nav-link">Products</NavLink>
-                    <NavLink to="/#contact" className="nav-link">Contact</NavLink>
+                    <button onClick={() => scrollToSection("home")} className="nav-link">Home</button>
+                    <button onClick={() => scrollToSection("products")} className="nav-link">Products</button>
+                    <button onClick={() => scrollToSection("contact")} className="nav-link">Contact</button>
                     {isAdmin && (
             <>
-              <button className="nav-link">Admin Dashboard</button>
+              <button onClick={() => scrollToSection("admin-dashboard")} className="nav-link">Admin Dashboard</button>
               <button className="nav-link" onClick={onAdminSignOut}>
                 Sign Out
               </button>
