@@ -13,6 +13,7 @@ interface AdminDashboardProps {
     deleteVariant: (productId: number, variantId: number) => void;
     createNewVariant: (newVariant: NewVariant) => void;
     deleteProduct: (productId: number) => void;
+    updateStock: (productId: number, variantId: number, newStock: number) => void;
 }
 
 interface InventoryItem {
@@ -28,12 +29,15 @@ export default function AdminDashboard({
     products, 
     createNewVariant,
     deleteVariant,
-    deleteProduct
+    deleteProduct,
+    updateStock
 }: AdminDashboardProps) {
    // Build inventory from products prop (no fetch needed - App.tsx handles fetching)
    const [showManager, setShowManager] = useState(false);
    const [showAnalytics, setShowAnalytics] = useState(false); 
    const [showInventory, setShowInventory] = useState(false);  
+    const [editingVariantId, setEditingVariantId] = useState<number | null>(null);
+    const [editStockValue, setEditStockValue] = useState<string>("");
 
 
    const inventory: InventoryItem[] = products.flatMap((product) =>
@@ -46,6 +50,23 @@ export default function AdminDashboard({
      }))
    );
 
+    const commitStockUpdate = (item: InventoryItem, value: string) => {
+        if (value.trim() === "") {
+            setEditStockValue(String(item.stockQuantity));
+            setEditingVariantId(null);
+            return; // prevent empty input from being submitted
+        }
+
+        const parsed = Number(value); // convert input to number for validation
+        if (Number.isNaN(parsed)) {
+            setEditStockValue(String(item.stockQuantity)); // reset to original value if input is not a valid number
+            setEditingVariantId(null);
+            return; // prevent non-numeric input from being submitted
+        }
+
+        updateStock(item.productId, item.variantId, parsed); // call updateStock function to patch the backend and update state
+        setEditingVariantId(null);
+    };
 
  return (
    <section className="admin-dashboard">
@@ -113,7 +134,37 @@ export default function AdminDashboard({
                         <tr key={item.variantId} className={rowClass}>
                         <td>{item.productName}</td>
                         <td>{item.variantLabel}</td>
-                        <td>{item.stockQuantity}</td>
+                        <td
+                            onClick={() => {
+                                setEditingVariantId(item.variantId);
+                                setEditStockValue(String(item.stockQuantity));
+                            }}
+                            className ="editable-stock"
+                            > 
+                            {/* editingVariantId is set to null when not editing */}
+                                {editingVariantId === item.variantId ? (
+                                <input
+                                    type="number"
+                                    value={editStockValue}
+                                    onChange={(e) => setEditStockValue(e.target.value)} // update local state as user types
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            commitStockUpdate(item, e.currentTarget.value); // commit change on Enter key
+                                        }
+                                        if (e.key === "Escape") {
+                                            setEditingVariantId(null);
+                                            setEditStockValue(String(item.stockQuantity)); // reset to original on cancel
+                                        }
+                                    }}
+                                    // if admin clicks away without hitting enter, commit the change
+                                    onBlur={(e) => {
+                                        commitStockUpdate(item, e.currentTarget.value);
+                                    }}
+                                    autoFocus //cursor starts in input immediately
+                                />) : (
+                                item.stockQuantity // if not editing, just display the stock quantity
+                                )}
+                        </td>
                         <td>
                             <button
                             className="delete-variant-btn"
