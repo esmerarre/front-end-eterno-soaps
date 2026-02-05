@@ -62,7 +62,7 @@ export default function AdminSignIn({ isOpen, onClose, admins, onSuccess}: Admin
 
     return (
         <div className="modal-backdrop" onClick={onClose}>
-        <div className="modal-content" onClick={(event) => event.stopPropagation()}>
+        <div className="modal-admin-content" onClick={(event) => event.stopPropagation()}>
             <button type="button" className="close-button" onClick={onClose}>
             &times;
             </button>

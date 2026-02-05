@@ -76,11 +76,11 @@ const NewVariantForm = ({createNewVariant, products}: NewVariantFormProps) => {
         <div>{ makeControlledInput('size')}</div>
       </div>
         <div className="input-wrapper">
-        <label htmlFor="shape">Shape:</label>
+        <label htmlFor="shape">Shape (Optional):</label>
         <div>{makeControlledInput('shape')}</div>
       </div>
       <div className="input-wrapper">
-        <label htmlFor="imgKey">Image Key:</label>
+        <label htmlFor="imgKey">Product Variant Image Key (Optional):</label>
         <div>{makeControlledInput('imgKey', "e.g. new-image.jpg")}</div>
       </div>
         <div className="input-wrapper">
