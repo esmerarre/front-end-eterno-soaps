@@ -50,3 +50,17 @@
 .products-catalog tr:nth-child(even):not(.stock-low):not(.stock-critical) {
   background: #fafafa;
 }
+
+
+/* Delete product button */
+.delete-product-btn {
+  background: transparent;
+  border: none;
+  color: #b91c1c;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.delete-product-btn:hover {
+  color: #dc2626;
+}

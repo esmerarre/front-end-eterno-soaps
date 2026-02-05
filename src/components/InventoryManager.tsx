@@ -7,9 +7,10 @@ interface InventoryManagerProps {
     createNewProduct: (newProduct: NewProduct) => void;
     createNewVariant: (newVariant: NewVariant) => void;
     products: Product[];
+    deleteProduct: (productId: number) => void;
 }
 
-export default function InventoryManager({ createNewProduct, createNewVariant, products }: InventoryManagerProps) {
+export default function InventoryManager({ createNewProduct, createNewVariant, products, deleteProduct}: InventoryManagerProps) {
     return (
         <div className="inventory-manager">
       
@@ -24,19 +25,34 @@ export default function InventoryManager({ createNewProduct, createNewVariant, p
                 <thead>
                 <tr>
                     <th>All Products</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {products.length === 0 ? (
                     <tr>
-                    <td colSpan={1}>No products available</td>
+                    <td colSpan={2}>No products available</td>
                     </tr>
                 ) : (
                     products.map((product, index) => {
  
                     return (
-                        <tr className="">
+                        <tr className="" key={index}>
                         <td>{product.name}</td>
+                        <td>
+                            <button
+                            className="delete-product-btn"
+                            onClick={() => {
+                                const confirmed = window.confirm(
+                                    "Are you sure you want to delete this product? ALL associated variants will also be deleted.");
+                                    if (confirmed) {
+                                        deleteProduct(product.id);
+                                    }
+                                }}
+                                >
+                                    ❌
+                            </button>
+                        </td>
                         </tr>
                     );
                     })
