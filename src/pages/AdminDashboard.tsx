@@ -10,27 +10,37 @@ interface AdminDashboardProps {
     createNewProduct: (newProduct: NewProduct) => void;
     products: Product[];
     onAdminSignOut?: () => void;
+    deleteVariant: (productId: number, variantId: number) => void;
     createNewVariant: (newVariant: NewVariant) => void;
 }
 
 interface InventoryItem {
+    productId: number;
+    variantId: number;
     productName: string;
     variantLabel: string;
     stockQuantity: number;
 }
 
-export default function AdminDashboard({createNewProduct, products, createNewVariant}: AdminDashboardProps) {
+export default function AdminDashboard({
+    createNewProduct, 
+    products, 
+    createNewVariant,
+    deleteVariant
+}: AdminDashboardProps) {
    // Build inventory from products prop (no fetch needed - App.tsx handles fetching)
    const [showManager, setShowManager] = useState(false);
-   const [showAnalytics, setShowAnalytics] = useState(false);  // default open
-    const [showInventory, setShowInventory] = useState(false);  // default open
+   const [showAnalytics, setShowAnalytics] = useState(false); 
+   const [showInventory, setShowInventory] = useState(false);  
 
 
    const inventory: InventoryItem[] = products.flatMap((product) =>
      product.variants.map((variant) => ({
-       productName: product.name,
-       variantLabel: `${variant.size} / ${variant.shape}`,
-       stockQuantity: variant.stockQuantity,
+        productId: product.id,
+        variantId: variant.id,
+        productName: product.name,
+        variantLabel: `${variant.size} / ${variant.shape}`,
+        stockQuantity: variant.stockQuantity,
      }))
    );
 
@@ -83,6 +93,7 @@ export default function AdminDashboard({createNewProduct, products, createNewVar
                     <th>Product</th>
                     <th>Variant</th>
                     <th>Stock Quantity</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -91,16 +102,30 @@ export default function AdminDashboard({createNewProduct, products, createNewVar
                     <td colSpan={3}>No products available</td>
                     </tr>
                 ) : (
-                    inventory.map((item, index) => {
+                    inventory.map((item) => {
                     let rowClass = "";
                     if (item.stockQuantity <= 3) rowClass = "stock-critical";
                     else if (item.stockQuantity <= 8) rowClass = "stock-low";
 
                     return (
-                        <tr key={index} className={rowClass}>
+                        <tr key={item.variantId} className={rowClass}>
                         <td>{item.productName}</td>
                         <td>{item.variantLabel}</td>
                         <td>{item.stockQuantity}</td>
+                        <td>
+                            <button
+                            className="delete-variant-btn"
+                            onClick={() => {
+                                const confirmed = window.confirm(
+                                    "Are you sure you want to delete this variant?");
+                                    if (confirmed) {
+                                        deleteVariant(item.productId, item.variantId);
+                                    }
+                                }}
+                                >
+                                    ❌
+                            </button>
+                        </td>
                         </tr>
                     );
                     })

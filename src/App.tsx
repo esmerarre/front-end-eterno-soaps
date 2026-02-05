@@ -297,6 +297,7 @@ const closeCart = () => setCartOpen(false);
         console.log(error);
       }
     };
+
     const createNewVariant = async (newVariant: NewVariant) => {
       try {
         const payload = {
@@ -317,6 +318,31 @@ const closeCart = () => setCartOpen(false);
         console.log(error);
       }
     };
+
+    const deleteVariant = async (productId: number, variantId: number) => {
+  try {
+    await axios.delete(
+      `${BASE_URL}/products/${productId}/variants/${variantId}`
+    );
+
+    // 🔑 Update frontend state so React re-renders
+    setProducts(prev =>
+      prev.map(product =>
+        product.id === productId
+          ? {
+              ...product,
+              variants: product.variants.filter(
+                variant => variant.id !== variantId
+              ),
+            }
+          : product
+      )
+    );
+  } catch (error) {
+    console.error("Error deleting variant:", error);
+  }
+};
+
 
   return (
     <div className="app">
@@ -363,7 +389,12 @@ const closeCart = () => setCartOpen(false);
           />
         )}
 
-        {isAdminAuthenticated && <AdminDashboard onAdminSignOut={handleAdminSignOut} createNewProduct={createNewProduct} createNewVariant={createNewVariant} products={products} />}
+        {isAdminAuthenticated && <AdminDashboard 
+        onAdminSignOut={handleAdminSignOut} 
+        createNewProduct={createNewProduct} 
+        createNewVariant={createNewVariant} 
+        products={products}
+        deleteVariant={deleteVariant} />}
         
       </main>
       <footer className="app-footer">
