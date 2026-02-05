@@ -54,17 +54,17 @@ export default function AdminDashboard({
         if (value.trim() === "") {
             setEditStockValue(String(item.stockQuantity));
             setEditingVariantId(null);
-            return;
+            return; // prevent empty input from being submitted
         }
 
-        const parsed = Number(value);
+        const parsed = Number(value); // convert input to number for validation
         if (Number.isNaN(parsed)) {
-            setEditStockValue(String(item.stockQuantity));
+            setEditStockValue(String(item.stockQuantity)); // reset to original value if input is not a valid number
             setEditingVariantId(null);
-            return;
+            return; // prevent non-numeric input from being submitted
         }
 
-        updateStock(item.productId, item.variantId, parsed);
+        updateStock(item.productId, item.variantId, parsed); // call updateStock function to patch the backend and update state
         setEditingVariantId(null);
     };
 
@@ -140,27 +140,29 @@ export default function AdminDashboard({
                                 setEditStockValue(String(item.stockQuantity));
                             }}
                             className ="editable-stock"
-                            >
+                            > 
+                            {/* editingVariantId is set to null when not editing */}
                                 {editingVariantId === item.variantId ? (
                                 <input
                                     type="number"
                                     value={editStockValue}
-                                    onChange={(e) => setEditStockValue(e.target.value)}
+                                    onChange={(e) => setEditStockValue(e.target.value)} // update local state as user types
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter") {
-                                            commitStockUpdate(item, e.currentTarget.value);
+                                            commitStockUpdate(item, e.currentTarget.value); // commit change on Enter key
                                         }
                                         if (e.key === "Escape") {
                                             setEditingVariantId(null);
                                             setEditStockValue(String(item.stockQuantity)); // reset to original on cancel
                                         }
                                     }}
-                                    onBlur={() => {
+                                    // if admin clicks away without hitting enter, commit the change
+                                    onBlur={(e) => {
                                         commitStockUpdate(item, e.currentTarget.value);
                                     }}
                                     autoFocus //cursor starts in input immediately
                                 />) : (
-                                item.stockQuantity
+                                item.stockQuantity // if not editing, just display the stock quantity
                                 )}
                         </td>
                         <td>
