@@ -282,7 +282,31 @@ const closeCart = () => setCartOpen(false);
     fetchCategoryProducts(categoryId.toString());
   }, [categoryId]);
 
-    const createNewProduct = async (newProduct: NewProduct) => {
+  const updateStock = async (productId: number, variantId: number, newStockQuantity: number) => {
+    try {           
+      await axios.patch(
+        `${BASE_URL}/products/${productId}/variants/${variantId}/stock-quantity`,
+        { stock_quantity: newStockQuantity }
+      );
+      
+      setProducts(prev => prev.map(product => 
+        product.id === productId 
+          ? { 
+              ...product, 
+              variants: product.variants.map(variant => 
+                variant.id === variantId 
+                  ? { ...variant, stockQuantity: newStockQuantity }
+                  : variant
+              )
+            } 
+          : product
+      ));
+    } catch (error) {
+      console.error("Error updating stock quantity:", error);
+    }
+  };
+
+  const createNewProduct = async (newProduct: NewProduct) => {
       try {
         const payload = {
           name: newProduct.name,
@@ -405,8 +429,9 @@ const closeCart = () => setCartOpen(false);
         createNewVariant={createNewVariant} 
         products={products}
         deleteVariant={deleteVariant}
-        deleteProduct={deleteProduct} />}
-        
+        deleteProduct={deleteProduct} 
+        updateStock={updateStock}
+        />}
       </main>
       <footer className="app-footer">
         <p>&copy; 2026 Eterno Soaps by Lucy. All rights reserved.</p>

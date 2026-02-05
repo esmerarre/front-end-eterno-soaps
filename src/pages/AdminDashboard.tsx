@@ -13,6 +13,7 @@ interface AdminDashboardProps {
     deleteVariant: (productId: number, variantId: number) => void;
     createNewVariant: (newVariant: NewVariant) => void;
     deleteProduct: (productId: number) => void;
+    updateStock: (productId: number, variantId: number, newStock: number) => void;
 }
 
 interface InventoryItem {
@@ -28,7 +29,8 @@ export default function AdminDashboard({
     products, 
     createNewVariant,
     deleteVariant,
-    deleteProduct
+    deleteProduct,
+    updateStock
 }: AdminDashboardProps) {
    // Build inventory from products prop (no fetch needed - App.tsx handles fetching)
    const [showManager, setShowManager] = useState(false);
