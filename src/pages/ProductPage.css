@@ -1,10 +1,15 @@
 /* ===============================
    PRODUCT CARD (grid view)
 ================================ */
-
+.product-page {
+  min-height: 100vh;
+  padding: 6rem 2rem 4rem;
+  background: linear-gradient(180deg, #f9fdf9 0%, #e8f5e9 100%);
+}
 .product-card-container {
   display: flex;
   justify-content: center;
+  
 }
 
 .product-card {
@@ -136,31 +141,7 @@
   margin-bottom: 1rem;
 }
 
-.modal-description {
-  color: #555;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
-}
 
-/* ===============================
-   INGREDIENTS
-================================ */
-
-.ingredients-block {
-  margin-bottom: 1.5rem;
-}
-
-.ingredients-block h3 {
-  color: #6b8e23;
-  margin-bottom: 0.3rem;
-}
-
-.ingredients-block p {
-  color: #4e6b1f;
-  font-style: italic;
-  line-height: 1.5;
-}
 
 /* ===============================
    VARIANT BUTTONS

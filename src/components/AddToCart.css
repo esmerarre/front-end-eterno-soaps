@@ -1,7 +1,7 @@
 .add-to-cart-btn-container {
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #6b6969;
+    border: none;
     width: fit-content;
 }
 

@@ -98,47 +98,62 @@ export default function ProductCard({
 				<p>{product.description}</p>
 			</button>
 
-		{isSelected && isModalOpen && variants && (
+			{isSelected && isModalOpen && variants && (
 				<div className="modal" onClick={closeModal}>
 					<div className="modal-content" onClick={(e) => e.stopPropagation()}>
 						<button className="close" onClick={closeModal}>&times;</button>
-				<img src={selectedVariant?.imageUrl || product.imageUrl || variants?.[0]?.imageUrl 
-					|| eternologocolor} alt="soap product image" className={selectedVariant?.imageUrl 
-					|| product.imageUrl || variants?.[0]?.imageUrl ? "modal-img" : "eternologo-img"}/>
-						<h2>{product.name}</h2>
-						<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
-
-
-					<div className="variant-buttons-container">
-					{sortedVariants && sortedVariants.map((variant) => (
-						<button
-							key={variant.id}
-							onClick={() => onVariantSelect(variant)}
-							className={`variant-btn ${
-								selectedVariant?.id === variant.id ? "active" : ""
-							} `}
-						>
-							{variant.size}
-						</button>
-					))}
-					</div>
-
-						<h3 className="modal-description">{product.description}</h3>
-						<div className="ingredients-block">
-							<h3> Key Ingredients: </h3>
-							<p>{product.ingredients?.join(", ")}</p>
-						</div>
-						<div className="quantity-add-cart-container">
-							<QuantityUpdate
-							minValue={1}
-							maxValue={selectedVariant?.stockQuantity ?? 30} // limit by backend stock
-							onChange={(qty) => setSelectedQuantity(qty)}
+						
+						<div className="modal-image-section">
+							<img 
+								src={
+									selectedVariant?.imageUrl || product.imageUrl || variants?.[0]?.imageUrl 
+									|| eternologocolor
+								} 
+								alt="soap product image" 
+								className={
+									selectedVariant?.imageUrl || 
+									product.imageUrl || 
+									variants?.[0]?.imageUrl 
+									? "modal-img" 
+									: "eternologo-img"
+								}
 							/>
-							<AddToCart onClick={handleAddToCartClick}
+						</div>
+
+						<div className="modal-info-section">
+							<h2>{product.name}</h2>
+							<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
 							
-							/>
-						</div>
+							<div className="variant-buttons-container">
+								{sortedVariants && sortedVariants.map((variant) => (
+									<button
+										key={variant.id}
+										onClick={() => onVariantSelect(variant)}
+										className={`variant-btn ${
+											selectedVariant?.id === variant.id ? "active" : ""
+										} `}
+									>
+										{variant.size}
+									</button>
+								))}
+							</div>
 
+							<div className="modal-description">{product.description}</div>
+							<div className="ingredients-block">
+								<h3> Key Ingredients: </h3>
+								<p>{product.ingredients?.join(", ")}</p>
+							</div>
+
+							<div className="quantity-add-cart-container">
+								<QuantityUpdate
+									minValue={1}
+									maxValue={selectedVariant?.stockQuantity ?? 30} // limit by backend stock
+									onChange={(qty) => setSelectedQuantity(qty)}
+								/>
+								<AddToCart onClick={handleAddToCartClick}/>
+							</div>
+
+						</div>
 					</div>
 				</div>
 			)}

@@ -66,7 +66,7 @@ const ProductList = ({
             {productsToRender.length === 0 ? (
                 <p className="no-products">No products found in this category.</p>
             ) : (
-                <ul>{getProductList(productsToRender)}</ul>
+                <ul >{getProductList(productsToRender)}</ul>
             )}
         </div>
     );
