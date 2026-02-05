@@ -3,6 +3,8 @@ import eternologo from "../assets/eternologo.png";
 // import React, { useState } from "react"
 import shoppingbag from "../assets/shopping-bag.png";
 // import CartPage from "../pages/CartPage";
+import { NavLink } from "react-router-dom";
+
 
 interface HeaderProps {
   onCartClick: () => void;
@@ -24,15 +26,9 @@ const Header: React.FC<HeaderProps> = ({ onCartClick, isAdmin, onAdminSignOut })
                     className="logo-image"/>
                     </div>
                 <nav className="header-nav">
-                    <button className="nav-link">
-                        Home
-                    </button>
-                    <button className="nav-link">
-                        Products
-                    </button>
-                    <button className="nav-link">
-                        Contact Us
-                    </button>
+                    <NavLink to="/#home" className="nav-link">Home</NavLink>
+                    <NavLink to="/#products" className="nav-link">Products</NavLink>
+                    <NavLink to="/#contact" className="nav-link">Contact</NavLink>
                     {isAdmin && (
             <>
               <button className="nav-link">Admin Dashboard</button>
