@@ -11,7 +11,12 @@
 .manage-products-section {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-content: speace-between;
+  flex-wrap: wrap;
+}
+
+.manage-products-section > * {
+  flex: 1 1 100px;
 }
 
 .product-form-wrapper {
