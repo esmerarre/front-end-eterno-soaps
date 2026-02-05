@@ -343,6 +343,16 @@ const closeCart = () => setCartOpen(false);
   }
 };
 
+    const deleteProduct = async (productId: number) => {
+      try {
+        await axios.delete(
+          `${BASE_URL}/products/${productId}`
+        );
+        setProducts((prev) => prev.filter((product) => product.id !== productId));
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
+    };
 
   return (
     <div className="app">
@@ -394,7 +404,8 @@ const closeCart = () => setCartOpen(false);
         createNewProduct={createNewProduct} 
         createNewVariant={createNewVariant} 
         products={products}
-        deleteVariant={deleteVariant} />}
+        deleteVariant={deleteVariant}
+        deleteProduct={deleteProduct} />}
         
       </main>
       <footer className="app-footer">

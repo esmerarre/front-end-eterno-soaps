@@ -7,3 +7,65 @@
 .inventory-manager h2 {
   margin-bottom: 1rem;
 }
+
+.manage-products-section {
+  display: flex;
+  flex-direction: row;
+  align-content: speace-between;
+  flex-wrap: wrap;
+}
+
+.manage-products-section > * {
+  flex: 1 1 100px;
+}
+
+.product-form-wrapper {
+  width: 480px;
+}
+
+/* Product Catalog */
+.products-catalog-container {
+  overflow-y: scroll;
+  width: 480px;  
+  height: 364px;
+  border-radius: 10px;
+}
+
+.products-catalog {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+.products-catalog th {
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.products-catalog td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.products-catalog th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+.products-catalog tr:nth-child(even):not(.stock-low):not(.stock-critical) {
+  background: #fafafa;
+}
+
+
+/* Delete product button */
+.delete-product-btn {
+  background: transparent;
+  border: none;
+  color: #b91c1c;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.delete-product-btn:hover {
+  color: #dc2626;
+}
