@@ -112,8 +112,19 @@
   color: #e5e7eb;
 }
 
+.modal-header {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .modal-image-section {
   position: relative;
+}
+
+.modal-info-section h4 {
+  font-size: 26px;
+  margin-right: 40px;
 }
 
 #card-img {
@@ -150,6 +161,10 @@
     align-items: center;
 }
 
+.variant-buttons-container {
+  margin-top: 0px;
+}
+
 .variant-buttons-container button {
     width: 100px;
     height: 30px;
@@ -166,12 +181,12 @@
 }
 
 .variant-buttons-container button:hover {
-    background-color: #f0f0f0;
+    background-color: #2d5016;
 }
 
 .variant-buttons-container button.active {
   border: 2px solid rgb(28, 33, 34);
-  background-color: #f0f0f0;
+  background-color: #2d5016;
 }
 
 @keyframes floatShake {

@@ -4,6 +4,9 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  /* background-image: url('../assets/background-soaps-2.jpeg');
+  background-size: cover;
+  opacity: 0.60; */
   padding: 2rem;
   margin-top: 80px;
 }

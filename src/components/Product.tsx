@@ -126,9 +126,10 @@ export default function ProductCard({
 						</div>
 
 						<div className="modal-info-section">
-							<h2>{product.name}</h2>
-							<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
-							
+							<div className="modal-header">
+								<h2>{product.name}</h2>
+								<h4> {selectedVariant ? `$${selectedVariant.price}` : defaultPrice()}</h4>
+							</div>
 							<div className="variant-buttons-container">
 								{sortedVariants && sortedVariants.map((variant) => (
 									<button
@@ -138,7 +139,7 @@ export default function ProductCard({
 											selectedVariant?.id === variant.id ? "active" : ""
 										} `}
 									>
-										{variant.size}-{variant.shape}
+										{variant.size}
 									</button>
 								))}
 							</div>
