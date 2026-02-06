@@ -13,10 +13,13 @@ interface AddToCartProps {
 }
 
 const AddToCart = ({ onClick, selectedVariant, value }: AddToCartProps) => {
-  const isOutOfStock = !selectedVariant || selectedVariant.stockQuantity === 0;
 
   const handleClick = () => {
-    if (isOutOfStock) {
+    if (!selectedVariant) {
+			alert("Please select a size before adding to cart."); // simple popup
+			return;
+		}
+    if (selectedVariant.stockQuantity === 0) {
       alert("Sorry, this product is out of stock.");
       return;
     }

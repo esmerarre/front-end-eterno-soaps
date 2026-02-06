@@ -46,11 +46,6 @@ export default function ProductCard({
 	const [selectedQuantity, setSelectedQuantity] = useState(0);
 
 	const handleAddToCartClick = () => {
-		if (!selectedVariant) {
-			alert("Please select a size before adding to cart."); // simple popup
-			return;
-		}
-		
 		onAddToCart({
 			id: selectedVariant.id,
 			productId: product.id,
