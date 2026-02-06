@@ -13,9 +13,9 @@ interface ProductProps {
 	variants: ProductVariant[] | null;
 	selectedVariant: ProductVariant | null;
 	onVariantSelect: (variant: ProductVariant) => void;
-	isModalOpen: boolean;
-	openModal: () => void;
-	closeModal: () => void;
+	isModalOpen?: boolean;
+	openModal?: () => void;
+	closeModal?: () => void;
 	onAddToCart: (item: CartItem) => void;
 	openCart: () => void;
 
@@ -59,7 +59,7 @@ export default function ProductCard({
 			quantity: selectedQuantity,
 		})
 		openCart();   // open the cart immediately
-		closeModal(); // optional: close modal after adding
+		closeModal?.(); // optional: close modal after adding
 };
 
 	// Sort variants by size (Small, Medium, Large, etc.)
@@ -92,7 +92,7 @@ export default function ProductCard({
 
 	return (
 		<div className="product-card-container">
-			<button onClick={() => { onSelect(); openModal(); defaultPrice(); setSelectedQuantity(0)}} className="product-card">
+			<button onClick={() => { onSelect(); openModal?.(); defaultPrice(); setSelectedQuantity(0)}} className="product-card">
 				<img src={product.imageUrl || variants?.[0]?.imageUrl || eternologocolor} alt="soap product image" id="card-img"/>
 				<h3>{product.name}</h3>
 				<p>{product.description}</p>

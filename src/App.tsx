@@ -1,19 +1,14 @@
 // import { useState } from "react";
 // import SalesChart from "./components/SalesChart";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from './components/Header';
-import CartPage from "./pages/CartPage";
-import CustomerHome from './pages/CustomerHome';
-import ProductPage from './pages/ProductPage';
-// import AboutUs from './pages/AboutUs';
-import ContactUs from './pages/ContactUs';
+import MainLayout from "./components/MainLayout";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
-import AdminDashboard from "./pages/AdminDashboard";
+
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from "axios";
-import AdminSignIn from "./components/AdminSignIn";
+
 
 export interface Product {
   id: number;
@@ -102,48 +97,116 @@ export default function App() {
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
-  //product data to camelCase
-const transformProductData = (product: any): Product => {  // Single product
-  return {
-    ...product,
-    imageUrl: product.image_url,
-    variants: product.variants.map((variant: any) => ({
-      ...variant,
-      productId: variant.product_id,
-      imgKey: variant.img_key,
-      imageUrl: variant.image_url,
-      stockQuantity: variant.stock_quantity
-    }))
-  };
+  const handleAdminSuccess = () => {
+  setIsAdminAuthenticated(true);
+
+  // mark admin session in URL
+  window.history.replaceState(null, "", "#admin");
+
+  // scroll to top for welcome moment
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-//transform variant data to camelCase
-const transformVariantData = (variant: any): ProductVariant => { // Single variant
-  return {
-    ...variant,
-    productId: variant.product_id,
-    imgKey: variant.img_key,
-    imageUrl: variant.image_url,
-    stockQuantity: variant.stock_quantity
-  };
+const handleAdminSignOut = () => {
+  setIsAdminAuthenticated(false);
+
+  // clear admin hash on logout
+  window.history.replaceState(null, "", "#home");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
+
+
+  interface BackendVariant {
+  id: number;
+  product_id: number;
+  size: string;
+  shape: string;
+  img_key: string;
+  image_url: string;
+  price: number;
+  stock_quantity: number;
+}
+
+interface BackendProduct {
+  id: number;
+  name: string;
+  description: string;
+  ingredients: string[];
+  image_url: string;
+  variants: BackendVariant[];
+}
+
+interface BackendProductSummary {
+  id: number;
+  name: string;
+  description: string;
+  ingredients: string[];
+  image_url: string;
+  variants?: {
+    id: number;
+    product_id: number;
+    size: string;
+    shape: string;
+    img_key: string;
+    image_url: string;
+    price: number;
+    stock_quantity: number;
+  }[];
+}
+
+
+
+  //product data to camelCase
+const transformProductData = (product: BackendProduct): Product => ({
+  id: product.id,
+  name: product.name,
+  description: product.description,
+  ingredients: product.ingredients,
+  imageUrl: product.image_url,
+  categories: [], // populated elsewhere
+  variants: product.variants.map(transformVariantData),
+});
+
+const transformVariantData = (variant: BackendVariant): ProductVariant => ({
+  id: variant.id,
+  productId: variant.product_id,
+  size: variant.size,
+  shape: variant.shape,
+  imgKey: variant.img_key,
+  imageUrl: variant.image_url,
+  price: variant.price,
+  stockQuantity: variant.stock_quantity,
+  product: [], // backend relation, not needed here
+});
+
 
 // Convert backend snake_case to frontend camelCase for ProductSummary
-const transformProductSummaryData = (product: any): ProductSummary => {
-  const variants = product.variants?.map((variant: any) => ({
-    ...variant,
-    productId: variant.product_id,
-    imgKey: variant.img_key,
-    imageUrl: variant.image_url,
-    stockQuantity: variant.stock_quantity
-  })) || [];
+const transformProductSummaryData = (
+  product: BackendProductSummary
+): ProductSummary => {
+  const variants: ProductVariant[] =
+    product.variants?.map((variant) => ({
+      id: variant.id,
+      productId: variant.product_id,
+      size: variant.size,
+      shape: variant.shape,
+      imgKey: variant.img_key,
+      imageUrl: variant.image_url,
+      price: variant.price,
+      stockQuantity: variant.stock_quantity,
+      product: [],
+    })) ?? [];
 
   return {
-    ...product,
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    ingredients: product.ingredients,
     imageUrl: product.image_url,
-    variants
+    variants,
   };
 };
+
 
   // Handler that updates productId AND clears selectedVariant
   const handleProductSelect = (id: number) => {
@@ -154,7 +217,6 @@ const transformProductSummaryData = (product: any): ProductSummary => {
   const removeFromCart = (id: number) => {
   setCartItems(prev => prev.filter(item => item.id !== id));
 };
-
   // Modal handlers
   const openModal = () => {
     if (isModalOpen) return;
@@ -175,14 +237,14 @@ const transformProductSummaryData = (product: any): ProductSummary => {
     setIsAdminModalOpen(false);
   };
 
-  const displayAdminDashboard = () => {
-    setIsAdminAuthenticated(true);
-    closeAdminModal();
-  }
+  // const displayAdminDashboard = () => {
+  //   setIsAdminAuthenticated(true);
+  //   closeAdminModal();
+  // }
 
-  const handleAdminSignOut = () => {
-    setIsAdminAuthenticated(false);
-  };
+ 
+
+
 
 const addToCart = (item: CartItem) => {
   setCartItems((prev) => {
@@ -204,6 +266,12 @@ const openCart = () => setCartOpen(true);
 const closeCart = () => setCartOpen(false);
 
   // Load all products once on page load
+  useEffect(() => {
+  if (!isAdminAuthenticated && window.location.hash.startsWith("#admin")) {
+    window.history.replaceState(null, "", "#home");
+  }
+}, [isAdminAuthenticated]);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -383,70 +451,57 @@ const closeCart = () => setCartOpen(false);
         console.error("Error deleting product:", error);
       }
     };
+    
 
   return (
-    <div className="app">
-      <Router>
-        <Header onCartClick={openCart}
-        isAdmin={isAdminAuthenticated}
-        onAdminSignOut={handleAdminSignOut}
-        />
-        <Routes>
-          <Route path="/" element={<CustomerHome />} />
-          <Route path="/success" element={<Success />} />
-          <Route path="/cancel" element={<Cancel />} />
-        </Routes>
+  <Router>
+    <Routes>
+      <Route
+          path="/"
+          element={
+            <MainLayout
+              products={products}
+              productId={productId}
+              productVariants={productVariants}
+              selectedVariant={selectedVariant}
+              categories={categories}
+              categoryProducts={categoryProducts}
+              cartItems={cartItems}
+              cartOpen={cartOpen}
+              admins={admins}
+              isAdminAuthenticated={isAdminAuthenticated}
+              isAdminModalOpen={isAdminModalOpen}
+              
+              onProductSelect={handleProductSelect}
+              onVariantSelect={setSelectedVariant}
+              onAddToCart={addToCart}
+              onRemoveFromCart={removeFromCart}
+              openCart={openCart}
+              closeCart={closeCart}
+              isModalOpen={isModalOpen}
+              openModal={openModal}
+              closeModal={closeModal}
 
-      </Router>
-      
-      <main className="main-content">
-  
-        {/* <CustomerHome /> */}
-        <ProductPage 
-          products={products} 
-          onProductSelect={handleProductSelect}
-          selectedProductId={productId}
-          productVariants={productVariants}
-          selectedVariant={selectedVariant}
-          onVariantSelect={setSelectedVariant}
-          isModalOpen={isModalOpen}
-          openModal={openModal}
-          closeModal={closeModal}
-          onAddToCart={addToCart}
-          openCart={openCart}
-          onCategorySelect={setCategoryId}
-          categoryProducts={categoryProducts}
-          categories={categories}
-        />
-        {/* <AboutUs /> */}
-        <ContactUs />
-        {!isAdminAuthenticated && (
-          <AdminSignIn 
-          isOpen={isAdminModalOpen} 
-          onClose={closeAdminModal} 
-          admins={admins} 
-          onSuccess={displayAdminDashboard} 
-          />
-        )}
+              onCategorySelect={setCategoryId}
 
-        {isAdminAuthenticated && <AdminDashboard 
-        onAdminSignOut={handleAdminSignOut} 
-        createNewProduct={createNewProduct} 
-        createNewVariant={createNewVariant} 
-        products={products}
-        deleteVariant={deleteVariant}
-        deleteProduct={deleteProduct} 
-        updateStock={updateStock}
-        />}
-      </main>
-      <footer className="app-footer">
-        <p>&copy; 2026 Eterno Soaps by Lucy. All rights reserved.</p>
-          <button onClick={() => { openAdminModal()}} className="sign-in-button">Admin Dashboard</button>
-      </footer>
-      {cartOpen && (
-      <CartPage items={cartItems} onClose={closeCart} onRemoveItem={removeFromCart}/> 
-      )}
-    </div>
+              openAdminModal={openAdminModal}
+              closeAdminModal={closeAdminModal}
+             
+              onAdminSignOut={handleAdminSignOut}
+              onAdminSuccess={handleAdminSuccess}
+
+              createNewProduct={createNewProduct}
+              createNewVariant={createNewVariant}
+              deleteVariant={deleteVariant}
+              deleteProduct={deleteProduct}
+              updateStock={updateStock}
+            />
+          }
+      />
+
+    <Route path="/success" element={<Success />} />
+    <Route path="/cancel" element={<Cancel />} />
+  </Routes>
+</Router>
   );
-};
-
+}

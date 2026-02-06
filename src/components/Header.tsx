@@ -1,14 +1,26 @@
 import "./header.css";
-import eternologo from "../assets/eternologo.png";
+// import eternologo from "../assets/eternologo.png";
 // import React, { useState } from "react"
 import shoppingbag from "../assets/shopping-bag.png";
 // import CartPage from "../pages/CartPage";
+
+
 
 interface HeaderProps {
   onCartClick: () => void;
   isAdmin?: boolean; 
   onAdminSignOut?: () => void; 
+
 }
+
+const scrollToSection = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+    window.history.replaceState(null, '', `#${id}`);
+  }
+};
+
 const Header: React.FC<HeaderProps> = ({ onCartClick, isAdmin, onAdminSignOut }) => {
     
  
@@ -18,24 +30,18 @@ const Header: React.FC<HeaderProps> = ({ onCartClick, isAdmin, onAdminSignOut })
         <header className="header">
             <div className="header-container">
                  <div className="header-logo" >
-                    <img 
+                    {/* <img 
                     src={eternologo} 
                     alt = "Eterno Soap Logo"
-                    className="logo-image"/>
+                    className="logo-image"/> */}
                     </div>
                 <nav className="header-nav">
-                    <button className="nav-link">
-                        Home
-                    </button>
-                    <button className="nav-link">
-                        Products
-                    </button>
-                    <button className="nav-link">
-                        Contact Us
-                    </button>
+                    <button onClick={() => scrollToSection("home")} className="nav-link">Home</button>
+                    {isAdmin && (<button onClick={() => scrollToSection("admin-dashboard")} className="nav-link">Admin Dashboard</button>)}
+                    <button onClick={() => scrollToSection("products")} className="nav-link">Products</button>
+                    <button onClick={() => scrollToSection("contact")} className="nav-link">Contact</button>
                     {isAdmin && (
             <>
-              <button className="nav-link">Admin Dashboard</button>
               <button className="nav-link" onClick={onAdminSignOut}>
                 Sign Out
               </button>

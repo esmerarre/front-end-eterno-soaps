@@ -1,22 +1,37 @@
 .admin-dashboard {
-  max-width: 1200px;
+  max-width: 1400px; /* or even 1600px */
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 2rem;
 }
+.admin-page {
+  min-height: 100vh;
+  padding: 6rem 2rem 4rem;
+  background: linear-gradient(180deg, #f9fdf9 0%, #e8f5e9 100%);
+}
+/* #admin-dashboard {
+  scroll-margin-top: 90px;
+} */
+
+
 
 .admin-header {
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-  padding: 2rem;
-  border-radius: 16px;
-  margin-bottom: 2.5rem;
   text-align: center;
-}
+    font-size: 1.75rem;
+    color: #2d5016;
+    margin-bottom: 1rem;
+    font-family: 'Georgia', serif;
+  
+  
 
-.admin-header h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #2d5016;
-  font-family: 'Georgia', serif;
+}
+.admin-title{
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+}
+.admin-header h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
   
 }
 
