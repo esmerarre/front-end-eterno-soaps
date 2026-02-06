@@ -370,6 +370,11 @@ const closeCart = () => setCartOpen(false);
             } 
           : product
       ));
+      setProductVariants(prev => prev?.map(variant =>
+        variant.id === variantId 
+          ? { ...variant, stockQuantity: newStockQuantity }
+          : variant
+      ) || null);
     } catch (error) {
       console.error("Error updating stock quantity:", error);
     }

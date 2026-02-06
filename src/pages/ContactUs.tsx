@@ -20,8 +20,8 @@ const ContactUs = () => {
               <div className="info-icon">📧</div>
               <div>
                 <h3>Email</h3>
-                <p>lucy@jaboneterno.com</p>
-                <p>info@jaboneterno.com</p>
+                <p>eternosoaps@gmail.com</p>
+                {/* <p>info@jaboneterno.com</p> */}
               </div>
             </div>
 
@@ -29,7 +29,7 @@ const ContactUs = () => {
               <div className="info-icon">📱</div>
               <div>
                 <h3>Phone</h3>
-                <p>+1 (555) 123-4567</p>
+                <p>+1 (505) 835-3880</p>
                 <p>Mon-Fri: 9am - 6pm</p>
               </div>
             </div>

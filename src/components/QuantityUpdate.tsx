@@ -1,47 +1,29 @@
 
 import "./QuantityUpdate.css"
-import { useState } from "react";
-
 
 type QuantityUpdateProps = {
-
   minValue?: number;
   maxValue?: number; // set this from backend stock
   onChange: (qty: number) => void // optional callback
+  value: number;
 };
 
 const QuantityUpdate = ({
-    maxValue=1, 
+    maxValue=0, 
     minValue=30, 
     onChange, // optional callback
+    value
 }: 
     QuantityUpdateProps) => {
-    const [count, setCount] = useState<number>(minValue);
- 
-    const onIncrement = () => {
-    setCount((prev) => {
-      const next = Math.min(prev + 1, maxValue);
-      onChange(next); // ✅ ONLY inside click handler
-      return next;
-    });
-  };
-
-  const onDecrement = () => {
-    setCount((prev) => {
-      const next = Math.max(prev - 1, minValue);
-      onChange(next); // ✅ ONLY inside click handler
-      return next;
-    });
-  };
 
     return <div className="qty-btn-container">
-        <button className="decrement-btn" onClick={onDecrement}>
+        <button className="decrement-btn" onClick={() => onChange(Math.max(value - 1, minValue))}>
             <span className="quantity-symbols">-</span>
         </button>
 
-        <p>{count}</p>
+        <p>{value}</p>
         
-        <button className="increment-btn" onClick={onIncrement}>
+        <button className="increment-btn" onClick={() => onChange(Math.min(value + 1, maxValue))}>
             <span className="quantity-symbols">+</span>
         </button>
     </div>
