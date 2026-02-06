@@ -87,7 +87,7 @@ export default function App() {
   const [productId, setProductId] = useState<number | null>(null);
   const [productVariants, setProductVariants] = useState<ProductVariant[] | null>(null); //reveiew default null state
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
@@ -96,6 +96,25 @@ export default function App() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+
+  const handleAdminSuccess = () => {
+  setIsAdminAuthenticated(true);
+
+  // mark admin session in URL
+  window.history.replaceState(null, "", "#admin");
+
+  // scroll to top for welcome moment
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+const handleAdminSignOut = () => {
+  setIsAdminAuthenticated(false);
+
+  // clear admin hash on logout
+  window.history.replaceState(null, "", "#home");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
 
   interface BackendVariant {
   id: number;
@@ -198,6 +217,15 @@ const transformProductSummaryData = (
   const removeFromCart = (id: number) => {
   setCartItems(prev => prev.filter(item => item.id !== id));
 };
+  // Modal handlers
+  const openModal = () => {
+    if (isModalOpen) return;
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   // Admin modal handlers
   const openAdminModal = () => {
@@ -209,14 +237,14 @@ const transformProductSummaryData = (
     setIsAdminModalOpen(false);
   };
 
-  const displayAdminDashboard = () => {
-    setIsAdminAuthenticated(true);
-    closeAdminModal();
-  }
+  // const displayAdminDashboard = () => {
+  //   setIsAdminAuthenticated(true);
+  //   closeAdminModal();
+  // }
 
-  const handleAdminSignOut = () => {
-    setIsAdminAuthenticated(false);
-  };
+ 
+
+
 
 const addToCart = (item: CartItem) => {
   setCartItems((prev) => {
@@ -238,6 +266,12 @@ const openCart = () => setCartOpen(true);
 const closeCart = () => setCartOpen(false);
 
   // Load all products once on page load
+  useEffect(() => {
+  if (!isAdminAuthenticated && window.location.hash.startsWith("#admin")) {
+    window.history.replaceState(null, "", "#home");
+  }
+}, [isAdminAuthenticated]);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -387,6 +421,7 @@ const closeCart = () => setCartOpen(false);
         console.error("Error deleting product:", error);
       }
     };
+    
 
   return (
   <Router>
@@ -413,13 +448,17 @@ const closeCart = () => setCartOpen(false);
               onRemoveFromCart={removeFromCart}
               openCart={openCart}
               closeCart={closeCart}
+              isModalOpen={isModalOpen}
+              openModal={openModal}
+              closeModal={closeModal}
 
               onCategorySelect={setCategoryId}
 
               openAdminModal={openAdminModal}
               closeAdminModal={closeAdminModal}
-              onAdminSuccess={displayAdminDashboard}
+             
               onAdminSignOut={handleAdminSignOut}
+              onAdminSuccess={handleAdminSuccess}
 
               createNewProduct={createNewProduct}
               createNewVariant={createNewVariant}

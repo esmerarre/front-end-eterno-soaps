@@ -11,9 +11,9 @@ interface ProductListProps {
     productVariants: ProductVariant[] | null;
     selectedVariant: ProductVariant | null;
     onVariantSelect: (variant: ProductVariant) => void;
-    isModalOpen?: boolean;
-    openModal?: () => void;
-    closeModal?: () => void;
+    isModalOpen: boolean;
+    openModal: () => void;
+    closeModal: () => void;
     onAdd?: () => void;
     onSubtract?: () => void;
     onAddToCart: (item: CartItem) => void;

@@ -5,6 +5,7 @@ import ContactUs from "../pages/ContactUs";
 import CartPage from "../pages/CartPage";
 import AdminDashboard from "../pages/AdminDashboard";
 import AdminSignIn from "../components/AdminSignIn";
+import { useEffect } from "react";
 
 
 import type {
@@ -31,6 +32,9 @@ interface MainLayoutProps {
   admins: Admin[];
   isAdminAuthenticated: boolean;
   isAdminModalOpen: boolean;
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
 
   // handlers
   onProductSelect: (id: number) => void;
@@ -55,6 +59,23 @@ interface MainLayoutProps {
 }
 
 export default function MainLayout(props: MainLayoutProps) {
+    const scrollToSection = (id: string) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+            window.history.replaceState(null, "", `#${id}`);
+        }};
+
+    useEffect(() => {
+        if (props.isAdminAuthenticated) {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    }, [props.isAdminAuthenticated]);
+
+
+  
+
+
   return (
     <>
       {/* Header */}
@@ -66,8 +87,23 @@ export default function MainLayout(props: MainLayoutProps) {
 
       {/* Main content */}
       <main className="main-content">
+        
         <section id="home">
           <CustomerHome />
+        </section>
+        <section id="admin-dashboard" className={props.isAdminAuthenticated ? "admin-page" : undefined}> 
+
+        {props.isAdminAuthenticated ? (
+            
+          <AdminDashboard 
+            products={props.products}
+            createNewProduct={props.createNewProduct}
+            createNewVariant={props.createNewVariant}
+            deleteVariant={props.deleteVariant}
+            deleteProduct={props.deleteProduct}
+            onAdminSignOut={props.onAdminSignOut}
+          />
+        ): null}
         </section>
 
         <section id="products">
@@ -83,34 +119,33 @@ export default function MainLayout(props: MainLayoutProps) {
             categories={props.categories}
             categoryProducts={props.categoryProducts}
             onCategorySelect={props.onCategorySelect}
+            isModalOpen={props.isModalOpen}
+            openModal={props.openModal}
+            closeModal={props.closeModal}
           />
         </section>
 
         <section id="contact">
           <ContactUs />
         </section>
-        <section id="admin-dashboard"> 
-
-        {props.isAdminAuthenticated && (
-          <AdminDashboard
-            products={props.products}
-            createNewProduct={props.createNewProduct}
-            createNewVariant={props.createNewVariant}
-            deleteVariant={props.deleteVariant}
-            deleteProduct={props.deleteProduct}
-            onAdminSignOut={props.onAdminSignOut}
-          />
-        )}
-        </section>
+        
     
       </main>
 
       {/* Footer */}
       <footer className="app-footer">
         <p>&copy; 2026 Eterno Soaps by Lucy. All rights reserved.</p>
-        <button onClick={props.openAdminModal} className="sign-in-button">
-          Admin Dashboard
+        <button className="sign-in-button" onClick={() => {
+            if (props.isAdminAuthenticated) {
+                scrollToSection("admin-dashboard");
+            } else {
+                props.openAdminModal();
+            }
+        }}
+    >
+        Admin Dashboard
         </button>
+
       </footer>
 
       {/* Cart modal */}
@@ -128,7 +163,7 @@ export default function MainLayout(props: MainLayoutProps) {
           isOpen={props.isAdminModalOpen}
           onClose={props.closeAdminModal}
           admins={props.admins}
-          onSuccess={props.onAdminSuccess}
+            onSuccess={props.onAdminSuccess}
         />
       )}
     </>
