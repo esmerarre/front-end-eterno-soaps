@@ -1,6 +1,8 @@
 import "./ContactUsForm.css";
 import { useState } from "react";
 
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 type FormData = {
   name: string;
   email: string;
@@ -29,7 +31,7 @@ const ContactUsForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8000/contact/", { // ✅ match FastAPI route
+      const response = await fetch(`${BASE_URL}/contact/`, { // ✅ match FastAPI route
         method: "POST",
         headers: {
           "Content-Type": "application/json",
