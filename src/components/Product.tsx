@@ -11,7 +11,7 @@ interface ProductProps {
 	isSelected: boolean;
 	onSelect: () => void;
 	variants: ProductVariant[] | null;
-	selectedVariant?: ProductVariant | null;
+	selectedVariant: ProductVariant | null;
 	onVariantSelect: (variant: ProductVariant) => void;
 	isModalOpen?: boolean;
 	openModal?: () => void;
@@ -47,10 +47,10 @@ export default function ProductCard({
 
 	const handleAddToCartClick = () => {
 		onAddToCart({
-			id: selectedVariant.id,
+			id: selectedVariant!.id,
 			productId: product.id,
 			name: product.name,
-			price: selectedVariant.price,
+			price: selectedVariant!.price,
 			quantity: selectedQuantity,
 		})
 		openCart();   // open the cart immediately
