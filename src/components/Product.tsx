@@ -11,7 +11,7 @@ interface ProductProps {
 	isSelected: boolean;
 	onSelect: () => void;
 	variants: ProductVariant[] | null;
-	selectedVariant: ProductVariant | null;
+	selectedVariant?: ProductVariant | null;
 	onVariantSelect: (variant: ProductVariant) => void;
 	isModalOpen?: boolean;
 	openModal?: () => void;
