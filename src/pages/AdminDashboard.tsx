@@ -40,6 +40,7 @@ export default function AdminDashboard({
     const [editStockValue, setEditStockValue] = useState<string>("");
 
 
+
    const inventory: InventoryItem[] = products.flatMap((product) =>
      product.variants.map((variant) => ({
         productId: product.id,
@@ -71,7 +72,7 @@ export default function AdminDashboard({
  return (
    <section className="admin-dashboard">
        <header className="admin-header">
-           <h1>Admin Dashboard</h1>
+           <h2 className="admin-title">Admin Dashboard</h2>
        </header>
 
         {/* ANALYTICS */}
@@ -87,8 +88,9 @@ export default function AdminDashboard({
             </button>
         </div>
         {showAnalytics && (
-        <div className="admin-content">
+        <div className="admin-content chart-grid">
            <MonthlySalesChart />
+
            <TopSellingProductsChart />
         </div>
         )}

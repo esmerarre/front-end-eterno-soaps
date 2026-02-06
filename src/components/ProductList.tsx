@@ -14,7 +14,6 @@ interface ProductListProps {
     isModalOpen: boolean;
     openModal: () => void;
     closeModal: () => void;
-    // quantity?: number;
     onAdd?: () => void;
     onSubtract?: () => void;
     onAddToCart: (item: CartItem) => void;
