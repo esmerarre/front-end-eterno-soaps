@@ -118,6 +118,11 @@ export default function ProductCard({
 									: "eternologo-img"
 								}
 							/>
+							{selectedVariant?.stockQuantity === 0 && (
+								<div className="out-of-stock-overlay">
+									<p>Out of Stock</p>
+								</div>
+							)}
 						</div>
 
 						<div className="modal-info-section">
@@ -151,7 +156,7 @@ export default function ProductCard({
 									onChange={(qty) => setSelectedQuantity(qty)}
 									value={selectedQuantity} // pass current quantity to QuantityUpdate
 								/>
-								<AddToCart onClick={handleAddToCartClick}/>
+								<AddToCart onClick={handleAddToCartClick} selectedVariant={selectedVariant} value={selectedQuantity}/>
 							</div>
 
 						</div>
