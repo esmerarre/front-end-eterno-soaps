@@ -1,5 +1,3 @@
-// import { useState } from "react";
-// import SalesChart from "./components/SalesChart";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./components/MainLayout";
 import Success from "./pages/Success";
@@ -8,7 +6,6 @@ import Cancel from "./pages/Cancel";
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from "axios";
-
 
 export interface Product {
   id: number;
@@ -154,8 +151,6 @@ interface BackendProductSummary {
   }[];
 }
 
-
-
   //product data to camelCase
 const transformProductData = (product: BackendProduct): Product => ({
   id: product.id,
@@ -178,7 +173,6 @@ const transformVariantData = (variant: BackendVariant): ProductVariant => ({
   stockQuantity: variant.stock_quantity,
   product: [], // backend relation, not needed here
 });
-
 
 // Convert backend snake_case to frontend camelCase for ProductSummary
 const transformProductSummaryData = (
@@ -206,7 +200,6 @@ const transformProductSummaryData = (
     variants,
   };
 };
-
 
   // Handler that updates productId AND clears selectedVariant
   const handleProductSelect = (id: number) => {
@@ -241,10 +234,6 @@ const transformProductSummaryData = (
   //   setIsAdminAuthenticated(true);
   //   closeAdminModal();
   // }
-
- 
-
-
 
 const addToCart = (item: CartItem) => {
   setCartItems((prev) => {

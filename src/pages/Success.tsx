@@ -67,7 +67,7 @@ export default function Success() {
         <p>Your order has been processed successfully.</p>
         <button
           className="continue-shopping-btn"
-          onClick={() => navigate("/products")}
+          onClick={() => navigate("/#products")}
         >
           Continue Shopping
         </button>
