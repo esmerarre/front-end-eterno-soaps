@@ -24,13 +24,18 @@
 //   );
 // }
 
+import eternologo from '../assets/eternologo.png';
 import './CustomerHome.css';
 
 export default function CustomerHome() {
   return (
     <section id="home" className="customer-home">
       <div className="home-content">
-        <h1 className="home-title">Welcome to Jabon Eterno</h1>
+        <div className='slide'>
+          <img src={eternologo} alt="Eterno Soaps Logo" className="home-logo" />
+        </div>
+        <div className="slide">
+        <h1 className="home-title">Welcome to Eterno Soaps</h1>
         <p className="home-tagline">Handcrafted Natural Soaps by Lucy</p>
         <p className="home-description">
           Experience the luxury of pure, artisan soaps made with love and the finest natural ingredients.
@@ -43,6 +48,7 @@ export default function CustomerHome() {
           >
             Shop Now
           </button>
+          </div>
         </div>
       </div>
     </section>
