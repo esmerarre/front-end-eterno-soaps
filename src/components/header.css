@@ -17,11 +17,29 @@
   justify-content: space-between;
   align-items: center;
 }
-.header-logo {
+
+/* .header-logo {
   display: flex;
   align-items: center;
+} */
+
+.header-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
- .logo-image {
+
+.jabon {
+  font-family: "Arsenal", sans-serif;
+  font-size: 12px;
+}
+
+.eterno {
+  font-family: "Didot LP", serif;
+  font-size: 24px;
+}
+
+.logo-image {
     height: 100px;
   }
 
