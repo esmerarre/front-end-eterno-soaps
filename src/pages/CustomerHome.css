@@ -5,7 +5,8 @@
   justify-content: center;
   position: relative;
   /* background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); */
-  background-image: url('../assets/background-soaps-3.jpeg');
+  /* background-image: url('../assets/background-soaps-3.jpeg'); */
+  background-image: url('../assets/background-green.jpeg');
   background-size: cover;
   background-position: -20px center;
   padding: 2rem;
