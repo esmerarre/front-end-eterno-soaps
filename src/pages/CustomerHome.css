@@ -9,7 +9,7 @@
   background-size: cover;
   background-position: -20px center;
   padding: 2rem;
-  margin-top: 80px;
+  margin-top: 78px;
 }
 
 .customer-home::before {
@@ -36,6 +36,8 @@
   margin-bottom: 1rem;
   /* font-family: 'Georgia', serif; */
   font-family: 'Didot LP', serif ;
+  text-transform: uppercase;
+  font-weight: normal;
 }
 
 .home-tagline {
