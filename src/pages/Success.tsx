@@ -18,6 +18,7 @@ export default function Success() {
 
     try {
       const parsed = JSON.parse(savedCart) as CartItem[];
+      console.log("Parsed checkoutCart:", parsed);
       setCartItems(parsed);
     } catch (err) {
       console.error("Failed to parse checkoutCart:", err);
@@ -27,6 +28,7 @@ export default function Success() {
   // Decrease stock ONCE
   useEffect(() => {
     if (!cartItems.length) return;
+    console.log("Decreasing stock for items:", cartItems);
 
     const updateStock = async () => {
       for (const item of cartItems) {
