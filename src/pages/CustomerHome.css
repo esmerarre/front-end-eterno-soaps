@@ -3,36 +3,56 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-  /* background-image: url('../assets/background-soaps-2.jpeg');
+  position: relative;
+  /* background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); */
+  /* background-image: url('../assets/background-soaps-3.jpeg'); */
+  background-image: url('../assets/background-green.jpeg');
   background-size: cover;
-  opacity: 0.60; */
+  background-position: -20px center;
   padding: 2rem;
-  margin-top: 80px;
+  margin-top: 78px;
+}
+
+.customer-home::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
 }
 
 .home-content {
   max-width: 800px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .home-title {
   font-size: 3.5rem;
   color: #2d5016;
   margin-bottom: 1rem;
-  font-family: 'Georgia', serif;
+  /* font-family: 'Georgia', serif; */
+  font-family: 'Didot LP', serif ;
+  text-transform: uppercase;
+  font-weight: normal;
 }
 
 .home-tagline {
   font-size: 1.5rem;
-  color: #6b8e23;
+  /* color: #6b8e23; */
+  color: black;
   margin-bottom: 2rem;
   font-style: italic;
 }
 
 .home-description {
   font-size: 1.2rem;
-  color: #555;
+  /* color: #555; */
+  color: #202020;
   line-height: 1.8;
   margin-bottom: 3rem;
   max-width: 600px;
@@ -106,5 +126,46 @@
     width: 100%;
     max-width: 300px;
   }
+}
+
+.home-logo {
+  width: 100%;
+  display: block;
+  position: relative;
+  /* left: 50%; */
+  transform: translateY(-28%);
+}
+
+/* Slide animations - logo shows first alone, then text */
+.slide {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+}
+
+/* Logo appears first and stays for 3 seconds, then fades out */
+.slide:nth-child(1) {
+  animation: showThenHide 6s ease-in-out forwards;
+}
+
+/* Text content appears after logo fades out */
+.slide:nth-child(2) {
+  animation: hideUntilShow 6s ease-in-out forwards;
+  position: relative;
+}
+
+@keyframes showThenHide {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  50% { opacity: 1; }
+  60% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes hideUntilShow {
+  0% { opacity: 0; }
+  60% { opacity: 0; }
+  70% { opacity: 1; }
+  100% { opacity: 1; }
 }
 

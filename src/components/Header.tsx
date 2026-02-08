@@ -29,7 +29,9 @@ const Header: React.FC<HeaderProps> = ({ onCartClick, isAdmin, onAdminSignOut })
         <>
         <header className="header">
             <div className="header-container">
-                 <div className="header-logo" >
+                  <div className="header-logo" >
+                    <div className="jabon">JABON</div>
+                    <div className="eterno">ETERNO</div>
                     {/* <img 
                     src={eternologo} 
                     alt = "Eterno Soap Logo"
