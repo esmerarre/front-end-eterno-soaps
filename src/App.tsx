@@ -420,6 +420,11 @@ export default function App() {
           : product
       )
     );
+    
+    // Update productVariants if this product is currently selected
+    setProductVariants(prev => 
+      prev ? prev.filter(variant => variant.id !== variantId) : null
+    );
   } catch (error) {
     console.error("Error deleting variant:", error);
   }
