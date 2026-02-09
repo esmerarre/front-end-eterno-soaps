@@ -1,4 +1,3 @@
-// frontend/src/components/CheckoutButton.tsx
 import React, { useState } from "react"
 import { createCheckoutSession} from "../services/checkout"
 import type { CartItem } from "../App"
@@ -23,6 +22,7 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ items }) => {
       setLoading(false)
     }
   }
+  
 //add on line 27 diable button when items is empty
   return (
     <button onClick={handleCheckout} className="checkout-btn" disabled={loading}>

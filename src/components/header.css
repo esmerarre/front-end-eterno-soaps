@@ -18,11 +18,6 @@
   align-items: center;
 }
 
-/* .header-logo {
-  display: flex;
-  align-items: center;
-} */
-
 .header-logo {
   display: flex;
   flex-direction: column;
@@ -72,8 +67,6 @@
   font-family: "Times New Roman", Times, serif;
   font-style: italic;
   flex: 1;
-  /* margin-bottom: 2rem; */
-
   }
 
 

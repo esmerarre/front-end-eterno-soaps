@@ -4,7 +4,6 @@ import TopSellingProductsChart from "../components/TopSellingProductsChart";
 import InventoryManager from "../components/InventoryManager";
 import type { NewProduct, Product, NewVariant } from "../App";
 import { useState } from "react";
-// import InventoryStockChart from "../components/InventoryStockChart";
 
 interface AdminDashboardProps {
     createNewProduct: (newProduct: NewProduct) => void;
@@ -32,24 +31,23 @@ export default function AdminDashboard({
     deleteProduct,
     updateStock
 }: AdminDashboardProps) {
-   // Build inventory from products prop (no fetch needed - App.tsx handles fetching)
-   const [showManager, setShowManager] = useState(false);
-   const [showAnalytics, setShowAnalytics] = useState(false); 
-   const [showInventory, setShowInventory] = useState(false);  
+    const [showManager, setShowManager] = useState(false);
+    const [showAnalytics, setShowAnalytics] = useState(false); 
+    const [showInventory, setShowInventory] = useState(false);  
     const [editingVariantId, setEditingVariantId] = useState<number | null>(null);
     const [editStockValue, setEditStockValue] = useState<string>("");
 
 
 
-   const inventory: InventoryItem[] = products.flatMap((product) =>
-     product.variants.map((variant) => ({
+    const inventory: InventoryItem[] = products.flatMap((product) =>
+    product.variants.map((variant) => ({
         productId: product.id,
         variantId: variant.id,
         productName: product.name,
         variantLabel: `${variant.size} / ${variant.shape}`,
         stockQuantity: variant.stockQuantity,
-     }))
-   );
+        }))
+    );
 
     const commitStockUpdate = (item: InventoryItem, value: string) => {
         if (value.trim() === "") {
@@ -57,23 +55,21 @@ export default function AdminDashboard({
             setEditingVariantId(null);
             return; // prevent empty input from being submitted
         }
-
         const parsed = Number(value); // convert input to number for validation
         if (Number.isNaN(parsed)) {
             setEditStockValue(String(item.stockQuantity)); // reset to original value if input is not a valid number
             setEditingVariantId(null);
             return; // prevent non-numeric input from being submitted
         }
-
         updateStock(item.productId, item.variantId, parsed); // call updateStock function to patch the backend and update state
         setEditingVariantId(null);
     };
 
- return (
-   <section className="admin-dashboard">
-       <header className="admin-header">
-           <h2 className="admin-title">Admin Dashboard</h2>
-       </header>
+    return (
+    <section className="admin-dashboard">
+        <header className="admin-header">
+            <h2 className="admin-title">Admin Dashboard</h2>
+        </header>
 
         {/* ANALYTICS */}
     <section className="admin-section">
@@ -84,14 +80,12 @@ export default function AdminDashboard({
                 onClick={() => setShowAnalytics((prev) => !prev)}
                 >
                 {showAnalytics ? "Hide" : "Manage Analytics"}
-
             </button>
         </div>
         {showAnalytics && (
         <div className="admin-content chart-grid">
-           <MonthlySalesChart />
-
-           <TopSellingProductsChart />
+            <MonthlySalesChart />
+            <TopSellingProductsChart />
         </div>
         )}
     </section>
@@ -105,11 +99,9 @@ export default function AdminDashboard({
                 onClick={() => setShowInventory((prev) => !prev)}
                 >
                 {showInventory ? "Hide" : "Manage Inventory Overview"}
-
             </button>
         </div>
 
-        
         {showInventory && (
         <>
             <table className="inventory-table">
@@ -213,14 +205,6 @@ export default function AdminDashboard({
             />
         )}
     </section>
-     {/* {!loading && (
- <>
-   <h3>Stock by Variant</h3>
-   <InventoryStockChart data={inventory} />
- </>
-)} */}
-
-
-   </section>
- );
+    </section>
+    );
 }

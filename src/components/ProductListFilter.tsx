@@ -1,6 +1,4 @@
-// import {useEffect, useState} from "react";
 import "./ProductListFilter.css";
-// import type { Category } from "../App";
 
 interface FilterProps {
     onCategorySelect: (categoryId: number | null) => void;
@@ -26,5 +24,4 @@ export default function ProductListFilter({onCategorySelect, categories}: Filter
             </select>
         </div>
     )
-
 }

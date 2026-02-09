@@ -1,4 +1,3 @@
-
 import "./QuantityUpdate.css"
 
 type QuantityUpdateProps = {
@@ -13,9 +12,7 @@ const QuantityUpdate = ({
     minValue=30, 
     onChange, // optional callback
     value
-}: 
-    QuantityUpdateProps) => {
-
+}: QuantityUpdateProps) => {
     return <div className="qty-btn-container">
         <button className="decrement-btn" onClick={() => onChange(Math.max(value - 1, minValue))}>
             <span className="quantity-symbols">-</span>

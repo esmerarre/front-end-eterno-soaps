@@ -27,6 +27,7 @@
 .qty-btn-container button:hover {
     background-color: #f0f0f0;
 }
+
 .qty-btn-container p {
   background-color: transparent; /* inherit green */
   color: white;

@@ -1,11 +1,6 @@
-// import {useState} from "react";
 import type { ProductVariant } from "../App";
 import "./AddToCart.css"
 
-// type AddtoCartProps = {
-//   minValue?: number;
-//   maxValue?: number;
-// };
 interface AddToCartProps {
   onClick: () => void;
   selectedVariant: ProductVariant | null; // pass selected variant to AddToCart for stock validation

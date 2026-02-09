@@ -1,4 +1,3 @@
-// frontend/services/contact.ts
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function sendContactForm(data: { name: string; email: string; message: string }) {

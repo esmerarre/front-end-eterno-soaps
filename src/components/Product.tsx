@@ -5,7 +5,6 @@ import "./Product.css";
 import { useState } from "react";
 import eternologocolor from '../assets/eternologocolor.png';
 
-
 interface ProductProps {
 	product: Product | ProductSummary;
 	isSelected: boolean;
@@ -18,8 +17,6 @@ interface ProductProps {
 	closeModal?: () => void;
 	onAddToCart: (item: CartItem) => void;
 	openCart: () => void;
-
-	
 }
 
 export default function ProductCard({
@@ -75,15 +72,6 @@ export default function ProductCard({
 		// If neither are in the order array, sort alphabetically
 		return sizeA.localeCompare(sizeB);
 	}) : null;
-
-
-// THIS LOGIC IS TO HIGHLIGHT DEFAULT SIZE BUTTON BUT MAY IMPLEMENT LATER
-	// 	//first ? automatically returns null if variants is null or undefined
-	// const cheapestSize = variants?.reduce((min, curr) => 
-	// 	curr.price < min.price ? curr : min
-	// ) ?? null;
-	//NEEDS TO BE MOVED TO APPROPRIATE ClassName= LOCATION
-	// // ${cheapestSize?.id === variant.id ? "cheapest" : ""}
 
 	return (
 		<div className="product-card-container">
@@ -162,4 +150,3 @@ export default function ProductCard({
 		</div>
 	);
 }
-	

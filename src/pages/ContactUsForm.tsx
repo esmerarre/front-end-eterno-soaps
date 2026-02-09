@@ -65,7 +65,6 @@ const ContactUsForm = () => {
           placeholder="Your name"
         />
       </div>
-
       <div className="form-container">
         <label htmlFor="email">Email</label>
         <input
@@ -78,7 +77,6 @@ const ContactUsForm = () => {
           placeholder="your@email.com"
         />
       </div>
-
       <div className="form-container">
         <label htmlFor="message">Message</label>
         <textarea
@@ -91,55 +89,9 @@ const ContactUsForm = () => {
           required
         ></textarea>
       </div>
-
       <button type="submit" className="btn-submit">Send Message</button>
     </form>
   );
 };
 
 export default ContactUsForm;
-
-
-
-  //           <form className="contact-form" onSubmit={handleSubmit}>
-//             <div className="form-group">
-//               <label htmlFor="name">Name</label>
-//               <input
-//                 type="text"
-//                 id="name"
-//                 name="name"
-//                 value={formData.name}
-//                 onChange={handleChange}
-//                 required
-//                 placeholder="Your name"
-//               />
-//             </div>
-
-//             <div className="form-group">
-//               <label htmlFor="email">Email</label>
-//               <input
-//                 type="email"
-//                 id="email"
-//                 name="email"
-//                 value={formData.email}
-//                 onChange={handleChange}
-//                 required
-//                 placeholder="your@email.com"
-//               />
-//             </div>
-
-//             <div className="form-group">
-//               <label htmlFor="message">Message</label>
-//               <textarea
-//                 id="message"
-//                 name="message"
-//                 value={formData.message}
-//                 onChange={handleChange}
-//                 required
-//                 rows={6}
-//                 placeholder="Tell us how we can help you..."
-//               ></textarea>
-//             </div>
-
-//             <button type="submit" className="btn-submit">Send Message</button>
-//           </form>

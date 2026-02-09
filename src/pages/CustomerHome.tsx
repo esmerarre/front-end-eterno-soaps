@@ -1,29 +1,3 @@
-// import "./CustomerHome.css";
-
-// export default function CustomerHome() {
-//   // 🔹 Add hooks or functions here later
-
-//   return (
-//     <section className="customer-home">
-//       <div className="home-container">
-
-//         <h2 className="home-title">
-//           {/* Page title */}
-//         </h2>
-
-//         <p className="home-subtitle">
-//           {/* Subtitle or tagline */}
-//         </p>
-
-//         <div className="home-actions">
-//           {/* Buttons / CTAs */}
-//         </div>
-
-//       </div>
-//     </section>
-//   );
-// }
-
 import eternologo from '../assets/eternologo.png';
 import './CustomerHome.css';
 

@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./components/MainLayout";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
-
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from "axios";
@@ -82,7 +81,7 @@ export default function App() {
   // Global app state (owned here, passed down to ProductPage)
   const [products, setProducts] = useState<Product[]>([]);
   const [productId, setProductId] = useState<number | null>(null);
-  const [productVariants, setProductVariants] = useState<ProductVariant[] | null>(null); //reveiew default null state
+  const [productVariants, setProductVariants] = useState<ProductVariant[] | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
@@ -104,42 +103,15 @@ export default function App() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-const handleAdminSignOut = () => {
-  setIsAdminAuthenticated(false);
+  const handleAdminSignOut = () => {
+    setIsAdminAuthenticated(false);
 
-  // clear admin hash on logout
-  window.history.replaceState(null, "", "#home");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
-
+    // clear admin hash on logout
+    window.history.replaceState(null, "", "#home");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   interface BackendVariant {
-  id: number;
-  product_id: number;
-  size: string;
-  shape: string;
-  img_key: string;
-  image_url: string;
-  price: number;
-  stock_quantity: number;
-}
-
-interface BackendProduct {
-  id: number;
-  name: string;
-  description: string;
-  ingredients: string[];
-  image_url: string;
-  variants: BackendVariant[];
-}
-
-interface BackendProductSummary {
-  id: number;
-  name: string;
-  description: string;
-  ingredients: string[];
-  image_url: string;
-  variants?: {
     id: number;
     product_id: number;
     size: string;
@@ -148,58 +120,83 @@ interface BackendProductSummary {
     image_url: string;
     price: number;
     stock_quantity: number;
-  }[];
-}
+  }
+
+  interface BackendProduct {
+    id: number;
+    name: string;
+    description: string;
+    ingredients: string[];
+    image_url: string;
+    variants: BackendVariant[];
+  }
+
+  interface BackendProductSummary {
+    id: number;
+    name: string;
+    description: string;
+    ingredients: string[];
+    image_url: string;
+    variants?: {
+      id: number;
+      product_id: number;
+      size: string;
+      shape: string;
+      img_key: string;
+      image_url: string;
+      price: number;
+      stock_quantity: number;
+    }[];
+  }
 
   //product data to camelCase
-const transformProductData = (product: BackendProduct): Product => ({
-  id: product.id,
-  name: product.name,
-  description: product.description,
-  ingredients: product.ingredients,
-  imageUrl: product.image_url,
-  categories: [], // populated elsewhere
-  variants: product.variants.map(transformVariantData),
-});
-
-const transformVariantData = (variant: BackendVariant): ProductVariant => ({
-  id: variant.id,
-  productId: variant.product_id,
-  size: variant.size,
-  shape: variant.shape,
-  imgKey: variant.img_key,
-  imageUrl: variant.image_url,
-  price: variant.price,
-  stockQuantity: variant.stock_quantity,
-  product: [], // backend relation, not needed here
-});
-
-// Convert backend snake_case to frontend camelCase for ProductSummary
-const transformProductSummaryData = (
-  product: BackendProductSummary
-): ProductSummary => {
-  const variants: ProductVariant[] =
-    product.variants?.map((variant) => ({
-      id: variant.id,
-      productId: variant.product_id,
-      size: variant.size,
-      shape: variant.shape,
-      imgKey: variant.img_key,
-      imageUrl: variant.image_url,
-      price: variant.price,
-      stockQuantity: variant.stock_quantity,
-      product: [],
-    })) ?? [];
-
-  return {
+  const transformProductData = (product: BackendProduct): Product => ({
     id: product.id,
     name: product.name,
     description: product.description,
     ingredients: product.ingredients,
     imageUrl: product.image_url,
-    variants,
+    categories: [], // populated elsewhere
+    variants: product.variants.map(transformVariantData),
+  });
+
+  const transformVariantData = (variant: BackendVariant): ProductVariant => ({
+    id: variant.id,
+    productId: variant.product_id,
+    size: variant.size,
+    shape: variant.shape,
+    imgKey: variant.img_key,
+    imageUrl: variant.image_url,
+    price: variant.price,
+    stockQuantity: variant.stock_quantity,
+    product: [], // backend relation, not needed here
+  });
+
+  // Convert backend snake_case to frontend camelCase for ProductSummary
+  const transformProductSummaryData = (
+    product: BackendProductSummary
+  ): ProductSummary => {
+    const variants: ProductVariant[] =
+      product.variants?.map((variant) => ({
+        id: variant.id,
+        productId: variant.product_id,
+        size: variant.size,
+        shape: variant.shape,
+        imgKey: variant.img_key,
+        imageUrl: variant.image_url,
+        price: variant.price,
+        stockQuantity: variant.stock_quantity,
+        product: [],
+      })) ?? [];
+    return {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      ingredients: product.ingredients,
+      imageUrl: product.image_url,
+      variants,
+    };
   };
-};
 
   // Handler that updates productId AND clears selectedVariant
   const handleProductSelect = (id: number) => {
@@ -230,36 +227,29 @@ const transformProductSummaryData = (
     setIsAdminModalOpen(false);
   };
 
-  // const displayAdminDashboard = () => {
-  //   setIsAdminAuthenticated(true);
-  //   closeAdminModal();
-  // }
+  const addToCart = (item: CartItem) => {
+    setCartItems((prev) => {
+      const existing = prev.find((i) => i.id === item.id);
+      if (existing) {
+        return prev.map((i) =>
+          i.id === item.id
+            ? { ...i, quantity: i.quantity + item.quantity }
+            : i
+        );
+      }
+      return [...prev, item];
+    });
+  };
 
-const addToCart = (item: CartItem) => {
-  setCartItems((prev) => {
-    const existing = prev.find((i) => i.id === item.id);
-
-    if (existing) {
-      return prev.map((i) =>
-        i.id === item.id
-          ? { ...i, quantity: i.quantity + item.quantity }
-          : i
-      );
-    }
-
-    return [...prev, item];
-  });
-};
-
-const openCart = () => setCartOpen(true);
-const closeCart = () => setCartOpen(false);
+  const openCart = () => setCartOpen(true);
+  const closeCart = () => setCartOpen(false);
 
   // Load all products once on page load
   useEffect(() => {
-  if (!isAdminAuthenticated && window.location.hash.startsWith("#admin")) {
-    window.history.replaceState(null, "", "#home");
-  }
-}, [isAdminAuthenticated]);
+    if (!isAdminAuthenticated && window.location.hash.startsWith("#admin")) {
+      window.history.replaceState(null, "", "#home");
+    }
+  }, [isAdminAuthenticated]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -286,8 +276,7 @@ const closeCart = () => setCartOpen(false);
     fetchCategories();
   }, []);
 
-
-    // Load all admin users once on page load
+  // Load all admin users once on page load
   useEffect(() => {
     const fetchAdminUsers = async () => {
       try {
@@ -299,7 +288,6 @@ const closeCart = () => setCartOpen(false);
     };
     fetchAdminUsers();
   }, []);
-
 
   // When a product is selected, fetch its variants
   useEffect(() => {
@@ -395,12 +383,19 @@ const closeCart = () => setCartOpen(false);
           stock_quantity: newVariant.stockQuantity,
         };
         const response = await axios.post(`${BASE_URL}/products/${newVariant.productId}/variants`, payload)
+        const newVariantData = transformVariantData(response.data);
+        
         // Update products list with new variant
         setProducts(prev => prev.map(product => 
           product.id === newVariant.productId 
-            ? { ...product, variants: [...product.variants, transformVariantData(response.data)] }
+            ? { ...product, variants: [...product.variants, newVariantData] }
             : product
         ));
+        
+        // Update productVariants if this product is currently selected
+        if (productId === newVariant.productId) {
+          setProductVariants(prev => prev ? [...prev, newVariantData] : [newVariantData]);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -440,7 +435,6 @@ const closeCart = () => setCartOpen(false);
         console.error("Error deleting product:", error);
       }
     };
-    
 
   return (
   <Router>
@@ -460,7 +454,6 @@ const closeCart = () => setCartOpen(false);
               admins={admins}
               isAdminAuthenticated={isAdminAuthenticated}
               isAdminModalOpen={isAdminModalOpen}
-              
               onProductSelect={handleProductSelect}
               onVariantSelect={setSelectedVariant}
               onAddToCart={addToCart}
@@ -470,15 +463,11 @@ const closeCart = () => setCartOpen(false);
               isModalOpen={isModalOpen}
               openModal={openModal}
               closeModal={closeModal}
-
               onCategorySelect={setCategoryId}
-
               openAdminModal={openAdminModal}
               closeAdminModal={closeAdminModal}
-             
               onAdminSignOut={handleAdminSignOut}
               onAdminSuccess={handleAdminSuccess}
-
               createNewProduct={createNewProduct}
               createNewVariant={createNewVariant}
               deleteVariant={deleteVariant}

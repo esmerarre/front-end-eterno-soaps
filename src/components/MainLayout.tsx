@@ -7,7 +7,6 @@ import AdminDashboard from "../pages/AdminDashboard";
 import AdminSignIn from "../components/AdminSignIn";
 import { useEffect } from "react";
 
-
 import type {
   Product,
   ProductVariant,
@@ -46,7 +45,6 @@ interface MainLayoutProps {
 
   onCategorySelect: (categoryId: number | null) => void;
 
-
   openAdminModal: () => void;
   closeAdminModal: () => void;
   onAdminSuccess: () => void;
@@ -58,7 +56,6 @@ interface MainLayoutProps {
   deleteProduct: (productId: number) => void;
   updateStock: (productId: number, variantId: number, newStock: number) => void;
 }
-
 
 export default function MainLayout(props: MainLayoutProps) {
     const scrollToSection = (id: string) => {
@@ -73,11 +70,6 @@ export default function MainLayout(props: MainLayoutProps) {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
     }, [props.isAdminAuthenticated]);
-
-
-
-  
-
 
   return (
     <>
@@ -128,12 +120,9 @@ export default function MainLayout(props: MainLayoutProps) {
             closeModal={props.closeModal}
           />
         </section>
-
         <section id="contact">
           <ContactUs />
         </section>
-        
-    
       </main>
 
       {/* Footer */}
@@ -149,7 +138,6 @@ export default function MainLayout(props: MainLayoutProps) {
     >
         Admin Dashboard
         </button>
-
       </footer>
 
       {/* Cart modal */}

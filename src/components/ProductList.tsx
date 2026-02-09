@@ -1,10 +1,8 @@
 import "./ProductList.css";
 import type { CartItem, Product, ProductSummary, ProductVariant } from "../App";
 import ProductCard from "./Product";
-// import {useState, useEffect} from "react";
 
 interface ProductListProps {
-    // Props needed to render product tiles and handle selection
     products: Product[];
     selectedProductId: number | null;
     onProductSelect: (productId: number) => void;

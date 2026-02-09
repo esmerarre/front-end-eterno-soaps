@@ -3,16 +3,12 @@
   margin: 0 auto;
   padding: 2.5rem 2rem;
 }
+
 .admin-page {
   min-height: 100vh;
   padding: 6rem 2rem 4rem;
   background: linear-gradient(180deg, #f9fdf9 0%, #e8f5e9 100%);
 }
-/* #admin-dashboard {
-  scroll-margin-top: 90px;
-} */
-
-
 
 .admin-header {
   text-align: center;
@@ -20,19 +16,16 @@
     color: #2d5016;
     margin-bottom: 1rem;
     font-family: 'Georgia', serif;
-  
-  
-
 }
+
 .admin-title{
     margin-top: 0;
     margin-bottom: 1rem;
-
 }
+
 .admin-header h2 {
     margin-top: 0;
     margin-bottom: 1rem;
-  
 }
 
 .admin-section {
@@ -42,7 +35,6 @@
   margin-bottom: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
-
 
 .admin-section h2 {
   margin-bottom: 1rem;

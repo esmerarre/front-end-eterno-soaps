@@ -5,7 +5,6 @@ import "./Success.css";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 
-
 export default function Success() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [showConfetti, setShowConfetti] = useState(true);
@@ -38,7 +37,6 @@ export default function Success() {
           /* quantity */ item.quantity
         );
       }
-
       localStorage.removeItem("checkoutCart");
     };
 

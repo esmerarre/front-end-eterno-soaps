@@ -25,19 +25,13 @@ const CartPage: React.FC<CartPageProps> = ({ items, onClose, onRemoveItem }) => 
         {items.length === 0 ? (
           <p className="empty-cart">Your cart is empty</p>
         ) : (
-
-        
           <>
           <div className="cart-items-header">
             <span className="header-action"></span>
             <span className="header-product">Product</span>
             <span className="header-quantity">Quantity</span>
             <span className="header-total">Total</span>
-          
-           
-            
           </div> 
-
           <ul className="cart-items">
             {items.map((item) => (
               <li key={item.id} className="cart-item">

@@ -36,7 +36,6 @@
   border-collapse: collapse;
 }
 
-
 .products-catalog th {
   padding: 0.75rem 1rem;
   text-align: center;
@@ -55,7 +54,6 @@
 .products-catalog tr:nth-child(even):not(.stock-low):not(.stock-critical) {
   background: #fafafa;
 }
-
 
 /* Delete product button */
 .delete-product-btn {
