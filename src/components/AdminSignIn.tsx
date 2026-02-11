@@ -49,7 +49,7 @@ export default function AdminSignIn({ isOpen, onClose, admins, onSuccess}: Admin
     const makeControlledInput = (inputName: 'username') => {
         return (
         <input
-            type="text"
+            type="password"
             name={inputName}
             id={`input-${inputName}`}
             value={formData[inputName]}
