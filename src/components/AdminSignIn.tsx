@@ -1,15 +1,19 @@
 import { useState } from 'react';
+import axios from 'axios';
 import "./AdminSignIn.css";
 
 interface AdminSignInProps {
-  isOpen: boolean;
-  onClose: () => void;
-  admins?: { id: number; username: string }[];
-  onSuccess: () => void;
+    isOpen: boolean;
+    onClose: () => void;
+    onSuccess: (accessToken: string) => void;
 }
 
-export default function AdminSignIn({ isOpen, onClose, admins, onSuccess}: AdminSignInProps) {
-  const [formData, setFormData] = useState({ username: '' }); //set up default state as empty str
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
+export default function AdminSignIn({ isOpen, onClose, onSuccess}: AdminSignInProps) {
+    const [formData, setFormData] = useState({ username: '', password: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = event.target.name;
@@ -23,37 +27,47 @@ export default function AdminSignIn({ isOpen, onClose, admins, onSuccess}: Admin
         })
     }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
-        const isValidUsername = admins?.some((admin) => admin.username === formData.username);
-        
-        if (!formData.username.trim()) { //popup if field left empty // change logic to alert if credential is wrong
-            alert('Please enter Admin credentials.');
+        setErrorMessage('');
+
+        if (!formData.username.trim() || !formData.password.trim()) {
+            setErrorMessage('Please enter both username and password.');
+            return;
         }
 
-        else if (!isValidUsername) { //popup if field left empty // change logic to alert if credential is wrong
-            alert("You've entered an incorrect username. Please try again.");
-        }
+        try {
+            setIsSubmitting(true);
+            const response = await axios.post(`${BASE_URL}/admins/login`, {
+                username: formData.username,
+                password: formData.password,
+            });
 
-        else if (isValidUsername) { //correct admin username
-            onSuccess(); //display admin dashboard page
-        }
-        
-        setFormData({username: ''}) //resets the text bar when the form is submitted
+            const accessToken: string | undefined = response.data?.access_token;
+            if (!accessToken) {
+                setErrorMessage('Login failed. Missing access token.');
+                return;
+            }
 
-        return;
+            onSuccess(accessToken);
+            setFormData({ username: '', password: '' });
+        } catch {
+            setErrorMessage('Invalid credentials. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
 
     }
 
-    const makeControlledInput = (inputName: 'username') => {
+    const makeControlledInput = (inputName: 'username' | 'password') => {
         return (
         <input
-            type="password"
+            type={inputName === 'password' ? 'password' : 'text'}
             name={inputName}
             id={`input-${inputName}`}
             value={formData[inputName]}
             onChange={handleChange}
+            autoComplete={inputName === 'password' ? 'current-password' : 'username'}
         />
         );
     };
@@ -68,11 +82,16 @@ export default function AdminSignIn({ isOpen, onClose, admins, onSuccess}: Admin
             </button>
             <form onSubmit={handleSubmit} className="sign-in-form">
             <div className="input-wrapper">
-                <label htmlFor="username">Enter Admin Username: </label>
+                <label htmlFor="input-username">Admin Username: </label>
                 <div>{makeControlledInput('username')}</div>
             </div>
+            <div className="input-wrapper">
+                <label htmlFor="input-password">Password: </label>
+                <div>{makeControlledInput('password')}</div>
+            </div>
+            {errorMessage && <p>{errorMessage}</p>}
             <div className="submit-button-wrapper">
-                <input type="submit" value="Sign In" />
+                <input type="submit" value={isSubmitting ? 'Signing In...' : 'Sign In'} disabled={isSubmitting} />
             </div>
             </form>
         </div>

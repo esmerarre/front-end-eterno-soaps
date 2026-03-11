@@ -13,7 +13,6 @@ import type {
   CartItem,
   ProductSummary,
   Category,
-  Admin,
   NewProduct,
   NewVariant,
 } from "../App";
@@ -28,7 +27,6 @@ interface MainLayoutProps {
   categoryProducts?: ProductSummary[];
   cartItems: CartItem[];
   cartOpen: boolean;
-  admins: Admin[];
   isAdminAuthenticated: boolean;
   isAdminModalOpen: boolean;
   isModalOpen: boolean;
@@ -47,7 +45,7 @@ interface MainLayoutProps {
 
   openAdminModal: () => void;
   closeAdminModal: () => void;
-  onAdminSuccess: () => void;
+  onAdminSuccess: (accessToken: string) => void;
   onAdminSignOut: () => void;
 
   createNewProduct: (p: NewProduct) => void;
@@ -154,7 +152,6 @@ export default function MainLayout(props: MainLayoutProps) {
         <AdminSignIn
           isOpen={props.isAdminModalOpen}
           onClose={props.closeAdminModal}
-          admins={props.admins}
             onSuccess={props.onAdminSuccess}
         />
       )}

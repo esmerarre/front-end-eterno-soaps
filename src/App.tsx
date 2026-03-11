@@ -52,11 +52,6 @@ export interface Category {
   products: ProductSummary[];
 }
 
-export interface Admin {
-  id: number;
-  username: string;
-}
-
 export interface NewProduct {
   name: string;
   description: string;
@@ -75,6 +70,7 @@ export interface NewVariant {
 
 // Base API URL for backend requests (Vite only exposes VITE_ prefixed vars)
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+const ADMIN_TOKEN_KEY = "admin_access_token";
 console.log("VITE_BACKEND_URL=", import.meta.env.VITE_BACKEND_URL);
 
 export default function App() {
@@ -90,21 +86,27 @@ export default function App() {
   const [categoryId, setCategoryId] = useState<number | null>(null);
   const [categoryProducts, setCategoryProducts] = useState<ProductSummary[] | undefined>(undefined);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [admins, setAdmins] = useState<Admin[]>([]);
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(
+    () => Boolean(localStorage.getItem(ADMIN_TOKEN_KEY))
+  );
 
-  const handleAdminSuccess = () => {
-  setIsAdminAuthenticated(true);
+  const handleAdminSuccess = (accessToken: string) => {
+    localStorage.setItem(ADMIN_TOKEN_KEY, accessToken);
+    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    setIsAdminAuthenticated(true);
+    setIsAdminModalOpen(false);
 
-  // mark admin session in URL
-  window.history.replaceState(null, "", "#admin");
+    // mark admin session in URL
+    window.history.replaceState(null, "", "#admin");
 
-  // scroll to top for welcome moment
-  window.scrollTo({ top: 0, behavior: "smooth" });
-};
+    // scroll to top for welcome moment
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const handleAdminSignOut = () => {
     setIsAdminAuthenticated(false);
+    localStorage.removeItem(ADMIN_TOKEN_KEY);
+    delete axios.defaults.headers.common.Authorization;
 
     // clear admin hash on logout
     window.history.replaceState(null, "", "#home");
@@ -252,6 +254,13 @@ export default function App() {
   }, [isAdminAuthenticated]);
 
   useEffect(() => {
+    const storedToken = localStorage.getItem(ADMIN_TOKEN_KEY);
+    if (!storedToken) return;
+
+    axios.defaults.headers.common.Authorization = `Bearer ${storedToken}`;
+  }, []);
+
+  useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/products`);
@@ -274,19 +283,6 @@ export default function App() {
       }
     };
     fetchCategories();
-  }, []);
-
-  // Load all admin users once on page load
-  useEffect(() => {
-    const fetchAdminUsers = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/admins`);
-        setAdmins(response.data);
-      } catch (error) { 
-        console.error("Error fetching admins", error);
-      }
-    };
-    fetchAdminUsers();
   }, []);
 
   // When a product is selected, fetch its variants
@@ -456,7 +452,6 @@ export default function App() {
               categoryProducts={categoryProducts}
               cartItems={cartItems}
               cartOpen={cartOpen}
-              admins={admins}
               isAdminAuthenticated={isAdminAuthenticated}
               isAdminModalOpen={isAdminModalOpen}
               onProductSelect={handleProductSelect}
