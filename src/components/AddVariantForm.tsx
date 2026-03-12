@@ -57,38 +57,39 @@ const NewVariantForm = ({createNewVariant, products}: NewVariantFormProps) => {
       <input
         type="text"
         name={inputName}
-        id={`input-${inputName}`}
+        id={`variant-${inputName}`}
         value={formData[inputName]}
         onChange={handleChange}
         placeholder={placeholder || ''}
+        autoComplete="off"
       />
     );
   };
 
   return (
-    <form onSubmit={handleSubmit} className="variant-form">
+    <form onSubmit={handleSubmit} className="variant-form" autoComplete="off">
       <div className="input-wrapper">
-        <label htmlFor="name">Enter Product Name: </label>
+        <label htmlFor="variant-name">Enter Product Name: </label>
         <div>{makeControlledInput('name')}</div>
       </div>
       <div className="input-wrapper">
-        <label htmlFor="size">Size: </label>
+        <label htmlFor="variant-size">Size: </label>
         <div>{ makeControlledInput('size')}</div>
       </div>
         <div className="input-wrapper">
-        <label htmlFor="shape">Shape (Optional):</label>
+        <label htmlFor="variant-shape">Shape (Optional):</label>
         <div>{makeControlledInput('shape')}</div>
       </div>
       <div className="input-wrapper">
-        <label htmlFor="imgKey">Product Variant Image Key (Optional):</label>
+        <label htmlFor="variant-imgKey">Product Variant Image Key (Optional):</label>
         <div>{makeControlledInput('imgKey', "e.g. new-image.jpg")}</div>
       </div>
         <div className="input-wrapper">
-        <label htmlFor="price">Price:</label>
+        <label htmlFor="variant-price">Price:</label>
         <div>{makeControlledInput('price', "e.g. 10.99")}</div>
       </div>
         <div className="input-wrapper">
-        <label htmlFor="stockQuantity">Stock Quantity:</label>
+        <label htmlFor="variant-stockQuantity">Stock Quantity:</label>
         <div>{makeControlledInput('stockQuantity')}</div>
       </div>
       <div className="submit-button-wrapper">

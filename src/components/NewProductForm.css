@@ -38,3 +38,77 @@ input[type="submit"] {
   border-radius: 6px;
   cursor: pointer;
 }
+
+input[type="submit"]:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+/* ── File upload ── */
+.file-upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Hide the native file input — the label handles the interaction */
+.file-input {
+  display: none;
+}
+
+.file-upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  background: #f0f0f0;
+  border: 1.5px dashed #aaa;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.file-upload-label::before {
+  content: '📷';
+}
+
+.file-upload-label:hover {
+  background: #e8e8e8;
+  border-color: #888;
+}
+
+/* ── Image preview ── */
+.image-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.image-preview {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.remove-image-btn {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  color: #c00;
+  cursor: pointer;
+  transition: background 0.15s;
+  width: fit-content;
+}
+
+.remove-image-btn:hover {
+  background: #fee;
+  border-color: #c00;
+}

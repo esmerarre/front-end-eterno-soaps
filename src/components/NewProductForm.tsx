@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { NewProduct } from '../App';
+import { getPresignedUploadUrl, uploadImageToS3 } from '../services/product';
 import './NewProductForm.css';
 
 interface NewProductFormProps {
@@ -10,40 +11,76 @@ const kDefaultsFormState = {
   name: '',
   description: '',
   ingredients: '',
-  imgKey: '',
 };
 
 const NewProductForm = ({createNewProduct}: NewProductFormProps) => {
-  const [formData, setFormData] = useState(kDefaultsFormState); //setting up default state to back the input
+  const [formData, setFormData] = useState(kDefaultsFormState);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+
+  // Revoke the object URL when preview changes or component unmounts to avoid memory leaks
+  useEffect(() => {
+    return () => {
+      if (imagePreview) URL.revokeObjectURL(imagePreview);
+    };
+  }, [imagePreview]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = event.target.name;
     const inputValue = event.target.value;
     
-    //as the input changes the state is updated
-    setFormData((formData)=> {
-      return {
-        ...formData,
-        [inputName]: inputValue
-      };
-    });
+    setFormData((formData) => ({
+      ...formData,
+      [inputName]: inputValue,
+    }));
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null;
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImageFile(file);
+    setImagePreview(file ? URL.createObjectURL(file) : null);
+  };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); 
+  const handleRemoveImage = () => {
+    if (imagePreview) URL.revokeObjectURL(imagePreview);
+    setImageFile(null);
+    setImagePreview(null);
+  };
 
-    if (!formData.name.trim() || !formData.description.trim() || !formData.ingredients.trim() ){ //popup if field left empty
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!formData.name.trim() || !formData.description.trim() || !formData.ingredients.trim()) {
       alert('Please fill in all required fields.');
       return;
     }
 
-    const ingredientsArray = formData.ingredients.split(',').map(item => item.trim());
-    createNewProduct({ ...formData, ingredients: ingredientsArray }); //notifying rest of the app that there is data available 
-    setFormData(kDefaultsFormState) //resets the text bar when the form is submitted
-  }
+    let imgKey = '';
 
-  const makeControlledInput = (inputName: 'name' | 'description' | 'ingredients' | 'imgKey', placeholder?: string) => {
+    if (imageFile) {
+      try {
+        setIsUploading(true);
+        const { uploadUrl, key } = await getPresignedUploadUrl(imageFile.name, imageFile.type);
+        await uploadImageToS3(imageFile, uploadUrl);
+        imgKey = key;
+      } catch {
+        alert('Image upload failed. Please try again.');
+        setIsUploading(false);
+        return;
+      } finally {
+        setIsUploading(false);
+      }
+    }
+
+    const ingredientsArray = formData.ingredients.split(',').map((item) => item.trim());
+    createNewProduct({ ...formData, ingredients: ingredientsArray, imgKey });
+    setFormData(kDefaultsFormState);
+    handleRemoveImage();
+  };
+
+  const makeControlledInput = (inputName: 'name' | 'description' | 'ingredients', placeholder?: string) => {
     return (
       <input
         type="text"
@@ -52,6 +89,7 @@ const NewProductForm = ({createNewProduct}: NewProductFormProps) => {
         value={formData[inputName]}
         onChange={handleChange}
         placeholder={placeholder || ''}
+        autoComplete="off"
       />
     );
   };
@@ -71,11 +109,39 @@ const NewProductForm = ({createNewProduct}: NewProductFormProps) => {
         <div>{makeControlledInput('ingredients', 'e.g. Oats, Honey, Lavender')}</div>
       </div>
       <div className="input-wrapper">
-        <label htmlFor="imgKey">Product Image Key (optional): </label>
-        <div>{ makeControlledInput('imgKey', "e.g. new-image.jpg")}</div>
+        <label>Product Image (optional):</label>
+        <div className="file-upload-wrapper">
+          <label htmlFor="productImage" className="file-upload-label">
+            {imageFile ? imageFile.name : 'Choose an image…'}
+          </label>
+          <input
+            type="file"
+            id="productImage"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="file-input"
+            tabIndex={-1}
+          />
+          {imagePreview && (
+            <div className="image-preview-wrapper">
+              <img src={imagePreview} alt="Product preview" className="image-preview" />
+              <button
+                type="button"
+                className="remove-image-btn"
+                onClick={handleRemoveImage}
+              >
+                ✕ Remove
+              </button>
+            </div>
+          )}
+        </div>
       </div>
       <div className="submit-button-wrapper">
-        <input type="submit" value="Create A New Product"/>
+        <input
+          type="submit"
+          value={isUploading ? 'Uploading image…' : 'Create A New Product'}
+          disabled={isUploading}
+        />
       </div>
     </form>
   );
