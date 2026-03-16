@@ -38,3 +38,52 @@ input[type="submit"] {
   border-radius: 6px;
   cursor: pointer;
 }
+
+.img-key-field {
+  position: relative;
+}
+
+.img-key-suggestions {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-top: 6px;
+  max-height: 180px;
+  overflow: auto;
+  list-style: none;
+  padding: 6px 0;
+}
+
+.img-key-suggestions li {
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+}
+
+.img-key-suggestions li:hover {
+  background: #f0f0f0;
+}
+
+.file-input-wrapper {
+  margin-top: 0.6rem;
+}
+
+.file-input-wrapper input[type="file"] {
+  width: 100%;
+  padding: 6px 8px;
+}
+
+.upload-status {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.muted {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #666;
+}

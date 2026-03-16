@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { NewVariant, Product} from '../App';
 import './AddVariantForm.css';
+import { fetchImageKeys, uploadImageFile } from '../services/product';
 
 interface NewVariantFormProps {
     createNewVariant: (newVariant: NewVariant) => void;
@@ -18,6 +19,10 @@ const kDefaultsFormState = {
 
 const NewVariantForm = ({createNewVariant, products}: NewVariantFormProps) => {
   const [formData, setFormData] = useState(kDefaultsFormState); //setting up default state to back the input
+  const [imageKeys, setImageKeys] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = event.target.name;
@@ -30,27 +35,70 @@ const NewVariantForm = ({createNewVariant, products}: NewVariantFormProps) => {
         [inputName]: inputValue
       };
     });
+    if (inputName === 'imgKey') {
+      setShowSuggestions(true);
+    }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    if (!formData.name.trim() || !formData.size.trim() || !formData.price.trim() || !formData.stockQuantity.trim() ) { //popup if field left empty
+    if (!formData.name.trim() || !formData.size.trim() || !formData.price.trim() || !formData.stockQuantity.trim()) {
       alert('Please fill in all required fields.');
       return;
+    }
+
+    // If a file was selected and no existing imgKey provided, upload now
+    if (selectedFile && !formData.imgKey.trim()) {
+      setUploading(true);
+      try {
+        const key = await uploadImageFile(selectedFile);
+        setFormData((f) => ({ ...f, imgKey: key }));
+        // refresh keys for suggestions
+        try {
+          const keys = await fetchImageKeys();
+          setImageKeys(keys || []);
+        } catch (fetchErr) {
+          // ignore refresh errors
+          console.debug('refresh image keys failed', fetchErr);
+        }
+      } catch (uploadErr) {
+            console.error('upload failed', uploadErr);
+        alert('Image upload failed. Variant creation cancelled.');
+        setUploading(false);
+        return;
+      }
+      setUploading(false);
+      setSelectedFile(null);
     }
 
     const findProduct = products.find((products) => products.name === formData.name);
 
     if (findProduct) {
-        createNewVariant({...formData, productId: findProduct.id, price: parseFloat(formData.price), stockQuantity: parseInt(formData.stockQuantity)});  
-        }
-    else {
-        alert('Product not found. Please make sure the product name is correct or create a new product.');
+      createNewVariant({ ...formData, productId: findProduct.id, price: parseFloat(formData.price), stockQuantity: parseInt(formData.stockQuantity) });
+    } else {
+      alert('Product not found. Please make sure the product name is correct or create a new product.');
+      return;
     }
 
-    setFormData(kDefaultsFormState) //resets the text bar when the form is submitted
-  }
+    setFormData(kDefaultsFormState); //resets the text bar when the form is submitted
+  };
+
+  useEffect(() => {
+    let mounted = true;
+    const loadKeys = async () => {
+      try {
+        const keys = await fetchImageKeys();
+        if (mounted) setImageKeys(keys || []);
+      } catch (err) {
+        // silently fail — backend may not exist yet
+      }
+    };
+    loadKeys();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const makeControlledInput = (inputName: 'name' | 'size' | 'shape' | 'imgKey' | 'price' | 'stockQuantity', placeholder?: string) => {
     return (
@@ -64,6 +112,21 @@ const NewVariantForm = ({createNewVariant, products}: NewVariantFormProps) => {
         autoComplete="off"
       />
     );
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    setSelectedFile(file);
+    // keep the file input value — we will clear it after a successful submit
+  };
+
+  const filteredKeys = formData.imgKey.trim()
+    ? imageKeys.filter((k) => k.toLowerCase().includes(formData.imgKey.toLowerCase())).slice(0, 8)
+    : [];
+
+  const selectExistingKey = (key: string) => {
+    setFormData((f) => ({ ...f, imgKey: key }));
+    setShowSuggestions(false);
   };
 
   return (
@@ -82,7 +145,32 @@ const NewVariantForm = ({createNewVariant, products}: NewVariantFormProps) => {
       </div>
       <div className="input-wrapper">
         <label htmlFor="variant-imgKey">Product Variant Image Key (Optional):</label>
-        <div>{makeControlledInput('imgKey', "e.g. new-image.jpg")}</div>
+        <div className="img-key-field">
+          {makeControlledInput('imgKey', "e.g. new-image.jpg")}
+          {showSuggestions && filteredKeys.length > 0 && (
+            <ul className="img-key-suggestions">
+              {filteredKeys.map((k) => (
+                <li key={k} onClick={() => selectExistingKey(k)}>{k}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="file-input-wrapper">
+          <label className="file-label">Or upload an image:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            disabled={Boolean(formData.imgKey.trim()) || uploading}
+          />
+          {selectedFile && (
+            <div className="selected-file">Selected file: {selectedFile.name}</div>
+          )}
+          {Boolean(formData.imgKey.trim()) && (
+            <div className="muted">Upload disabled while using an existing image key. Clear the field to upload a new image.</div>
+          )}
+          {uploading && <div className="upload-status">Uploading...</div>}
+        </div>
       </div>
         <div className="input-wrapper">
         <label htmlFor="variant-price">Price:</label>

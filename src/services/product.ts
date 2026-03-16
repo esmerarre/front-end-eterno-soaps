@@ -37,6 +37,20 @@ export const uploadImageToS3 = async (
   }
 };
 
+export const fetchImageKeys = async (): Promise<string[]> => {
+  const res = await fetch(`${BACKEND_URL}/images/keys`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch image keys');
+  }
+  return res.json();
+};
+
+export const uploadImageFile = async (file: File): Promise<string> => {
+  const { uploadUrl, key } = await getPresignedUploadUrl(file.name, file.type);
+  await uploadImageToS3(file, uploadUrl);
+  return key;
+};
+
 export const decreaseStock = async (
   productId: number,
   variantId: number,
