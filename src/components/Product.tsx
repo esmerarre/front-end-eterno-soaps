@@ -127,7 +127,7 @@ export default function ProductCard({
 								))}
 							</div>
 
-							<div className="modal-description">{product.description}</div>
+							<div className="modal-description">{product.ldescription || product.description}</div>
 							<div className="ingredients-block">
 								<h3> Key Ingredients: </h3>
 								<p>{product.ingredients?.join(", ")}</p>

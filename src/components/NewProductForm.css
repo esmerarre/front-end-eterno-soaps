@@ -21,7 +21,22 @@ input {
   border: 1px solid #ccc;
 }
 
+textarea {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+}
+
 input:focus {
+  outline: none;
+  border-color: #888;
+}
+
+textarea:focus {
   outline: none;
   border-color: #888;
 }
@@ -45,39 +60,20 @@ input[type="submit"]:disabled {
 }
 
 /* ── File upload ── */
-.file-upload-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+/* File input — mirror AddVariantForm styles */
+.file-input-wrapper {
+  margin-top: 0.6rem;
 }
 
-/* Hide the native file input — the label handles the interaction */
-.file-input {
-  display: none;
+.file-input-wrapper input[type="file"] {
+  width: 100%;
+  padding: 6px 8px;
 }
 
-.file-upload-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: fit-content;
-  padding: 0.5rem 1rem;
-  background: #f0f0f0;
-  border: 1.5px dashed #aaa;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  color: #555;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
-}
-
-.file-upload-label::before {
-  content: '📷';
-}
-
-.file-upload-label:hover {
-  background: #e8e8e8;
-  border-color: #888;
+.file-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
 }
 
 /* ── Image preview ── */
@@ -94,6 +90,47 @@ input[type="submit"]:disabled {
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid #ddd;
+}
+
+/* Suggestion dropdown for existing image keys (copied from AddVariantForm.css) */
+.img-key-field {
+  position: relative;
+}
+
+.img-key-suggestions {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-top: 6px;
+  max-height: 180px;
+  overflow: auto;
+  list-style: none;
+  padding: 6px 0;
+}
+
+.img-key-suggestions li {
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+}
+
+.img-key-suggestions li:hover {
+  background: #f0f0f0;
+}
+
+.upload-status {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.muted {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .remove-image-btn {

@@ -11,7 +11,7 @@
 .manage-products-section {
   display: flex;
   flex-direction: row;
-  align-content: speace-between;
+  align-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -27,7 +27,7 @@
 .products-catalog-container {
   overflow-y: scroll;
   width: 480px;  
-  height: 364px;
+  height: 432.78px;
   border-radius: 10px;
 }
 

@@ -10,6 +10,7 @@ export interface Product {
   id: number;
   name: string;
   description: string;
+  ldescription?: string;
   ingredients: string[];
   imageUrl: string;
   categories: Category[]; // [] belongs to multiple categories
@@ -32,6 +33,7 @@ export interface ProductSummary {
   id: number;
   name: string;
   description: string;
+  ldescription?: string;
   ingredients: string[];
   variants: ProductVariant[];
   imageUrl: string;
@@ -55,6 +57,7 @@ export interface Category {
 export interface NewProduct {
   name: string;
   description: string;
+  ldescription?: string;
   ingredients: string[];
   imgKey: string;
 }
@@ -128,6 +131,7 @@ export default function App() {
     id: number;
     name: string;
     description: string;
+    long_description?: string;
     ingredients: string[];
     image_url: string;
     variants: BackendVariant[];
@@ -139,6 +143,7 @@ export default function App() {
     description: string;
     ingredients: string[];
     image_url: string;
+    long_description?: string;
     variants?: {
       id: number;
       product_id: number;
@@ -156,6 +161,7 @@ export default function App() {
     id: product.id,
     name: product.name,
     description: product.description,
+    ldescription: product.long_description,
     ingredients: product.ingredients,
     imageUrl: product.image_url,
     categories: [], // populated elsewhere
@@ -194,6 +200,7 @@ export default function App() {
       id: product.id,
       name: product.name,
       description: product.description,
+      ldescription: product.long_description,
       ingredients: product.ingredients,
       imageUrl: product.image_url,
       variants,
@@ -358,6 +365,7 @@ export default function App() {
         const payload = {
           name: newProduct.name,
           description: newProduct.description,
+          long_description: newProduct.ldescription,
           ingredients: newProduct.ingredients,
           img_key: newProduct.imgKey,
         };
