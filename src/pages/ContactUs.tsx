@@ -45,7 +45,7 @@ const ContactUs = () => {
 
 Thank you so much for visiting Eterno Soaps and for your incredible support.
 
-Recently, our small family-run business received an unexpected wave of interest following a spontaneous feature in a YouTube creator’s video. While we are truly grateful for the excitement, we were not fully prepared for the level of demand that followed.
+Recently, our small family-run business received an unexpected wave of interest following a spontaneous feature in a <a href="https://youtu.be/_wVcGvyBtgo?si=zrqE0YprAp82xEri&t=478" target="_blank" rel="noopener noreferrer">YouTube creator’s video</a>. While we are truly grateful for the excitement, we were not fully prepared for the level of demand that followed.
 
 We are currently working behind the scenes to prepare inventory and ensure everything meets the quality standards we want to deliver before opening orders more widely.
 
