@@ -54,7 +54,7 @@ We will continue to post updates as things come together. In the meantime, <h4>i
 Thank you again for your patience, kindness, and support of our small business. We’re excited to share Eterno Soaps with you soon.
 
 Warm regards,
-Eterno Soaps .
+Lucy.
                 </p>
               </div>
           </div>
