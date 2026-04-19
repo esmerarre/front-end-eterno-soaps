@@ -31,7 +31,7 @@ const ContactUsForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${BASE_URL}/contact/`, { // ✅ match FastAPI route
+      const response = await fetch(`${BASE_URL}/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,9 @@ const ContactUsForm = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to send message");
+        const text = await response.text().catch(() => "");
+        console.error("Contact API error:", response.status, text);
+        throw new Error(text || "Failed to send message");
       }
 
       alert("Message sent!");
