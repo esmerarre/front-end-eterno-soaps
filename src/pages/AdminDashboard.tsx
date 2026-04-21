@@ -2,6 +2,7 @@ import "./AdminDashboard.css";
 import MonthlySalesChart from "../components/SalesChart";
 import TopSellingProductsChart from "../components/TopSellingProductsChart";
 import InventoryManager from "../components/InventoryManager";
+import AdminOrdersPage from "../components/AdminOrdersPage";
 import type { NewProduct, Product, NewVariant } from "../App";
 import { useState } from "react";
 
@@ -34,6 +35,7 @@ export default function AdminDashboard({
     const [showManager, setShowManager] = useState(false);
     const [showAnalytics, setShowAnalytics] = useState(false); 
     const [showInventory, setShowInventory] = useState(false);  
+    const [showOrders, setShowOrders] = useState(false);
     const [editingVariantId, setEditingVariantId] = useState<number | null>(null);
     const [editStockValue, setEditStockValue] = useState<string>("");
 
@@ -203,6 +205,23 @@ export default function AdminDashboard({
             products={products}
             deleteProduct={deleteProduct}
             />
+        )}
+    </section>
+
+    {/* ORDERS */}
+    <section className="admin-section">
+        <div className="section-header">
+        <h2>Orders</h2>
+            <button
+                className="toggle-button"
+                onClick={() => setShowOrders((prev) => !prev)}
+                >
+                {showOrders ? "Hide" : "Manage Orders"}
+            </button>
+        </div>
+
+        {showOrders && (
+            <AdminOrdersPage />
         )}
     </section>
     </section>

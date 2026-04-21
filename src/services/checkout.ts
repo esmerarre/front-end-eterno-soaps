@@ -27,6 +27,9 @@ export const createCheckoutSession = async (
   }
 
   const data = await response.json()
+  if (!data || !data.url) {
+    throw new Error("Checkout session creation failed: missing redirect URL from server")
+  }
   return data.url
 }
 

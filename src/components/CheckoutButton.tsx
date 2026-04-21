@@ -25,7 +25,7 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ items }) => {
   
 //add on line 27 diable button when items is empty
   return (
-    <button onClick={handleCheckout} className="checkout-btn" disabled={loading}>
+    <button onClick={handleCheckout} className="checkout-btn" disabled={loading || items.length === 0} aria-disabled={loading || items.length === 0} title={items.length === 0 ? "Your cart is empty" : undefined}>
       {loading ? "Processing..." : "Checkout"}
     </button>
   )

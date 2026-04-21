@@ -1,0 +1,33 @@
+.admin-orders {
+  padding: 1rem;
+}
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.orders-controls label {
+  margin-left: 0.5rem;
+}
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.orders-table th, .orders-table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+.orders-table tr.fulfilled { background: #f6ffed; }
+.spinner { padding: 2rem; }
+.empty { padding: 1rem; color: #666; }
+.pagination { margin-top: 0.5rem; display:flex; gap:1rem; align-items:center }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; z-index: 999; }
+.modal-order-content { background: #fff; padding: 1rem; width: 90%; max-width: 800px; border-radius: 6px; position: relative; }
+.modal-order-content .close-button { position: absolute; right: 8px; top: 8px; }
+.order-details-table { width:100%; border-collapse: collapse; margin-top: 1rem }
+.order-details-table th, .order-details-table td { border: 1px solid #ddd; padding: 0.5rem }
+.modal-actions { display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem }
+.fulfill-btn { background: #0b84ff; color: white; border: none; padding: 0.4rem 0.6rem; border-radius: 4px }

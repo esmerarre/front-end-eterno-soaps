@@ -43,13 +43,23 @@ export default function ProductCard({
 	const [selectedQuantity, setSelectedQuantity] = useState(0);
 
 	const handleAddToCartClick = () => {
+		// build name with size short label (e.g. "Cactus S")
+		const sizeLabel = (() => {
+			const s = selectedVariant!.size || "";
+			const lower = s.toLowerCase();
+			if (lower.startsWith("small") || lower === "s") return "S";
+			if (lower.startsWith("medium") || lower === "m") return "M";
+			if (lower.startsWith("large") || lower === "l") return "L";
+			return s.charAt(0).toUpperCase();
+		})();
+
 		onAddToCart({
 			id: selectedVariant!.id,
 			productId: product.id,
-			name: product.name,
+			name: `${product.name} ${sizeLabel}`,
 			price: selectedVariant!.price,
 			quantity: selectedQuantity,
-		})
+		});
 		openCart();   // open the cart immediately
 		closeModal?.(); // optional: close modal after adding
 };
