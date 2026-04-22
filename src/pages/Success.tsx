@@ -65,6 +65,7 @@ export default function Success() {
         </button>
         <h1>Thank you for your purchase! 🧼✨</h1>
         <p>Your order has been processed successfully.</p>
+        <p>A confirmation email will be sent to you shortly.</p>
         <button
           className="continue-shopping-btn"
           onClick={() => navigate("/#products")}
