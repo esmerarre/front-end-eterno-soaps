@@ -43,10 +43,21 @@ export default function ProductCard({
 	const [selectedQuantity, setSelectedQuantity] = useState(0);
 
 	const handleAddToCartClick = () => {
+		// append size letter to product name for cart and checkout (S/M/L)
+		const size = selectedVariant?.size ?? "";
+		let sizeLetter = "";
+		const s = size.toLowerCase();
+		if (s === "small" || s === "s") sizeLetter = "S";
+		else if (s === "medium" || s === "m") sizeLetter = "M";
+		else if (s === "large" || s === "l") sizeLetter = "L";
+		else if (s) sizeLetter = s.charAt(0).toUpperCase();
+
+		const displayName = sizeLetter ? `${product.name} (${sizeLetter})` : product.name;
+
 		onAddToCart({
 			id: selectedVariant!.id,
 			productId: product.id,
-			name: product.name,
+			name: displayName,
 			price: selectedVariant!.price,
 			quantity: selectedQuantity,
 		})
@@ -136,7 +147,7 @@ export default function ProductCard({
 							<div className="quantity-add-cart-container">
 								<QuantityUpdate
 									minValue={0} 
-									maxValue={selectedVariant?.stockQuantity ?? 30} // limit by backend stock
+									maxValue={selectedVariant?.stockQuantity ?? 1000} // limit by backend stock
 									onChange={(qty) => setSelectedQuantity(qty)}
 									value={selectedQuantity} // pass current quantity to QuantityUpdate
 								/>
