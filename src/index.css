@@ -112,8 +112,9 @@ body {
 
 /* Modal-scoped sizing to override other .btn-submit definitions */
 .policy-modal .btn-submit {
-  padding: 0.75rem 1.25rem;
-  height: 40px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -123,9 +124,16 @@ body {
 .modal-actions button,
 .modal-actions .btn-submit,
 .modal-actions .btn-secondary {
-  height: 40px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .modal-actions {
+    background: #fff; /* solid background on small screens to keep contrast */
+    padding: 0.6rem 0.5rem;
+  }
 }
